@@ -16,13 +16,13 @@ function ProgressBar({
       {(label || showValue) && (
         <div className="mb-2 flex items-center justify-between gap-4">
           {label && (
-            <span className="text-sm font-medium text-slate-200">
+            <span className="text-sm font-medium text-slate-700 dark:text-slate-200">
               {label}
             </span>
           )}
 
           {showValue && (
-            <span className="text-sm font-bold text-emerald-300">
+            <span className="text-sm font-bold text-emerald-700 dark:text-emerald-300">
               {normalizedValue}%
             </span>
           )}
@@ -30,7 +30,11 @@ function ProgressBar({
       )}
 
       <div
-        className="h-3 overflow-hidden rounded-full bg-emerald-950"
+        className="
+          h-3 overflow-hidden rounded-full
+          bg-emerald-100
+          dark:bg-emerald-950
+        "
         role="progressbar"
         aria-label={label ?? 'Progresso'}
         aria-valuemin={0}
@@ -38,7 +42,12 @@ function ProgressBar({
         aria-valuenow={normalizedValue}
       >
         <div
-          className="h-full rounded-full bg-emerald-400 transition-all"
+          className="
+            h-full rounded-full
+            bg-emerald-500
+            transition-all
+            dark:bg-emerald-400
+          "
           style={{ width: `${normalizedValue}%` }}
         />
       </div>

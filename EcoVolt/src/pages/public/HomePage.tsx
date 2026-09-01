@@ -15,10 +15,22 @@ function HomePage() {
   }
 
   return (
-    <main className="bg-emerald-950 px-6 py-16 text-white">
+    <main
+      className="
+        bg-emerald-50 px-6 py-16
+        text-slate-900 transition-colors
+        dark:bg-emerald-950 dark:text-white
+      "
+    >
       <div className="mx-auto max-w-6xl">
         <header className="text-center">
-          <span className="text-sm font-bold uppercase tracking-widest text-emerald-400">
+          <span
+            className="
+              text-sm font-bold uppercase
+              tracking-widest text-emerald-700
+              dark:text-emerald-400
+            "
+          >
             EcoVolt
           </span>
 
@@ -26,7 +38,13 @@ function HomePage() {
             React Router configurado!
           </h1>
 
-          <p className="mx-auto mt-4 max-w-2xl text-emerald-100">
+          <p
+            className="
+              mx-auto mt-4 max-w-2xl
+              text-emerald-800
+              dark:text-emerald-100
+            "
+          >
             React, Vite, TypeScript, TailwindCSS e os componentes
             compartilhados estão funcionando corretamente.
           </p>
@@ -39,7 +57,7 @@ function HomePage() {
           <Card className="mx-auto max-w-md text-left">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <span className="text-sm text-emerald-200">
+                <span className="text-sm text-emerald-700 dark:text-emerald-200">
                   Ação sustentável
                 </span>
 
@@ -56,7 +74,13 @@ function HomePage() {
               </Badge>
             </div>
 
-            <p className="mt-4 text-sm leading-relaxed text-emerald-100">
+            <p
+              className="
+                mt-4 text-sm leading-relaxed
+                text-slate-600
+                dark:text-emerald-100
+              "
+            >
               Reduza o consumo de energia desligando aparelhos que não
               estiverem sendo utilizados.
             </p>
@@ -92,14 +116,19 @@ function HomePage() {
             to="/rota-inexistente"
             className="
               inline-flex items-center justify-center
-              rounded-lg border border-emerald-400
-              px-5 py-3 font-bold text-emerald-300
-              transition hover:bg-emerald-400/10
+              rounded-lg border border-emerald-600
+              px-5 py-3 font-bold text-emerald-700
+              transition hover:bg-emerald-100
               focus-visible:outline-none
               focus-visible:ring-2
-              focus-visible:ring-emerald-300
+              focus-visible:ring-emerald-500
               focus-visible:ring-offset-2
-              focus-visible:ring-offset-emerald-950
+              focus-visible:ring-offset-emerald-50
+              dark:border-emerald-400
+              dark:text-emerald-300
+              dark:hover:bg-emerald-400/10
+              dark:focus-visible:ring-emerald-300
+              dark:focus-visible:ring-offset-emerald-950
             "
           >
             Testar página 404

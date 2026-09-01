@@ -13,9 +13,13 @@ function Card({
     <article
       className={`
         rounded-2xl
-        border border-emerald-800
-        bg-emerald-950/50
-        p-6 shadow-lg
+        border border-emerald-200
+        bg-white p-6
+        text-slate-900 shadow-lg
+        transition-colors
+        dark:border-emerald-800
+        dark:bg-emerald-950/50
+        dark:text-white
         ${className}
       `}
       {...props}
