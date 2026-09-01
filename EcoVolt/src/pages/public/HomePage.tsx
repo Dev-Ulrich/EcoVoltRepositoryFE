@@ -15,7 +15,7 @@ function HomePage() {
   }
 
   return (
-    <main className="min-h-screen bg-emerald-950 px-6 py-16 text-white">
+    <main className="bg-emerald-950 px-6 py-16 text-white">
       <div className="mx-auto max-w-6xl">
         <header className="text-center">
           <span className="text-sm font-bold uppercase tracking-widest text-emerald-400">
