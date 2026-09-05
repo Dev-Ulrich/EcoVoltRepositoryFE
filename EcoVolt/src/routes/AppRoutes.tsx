@@ -5,10 +5,12 @@ import DashboardPage from '../pages/app/DashboardPage'
 import HomePage from '../pages/public/HomePage'
 import NotFoundPage from '../pages/public/NotFoundPage'
 import QuemSomosPage from '../pages/public/QuemSomosPage'
+import LoginPage from '../pages/public/LoginPage'
 
 function AppRoutes() {
   return (
     <Routes>
+      <Route path="login" element={<LoginPage />} />
       <Route element={<PublicLayout />}>
         <Route index element={<HomePage />} />
         <Route path="quem-somos" element={<QuemSomosPage />} />
