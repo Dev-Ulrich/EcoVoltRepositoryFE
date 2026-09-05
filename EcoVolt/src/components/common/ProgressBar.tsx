@@ -33,7 +33,7 @@ function ProgressBar({
         className="
           h-3 overflow-hidden rounded-full
           bg-emerald-100
-          dark:bg-emerald-950
+          dark:bg-slate-600
         "
         role="progressbar"
         aria-label={label ?? 'Progresso'}
