@@ -13,7 +13,7 @@ const navigationItems = [
 function AppNavigation() {
   return (
     <nav aria-label="Navegação da área do participante">
-      <p className="mb-3 px-3 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+      <p className="mb-3 px-3 text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">
         Área do participante
       </p>
 
@@ -31,8 +31,8 @@ function AppNavigation() {
                     'flex items-center gap-3 rounded-xl px-4 py-3 font-medium transition-colors',
                     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500',
                     isActive
-                      ? 'bg-emerald-600 text-white'
-                      : 'text-slate-600 hover:bg-slate-200 hover:text-slate-950 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white',
+                      ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-400/15 dark:text-emerald-300'
+                      : 'text-slate-700 hover:bg-emerald-100 hover:text-emerald-700 dark:text-emerald-100 dark:hover:bg-emerald-900 dark:hover:text-white',
                   ].join(' ')
                 }
               >
