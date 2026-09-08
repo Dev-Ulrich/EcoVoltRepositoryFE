@@ -1,9 +1,3 @@
-LoginPage
-É o ponto de entrada do fluxo real. O README do HTML antigo cita login simulado e redirecionamento para dashboard.
-
-DashboardPage
-Já existe, mas ainda está básica. Deve virar a página central com usuário, pontos, XP, tier, missões e ranking.
-
 EnviarAcaoPage
 É uma funcionalidade principal do projeto: envio de ação sustentável com vídeo/evidência.
 
