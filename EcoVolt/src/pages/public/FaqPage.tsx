@@ -33,7 +33,6 @@ function FaqPage() {
     <main className="bg-emerald-50 px-6 py-12 text-slate-900 transition-colors sm:py-16 dark:bg-emerald-950 dark:text-white">
       <div className="mx-auto max-w-4xl">
         <header className="mx-auto max-w-3xl text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-emerald-800 dark:border-emerald-800 dark:bg-emerald-900 dark:text-emerald-200"><CircleHelp aria-hidden="true" size={14} /> FAQ</span>
           <h1 className="mt-6 text-4xl font-black tracking-tight sm:text-5xl lg:text-6xl">Dúvidas? <span className="text-emerald-700 dark:text-emerald-400">Vamos ajudar.</span></h1>
           <p className="mt-6 text-lg leading-relaxed text-slate-600 dark:text-emerald-100">Encontre respostas sobre o EcoVolt, o acesso e os próximos passos da sua jornada sustentável.</p>
         </header>

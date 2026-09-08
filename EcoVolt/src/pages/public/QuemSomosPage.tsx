@@ -50,9 +50,6 @@ function QuemSomosPage() {
     <main className="bg-emerald-50 px-6 py-12 text-slate-900 transition-colors sm:py-16 dark:bg-emerald-950 dark:text-white">
       <section aria-labelledby="team-title" className="mx-auto max-w-6xl">
         <header className="mx-auto max-w-3xl text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-emerald-800 dark:border-emerald-800 dark:bg-emerald-900 dark:text-emerald-200">
-            <Users aria-hidden="true" size={14} /> Quem somos
-          </span>
           <h1 id="team-title" className="mt-6 text-4xl font-black tracking-tight sm:text-5xl lg:text-6xl">Nossa equipe</h1>
           <p className="mt-6 text-lg leading-relaxed text-slate-600 dark:text-emerald-100">
             Conheça os integrantes responsáveis pelo desenvolvimento do projeto EcoVolt.
