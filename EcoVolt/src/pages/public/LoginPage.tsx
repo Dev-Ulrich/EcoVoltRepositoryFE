@@ -1,7 +1,8 @@
 import { ArrowLeft, Eye, EyeOff } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 
+import { useAuth } from '../../auth/useAuth'
 import ecovoltLogoDark from '../../assets/ecovolt-logo-dark.png'
 import ecovoltLogo from '../../assets/ecovolt-logo.png'
 import Button from '../../components/common/Button'
@@ -13,10 +14,23 @@ function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [message, setMessage] = useState('')
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  const { user, loading, login } = useAuth()
+  const [submitting, setSubmitting] = useState(false)
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    setMessage('O login ainda não está disponível. Tente novamente em breve.')
+    const fields = new FormData(event.currentTarget)
+    setSubmitting(true)
+    setMessage('')
+    try {
+      await login(String(fields.get('username')), String(fields.get('password')))
+    } catch (error) {
+      setMessage(error instanceof Error && error.message !== 'Failed to fetch' ? error.message : 'Não foi possível conectar. Tente novamente.')
+    } finally { setSubmitting(false) }
   }
+
+  if (loading) return <main className="p-10 text-center" role="status">Verificando seu acesso…</main>
+  if (user) return <Navigate to="/app" replace />
 
   return (
     <main className="flex min-h-dvh flex-col bg-emerald-50 text-slate-900 transition-colors dark:bg-emerald-950 dark:text-white">
@@ -43,8 +57,8 @@ function LoginPage() {
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-5">
             <div>
-              <label htmlFor="login-email" className="mb-2 block text-sm font-semibold">E-mail</label>
-              <input id="login-email" name="email" type="email" autoComplete="username" required placeholder="voce@exemplo.com" className={inputClasses} />
+              <label htmlFor="login-username" className="mb-2 block text-sm font-semibold">Usuário</label>
+              <input id="login-username" name="username" type="text" autoComplete="username" required placeholder="Digite seu usuário" className={inputClasses} />
             </div>
 
             <div>
@@ -74,7 +88,7 @@ function LoginPage() {
               </button>
             </div>
 
-            <Button type="submit" fullWidth>Entrar</Button>
+            <Button type="submit" fullWidth disabled={submitting}>{submitting ? 'Entrando…' : 'Entrar'}</Button>
             {message && <p role="status" className="rounded-lg bg-emerald-50 p-3 text-sm text-emerald-800 dark:bg-emerald-900 dark:text-emerald-100">{message}</p>}
           </form>
         </section>

@@ -1,25 +1,19 @@
-import { Outlet } from 'react-router-dom'
-import AppNavigation from './AppNavigation'
+import { Navigate, Outlet } from 'react-router-dom'
+import { useAuth } from '../../auth/useAuth'
+import Button from '../common/Button'
 import Footer from './Footer'
 import Header from './Header'
 
 function AppLayout() {
+  const { user, loading, error, refresh } = useAuth()
+  if (loading) return <main className="p-10 text-center" role="status">Verificando seu acesso…</main>
+  if (error) return <main className="space-y-4 p-10 text-center"><p role="alert">{error}</p><Button onClick={() => void refresh()}>Tentar novamente</Button></main>
+  if (!user) return <Navigate to="/login" replace />
+
   return (
     <div className="flex min-h-screen flex-col bg-emerald-50 text-slate-900 transition-colors dark:bg-emerald-950 dark:text-white">
       <Header />
-
-      <div className="mx-auto grid w-full max-w-7xl flex-1 gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:px-8">
-        <aside className="min-w-0">
-          <div className="lg:sticky lg:top-24">
-            <AppNavigation />
-          </div>
-        </aside>
-
-        <main className="min-w-0">
-          <Outlet />
-        </main>
-      </div>
-
+      <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-10"><Outlet /></main>
       <Footer />
     </div>
   )

@@ -3,6 +3,8 @@ import { Link, NavLink } from 'react-router-dom'
 
 import ecovoltLogoDark from '../../assets/ecovolt-logo-dark.png'
 import ecovoltLogo from '../../assets/ecovolt-logo.png'
+import { useAuth } from '../../auth/useAuth'
+import AppNavigation from './AppNavigation'
 import ThemeToggle from '../common/ThemeToggle'
 
 const navigationItems = [
@@ -16,6 +18,17 @@ const navigationItems = [
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { user, logout } = useAuth()
+  const [logoutError, setLogoutError] = useState('')
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
+
+  async function handleLogout() {
+    setIsLoggingOut(true)
+    setLogoutError('')
+    try { await logout(); closeMenu() }
+    catch { setLogoutError('Não foi possível sair. Tente novamente.') }
+    finally { setIsLoggingOut(false) }
+  }
 
   function closeMenu() {
     setIsMenuOpen(false)
@@ -40,10 +53,10 @@ function Header() {
         aria-label="Navegação principal"
       >
         <Link
-          to="/"
+          to={user ? "/app" : "/"}
           className="flex shrink-0 items-center"
           onClick={closeMenu}
-          aria-label="EcoVolt - Início"
+          aria-label={user ? "EcoVolt - Dashboard" : "EcoVolt - Início"}
         >
           <img
             src={ecovoltLogo}
@@ -103,7 +116,7 @@ function Header() {
             ${isMenuOpen ? 'flex' : 'hidden'}
           `}
         >
-          {navigationItems.map((item) => (
+          {(user ? [{ label: 'Dashboard', path: '/app' }] : navigationItems).map((item) => (
             <li key={item.path}>
               <NavLink
                 to={item.path}
@@ -138,7 +151,11 @@ function Header() {
             <ThemeToggle />
           </li>
 
-          <li>
+          {user ? <li className="flex flex-wrap items-center gap-3 lg:max-w-72">
+            <span className="text-sm font-semibold text-emerald-800 dark:text-emerald-100">{user.displayName}</span>
+            <button type="button" disabled={isLoggingOut} onClick={() => void handleLogout()} className="rounded-lg border border-emerald-600 px-4 py-2 font-semibold text-emerald-700 hover:bg-emerald-100 disabled:opacity-50 dark:text-emerald-200 dark:hover:bg-emerald-900">{isLoggingOut ? 'Saindo…' : 'Sair'}</button>
+            {logoutError && <p role="alert" className="text-sm text-red-600 dark:text-red-300">{logoutError}</p>}
+          </li> : <li>
             <Link
               to="/login"
               onClick={closeMenu}
@@ -154,9 +171,10 @@ function Header() {
             >
               Entrar
             </Link>
-          </li>
+          </li>}
         </ul>
       </nav>
+      {user && <AppNavigation />}
     </header>
   )
 }
