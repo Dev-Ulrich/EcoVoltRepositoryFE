@@ -4,6 +4,7 @@ import PublicLayout from '../components/layout/PublicLayout'
 import DashboardPage from '../pages/app/DashboardPage'
 import HomePage from '../pages/public/HomePage'
 import ComoFuncionaPage from '../pages/public/ComoFuncionaPage'
+import SobrePage from '../pages/public/SobrePage'
 import NotFoundPage from '../pages/public/NotFoundPage'
 import QuemSomosPage from '../pages/public/QuemSomosPage'
 import LoginPage from '../pages/public/LoginPage'
@@ -15,6 +16,7 @@ function AppRoutes() {
       <Route element={<PublicLayout />}>
         <Route index element={<HomePage />} />
         <Route path="como-funciona" element={<ComoFuncionaPage />} />
+        <Route path="sobre" element={<SobrePage />} />
         <Route path="quem-somos" element={<QuemSomosPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
