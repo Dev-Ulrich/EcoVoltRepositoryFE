@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 
 import ecovoltLogoDark from '../../assets/ecovolt-logo-dark.png'
 import ecovoltLogo from '../../assets/ecovolt-logo.png'
@@ -19,13 +19,14 @@ const navigationItems = [
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { user, logout } = useAuth()
+  const navigate = useNavigate()
   const [logoutError, setLogoutError] = useState('')
   const [isLoggingOut, setIsLoggingOut] = useState(false)
 
   async function handleLogout() {
     setIsLoggingOut(true)
     setLogoutError('')
-    try { await logout(); closeMenu() }
+    try { await logout(); closeMenu(); navigate('/login', { replace: true }) }
     catch { setLogoutError('Não foi possível sair. Tente novamente.') }
     finally { setIsLoggingOut(false) }
   }
@@ -152,8 +153,8 @@ function Header() {
           </li>
 
           {user ? <li className="flex flex-wrap items-center gap-3 lg:max-w-72">
-            <span className="text-sm font-semibold text-emerald-800 dark:text-emerald-100">{user.displayName}</span>
-            <button type="button" disabled={isLoggingOut} onClick={() => void handleLogout()} className="rounded-lg border border-emerald-600 px-4 py-2 font-semibold text-emerald-700 hover:bg-emerald-100 disabled:opacity-50 dark:text-emerald-200 dark:hover:bg-emerald-900">{isLoggingOut ? 'Saindo…' : 'Sair'}</button>
+            <span className="text-sm font-semibold text-emerald-800 dark:text-emerald-100">{user.displayName}<span className="mt-0.5 block text-xs font-normal">Sessão demonstrativa</span></span>
+            <button type="button" disabled={isLoggingOut} onClick={() => void handleLogout()} className="rounded-lg border border-emerald-600 px-4 py-2 font-semibold text-emerald-700 hover:bg-emerald-100 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-emerald-200 dark:hover:bg-emerald-900">{isLoggingOut ? 'Saindo…' : 'Sair'}</button>
             {logoutError && <p role="alert" className="text-sm text-red-600 dark:text-red-300">{logoutError}</p>}
           </li> : <li>
             <Link

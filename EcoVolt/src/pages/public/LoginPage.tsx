@@ -1,5 +1,5 @@
 import { ArrowLeft, Eye, EyeOff } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link, Navigate } from 'react-router-dom'
 
@@ -19,14 +19,28 @@ function LoginPage() {
   const [message, setMessage] = useState('')
 
   const { user, login } = useAuth()
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LoginFormData>()
+  const { register, handleSubmit, setError, clearErrors, formState: { errors, isSubmitting } } = useForm<LoginFormData>()
+
+  const pendingRequest = useRef<AbortController | null>(null)
+  useEffect(() => () => pendingRequest.current?.abort(), [])
 
   async function submitLogin(data: LoginFormData) {
+    if (pendingRequest.current) return
+    const request = new AbortController()
+    pendingRequest.current = request
     setMessage('')
+    clearErrors('root')
     try {
+      // Breve espera local para demonstrar o estado de processamento, sem rede.
+      await new Promise(resolve => window.setTimeout(resolve, 450))
+      if (request.signal.aborted) return
       await login(data.email, data.password)
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : 'Não foi possível iniciar a demonstração.')
+      if (!request.signal.aborted) {
+        setError('root', { message: error instanceof Error ? error.message : 'Não foi possível iniciar a demonstração.' })
+      }
+    } finally {
+      pendingRequest.current = null
     }
   }
 
@@ -61,10 +75,13 @@ function LoginPage() {
             <p className="mt-1 break-all">Senha: {demoCredentials.password}</p>
           </div>
 
-          <form onSubmit={handleSubmit(submitLogin)} noValidate className="mt-8 space-y-5">
+          <form onSubmit={event => {
+            if (pendingRequest.current) { event.preventDefault(); return }
+            void handleSubmit(submitLogin, () => setMessage(''))(event)
+          }} onChange={() => clearErrors('root')} noValidate aria-busy={isSubmitting} className="mt-8 space-y-5">
             <div>
               <label htmlFor="login-email" className="mb-2 block text-sm font-semibold">E-mail</label>
-              <input id="login-email" type="email" autoComplete="username" required placeholder="Digite o e-mail demonstrativo" className={inputClasses}
+              <input id="login-email" readOnly={isSubmitting} type="email" autoComplete="username" required placeholder="Digite o e-mail demonstrativo" className={inputClasses}
                 aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'email-error' : undefined}
                 {...register('email', { required: 'Informe o e-mail.', setValueAs: (value: string) => value.trim(), pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Informe um e-mail válido.' } })} />
               {errors.email && <p id="email-error" role="alert" className="mt-2 text-sm text-red-700 dark:text-red-300">{errors.email.message}</p>}
@@ -73,7 +90,7 @@ function LoginPage() {
             <div>
               <label htmlFor="login-password" className="mb-2 block text-sm font-semibold">Senha</label>
               <div className="relative">
-                <input id="login-password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" required placeholder="Digite sua senha" className={`${inputClasses} pr-14`}
+                <input id="login-password" readOnly={isSubmitting} type={showPassword ? 'text' : 'password'} autoComplete="current-password" required placeholder="Digite sua senha" className={`${inputClasses} pr-14`}
                   aria-invalid={Boolean(errors.password)} aria-describedby={errors.password ? 'password-error' : undefined}
                   {...register('password', { required: 'Informe a senha demonstrativa.' })} />
                 <button
@@ -100,6 +117,8 @@ function LoginPage() {
               </button>
             </div>
 
+            {errors.root && <p role="alert" className="rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-950/40 dark:text-red-300">{errors.root.message}</p>}
+            {isSubmitting && <p role="status" className="text-sm text-emerald-800 dark:text-emerald-200">Verificando os dados da demonstração…</p>}
             <Button type="submit" fullWidth disabled={isSubmitting}>{isSubmitting ? 'Entrando…' : 'Entrar'}</Button>
             {message && <p role="status" className="rounded-lg bg-emerald-50 p-3 text-sm text-emerald-800 dark:bg-emerald-900 dark:text-emerald-100">{message}</p>}
           </form>

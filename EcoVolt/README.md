@@ -109,3 +109,37 @@ As alterações ficam **somente na memória**: navegar entre as rotas mantém o 
 O contexto usa `useReducer` para transições imutáveis e `useContext` para compartilhar dados. `useState` continua na autenticação e `useEffect` no tema, onde há sincronização com o navegador. Não foi adicionado efeito para persistir ações nem chamada de rede.
 
 A criação das telas de envio, detalhes e revisão fica nas próximas etapas; a base compartilhada e suas operações já estão disponíveis e testadas.
+
+## Etapa 4 — Login e sessão demonstrativa
+
+- [x] Formulário e contratos de autenticação usam `email` em vez de `username`.
+- [x] `useForm<LoginFormData>()` com `register`, `handleSubmit` e `formState.errors`.
+- [x] E-mail obrigatório/com formato válido e senha obrigatória.
+- [x] Labels, `aria-invalid`, `aria-describedby` e mensagens acessíveis para os erros.
+- [x] Botão para mostrar/ocultar senha preservado.
+- [x] Processamento local visível, botão bloqueado e proteção contra envios repetidos.
+- [x] Conta fictícia validada pelos mocks, com credenciais exibidas no login.
+- [x] Estado de sessão em contexto e apenas o ID fictício no `sessionStorage`, sem salvar senha.
+- [x] Entrada redireciona para `/app`; logout remove a sessão e retorna a `/login`.
+- [x] `AppLayout` redireciona visitantes sem sessão; `Header` identifica a sessão demonstrativa e permite sair.
+- [x] Interface e README informam que o acesso é uma simulação.
+
+**Conta de demonstração:** `demo@ecovolt.example` / `EcoVoltDemo2026`. `autoComplete="username"` no campo de e-mail é apenas a indicação padrão de preenchimento do navegador; o nome do campo e os contratos usam `email`.
+
+O processamento tem uma espera local de 450 ms para tornar o estado “Entrando…” observável. Sair da tela durante essa espera cancela a tentativa, evitando que uma navegação posterior autentique o participante inesperadamente. Não há chamada de API.
+
+### Validação do fluxo
+
+Fluxo conferido em Chromium com a versão de produção via preview:
+
+- Acesso direto a `/app` sem sessão redireciona para `/login`.
+- Campos vazios e e-mail inválido mostram erros associados aos campos.
+- Senha incorreta mostra mensagem de erro; mostrar/ocultar senha funciona.
+- Processamento bloqueia o botão e impede um segundo envio.
+- Conta fictícia abre o dashboard; atualizar a página mantém o acesso na mesma aba.
+- Logout a partir da área interna ou de uma página pública remove o ID e retorna ao login.
+- Navegar para outra página durante o processamento cancela a entrada.
+- Em viewport de celular, login/menu/logout funcionam mesmo com `sessionStorage` bloqueado, usando estado em memória.
+- Nenhuma requisição aos antigos endpoints de API ou erro JavaScript foi observado no fluxo desktop.
+
+Para repetir manualmente, execute `npm run dev` e percorra os cenários acima. Build, lint e testes locais também devem passar antes de integrar a alteração.
