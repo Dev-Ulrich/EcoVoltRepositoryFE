@@ -10,9 +10,9 @@ export const mockUsers: User[] = [{
   id: 1,
   email: demoCredentials.email,
   displayName: 'Participante Demo',
-  points: 1240,
-  xp: 620,
-  completedActions: 16,
+  points: 115,
+  xp: 90,
+  completedActions: 1,
   activeMissions: 2,
   tier: 'Bronze',
 }]

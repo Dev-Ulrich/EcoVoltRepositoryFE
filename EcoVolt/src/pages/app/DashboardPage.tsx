@@ -1,9 +1,10 @@
 import { Award, Leaf, Target, Zap } from 'lucide-react'
 
-import { useAuth } from '../../auth/useAuth'
+import { useDemoData } from '../../hooks/useDemoData'
+import { actionCategories, actionStatusLabels } from '../../data/mockActions'
 
 function DashboardPage() {
-  const { user } = useAuth()
+  const { user, actions } = useDemoData()
   if (!user) return null
   const summaryItems = [
   {
@@ -88,11 +89,20 @@ function DashboardPage() {
         </article>
         <article className="rounded-2xl border border-emerald-200 bg-white p-6 sm:p-8 dark:border-emerald-800 dark:bg-emerald-950/50">
           <h2 className="text-xl font-bold">Suas atividades</h2>
-          <div className="mt-6 rounded-xl border border-dashed border-emerald-200 p-6 text-center dark:border-emerald-800">
-            <Leaf aria-hidden="true" className="mx-auto text-emerald-600 dark:text-emerald-300" size={30} />
-            <p className="mt-3 font-semibold">{user.completedActions === 0 ? 'Sua jornada está começando' : `${user.completedActions} ações concluídas`}</p>
-            <p className="mt-2 text-sm leading-relaxed text-slate-500 dark:text-emerald-200">O histórico detalhado estará disponível junto com o envio de ações.</p>
-          </div>
+          <p className="mt-2 text-sm text-slate-500 dark:text-emerald-200">Dados simulados. Alterações reiniciam ao recarregar a página ou sair.</p>
+          {actions.length === 0 ? (
+            <p className="mt-6 text-sm text-slate-600 dark:text-emerald-100">Nenhuma ação nesta demonstração.</p>
+          ) : (
+            <ul className="mt-5 divide-y divide-emerald-100 dark:divide-emerald-800">
+              {actions.slice(0, 4).map(action => (
+                <li key={action.id} className="py-3">
+                  <p className="font-semibold">{actionCategories[action.category].title}</p>
+                  <p className="mt-1 text-sm text-emerald-700 dark:text-emerald-300">{actionStatusLabels[action.status]}</p>
+                  <p className="mt-1 text-sm text-slate-500 dark:text-emerald-200">{action.description}</p>
+                </li>
+              ))}
+            </ul>
+          )}
         </article>
       </div>
     </section>
