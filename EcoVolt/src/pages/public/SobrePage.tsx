@@ -34,9 +34,6 @@ function SobrePage() {
     <main className="bg-emerald-50 px-6 py-12 text-slate-900 transition-colors sm:py-16 dark:bg-emerald-950 dark:text-white">
       <div className="mx-auto max-w-6xl">
         <header className="mx-auto max-w-3xl text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-emerald-800 dark:border-emerald-800 dark:bg-emerald-900 dark:text-emerald-200">
-            <Sprout aria-hidden="true" size={14} /> Sobre o EcoVolt
-          </span>
           <h1 className="mt-6 text-4xl font-black leading-tight tracking-tight sm:text-5xl lg:text-6xl">
             A energia da mudança<br />
             <span className="text-emerald-700 dark:text-emerald-400">começa com a gente.</span>

@@ -1,13 +1,17 @@
 import { ArrowRight, ArrowUpRight, BookOpen, CircleHelp, Code, MessageCircle, Users } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
+import arthurPhoto from '../../assets/team/Arthur-da-Silva.jpg'
+import lucaPhoto from '../../assets/team/Matheus-Luca.png'
+import pereiraPhoto from '../../assets/team/Matheus-Pereira.jpeg'
+import victorPhoto from '../../assets/team/Victor-Ulrich.png'
 import Card from '../../components/common/Card'
 
 const contacts = [
-  { name: 'Victor Ulrich', initials: 'VU', url: 'https://www.linkedin.com/in/victorulrichcosta/' },
-  { name: 'Matheus Pereira', initials: 'MP', url: 'https://www.linkedin.com/in/matheus-pereira-da-silva-franco-b7a7b03b7/' },
-  { name: 'Matheus Luca', initials: 'ML', url: 'https://www.linkedin.com/in/matheusbarragao/' },
-  { name: 'Arthur da Silva', initials: 'AS', url: 'https://www.linkedin.com/in/arthur-da-silva-santana-a6061a310/' },
+  { name: 'Victor Ulrich', photo: victorPhoto, photoPosition: 'object-[center_25%]', url: 'https://www.linkedin.com/in/victorulrichcosta/' },
+  { name: 'Matheus Pereira', photo: pereiraPhoto, photoPosition: 'object-center', url: 'https://www.linkedin.com/in/matheus-pereira-da-silva-franco-b7a7b03b7/' },
+  { name: 'Matheus Luca', photo: lucaPhoto, photoPosition: 'object-center', url: 'https://www.linkedin.com/in/matheusbarragao/' },
+  { name: 'Arthur da Silva', photo: arthurPhoto, photoPosition: 'object-[center_25%]', url: 'https://www.linkedin.com/in/arthur-da-silva-santana-a6061a310/' },
 ]
 
 const topics = [
@@ -21,9 +25,6 @@ function ContatoPage() {
     <main className="bg-emerald-50 px-6 py-12 text-slate-900 transition-colors sm:py-16 dark:bg-emerald-950 dark:text-white">
       <div className="mx-auto max-w-6xl">
         <header className="mx-auto max-w-3xl text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-emerald-800 dark:border-emerald-800 dark:bg-emerald-900 dark:text-emerald-200">
-            <MessageCircle aria-hidden="true" size={14} /> Contato
-          </span>
           <h1 className="mt-6 text-4xl font-black tracking-tight sm:text-5xl lg:text-6xl">Vamos <span className="text-emerald-700 dark:text-emerald-400">conversar?</span></h1>
           <p className="mt-6 text-lg leading-relaxed text-slate-600 dark:text-emerald-100">Uma dúvida, uma ideia ou uma sugestão? Conheça os canais para falar com quem está construindo o EcoVolt.</p>
         </header>
@@ -49,14 +50,13 @@ function ContatoPage() {
               {contacts.map(contact => (
                 <li key={contact.url}>
                   <a href={contact.url} target="_blank" rel="noopener noreferrer" aria-label={`Abrir LinkedIn de ${contact.name} (nova aba)`} className="group flex items-center gap-3 rounded-2xl border border-emerald-100 p-4 transition hover:border-emerald-400 hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-emerald-800 dark:hover:border-emerald-600 dark:hover:bg-emerald-900">
-                    <span aria-hidden="true" className="flex size-11 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-sm font-bold text-emerald-800 dark:bg-emerald-800 dark:text-emerald-100">{contact.initials}</span>
+                    <img src={contact.photo} alt="" width={44} height={44} loading="lazy" className={`size-11 shrink-0 rounded-full bg-emerald-100 object-cover dark:bg-emerald-800 ${contact.photoPosition}`} />
                     <span className="min-w-0 flex-1"><span className="block font-semibold text-slate-900 dark:text-white">{contact.name}</span><span className="mt-1 block text-sm text-emerald-700 dark:text-emerald-300">Ver perfil no LinkedIn</span></span>
                     <ArrowUpRight aria-hidden="true" size={19} className="shrink-0 text-emerald-700 dark:text-emerald-300" />
                   </a>
                 </li>
               ))}
             </ul>
-            <Link to="/quem-somos" className="mt-6 inline-flex items-center gap-2 rounded-lg py-2 text-sm font-bold text-emerald-700 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-emerald-300">Conhecer a equipe completa <ArrowRight aria-hidden="true" size={18} /></Link>
           </div>
         </section>
 

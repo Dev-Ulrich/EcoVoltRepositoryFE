@@ -28,9 +28,6 @@ function ComoFuncionaPage() {
       <div className="mx-auto max-w-6xl">
         <section aria-labelledby="how-title" className="grid items-center gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
           <div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-emerald-800 dark:border-emerald-800 dark:bg-emerald-900 dark:text-emerald-200">
-              <Leaf aria-hidden="true" size={14} /> Como funciona
-            </span>
             <h1 id="how-title" className="mt-6 text-4xl font-black leading-tight tracking-tight sm:text-5xl lg:text-6xl">Pequenas ações.<br /><span className="text-emerald-700 dark:text-emerald-400">Um futuro melhor.</span></h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600 dark:text-emerald-100">O EcoVolt conecta atitudes sustentáveis a uma jornada de aprendizado e evolução. Conheça o caminho, do primeiro acesso ao reconhecimento de cada contribuição.</p>
             <div className="mt-8 flex flex-wrap gap-3">
