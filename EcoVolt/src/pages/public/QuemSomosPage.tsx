@@ -1,4 +1,4 @@
-import { ArrowUpRight, GraduationCap, Users } from 'lucide-react'
+import { ArrowUpRight, GraduationCap } from 'lucide-react'
 
 import arthurPhoto from '../../assets/team/Arthur-da-Silva.jpg'
 import lucaPhoto from '../../assets/team/Matheus-Luca.png'
