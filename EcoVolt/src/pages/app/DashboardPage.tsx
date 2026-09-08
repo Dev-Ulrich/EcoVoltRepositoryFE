@@ -47,7 +47,7 @@ function DashboardPage() {
         </h1>
 
         <p className="mt-3 max-w-2xl text-slate-600 dark:text-emerald-100">
-          Acompanhe suas ações, seus pontos e sua evolução dentro do EcoVolt.
+          Demonstração do EcoVolt: ações, pontos e evolução abaixo são dados fictícios.
         </p>
       </div>
 

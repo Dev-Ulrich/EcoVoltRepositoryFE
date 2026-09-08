@@ -1,58 +1,38 @@
-import { useEffect, useState, type ReactNode } from 'react'
-import { AuthContext, type User } from './useAuth'
+import { useState, type ReactNode } from 'react'
+import { authenticateDemo, readDemoSession, saveDemoSession } from './demoAuth'
+import { AuthContext } from './useAuth'
+import type { User } from '../types/user'
 
-async function loadUser(): Promise<User | null> {
-  const response = await fetch('/api/me')
-  if (response.status === 401) return null
-  if (!response.ok) throw new Error('Sessão indisponível')
-  return (await response.json()).user
+function loadDemoUser(): User | null {
+  try {
+    return readDemoSession(window.sessionStorage)
+  } catch {
+    // O navegador pode bloquear o armazenamento. A demo ainda funciona em memória.
+    return null
+  }
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
+  const [user, setUser] = useState<User | null>(loadDemoUser)
 
-  async function refresh() {
+  async function login(email: string, password: string) {
+    const demoUser = authenticateDemo(email, password)
     try {
-      setUser(await loadUser())
-      setError('')
+      saveDemoSession(window.sessionStorage, demoUser)
     } catch {
-      setUser(null)
-      setError('Não foi possível verificar sua sessão. Confira a conexão e tente novamente.')
-    } finally { setLoading(false) }
-  }
-
-  useEffect(() => {
-    let active = true
-    void loadUser().then((currentUser) => {
-      if (active) { setUser(currentUser); setLoading(false) }
-    }).catch(() => {
-      if (active) {
-        setError('Não foi possível verificar sua sessão. Confira a conexão e tente novamente.')
-        setLoading(false)
-      }
-    })
-    return () => { active = false }
-  }, [])
-
-  async function login(username: string, password: string) {
-    const response = await fetch('/api/login', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password }),
-    })
-    const data = await response.json()
-    if (!response.ok) throw new Error(data.message)
-    setError('')
-    setUser(data.user)
+      // Sem armazenamento, o acesso dura até recarregar a página.
+    }
+    setUser(demoUser)
   }
 
   async function logout() {
-    const response = await fetch('/api/logout', { method: 'POST' })
-    if (!response.ok) throw new Error('Não foi possível sair. Tente novamente.')
+    try {
+      saveDemoSession(window.sessionStorage, null)
+    } catch {
+      // Encerrar também a sessão em memória se o armazenamento estiver indisponível.
+    }
     setUser(null)
   }
 
-  return <AuthContext.Provider value={{ user, loading, error, refresh, login, logout }}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={{ user, login, logout }}>{children}</AuthContext.Provider>
 }
-

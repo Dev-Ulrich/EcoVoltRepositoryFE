@@ -1,26 +1,13 @@
 import { createContext, useContext } from 'react'
-
-export type User = {
-  id: number
-  username: string
-  displayName: string
-  points: number
-  xp: number
-  completedActions: number
-  activeMissions: number
-  tier: string
-}
+import type { User } from '../types/user'
 
 type Auth = {
   user: User | null
-  loading: boolean
-  error: string
-  refresh: () => Promise<void>
-  login: (username: string, password: string) => Promise<void>
+  login: (email: string, password: string) => Promise<void>
   logout: () => Promise<void>
 }
-export const AuthContext = createContext<Auth | null>(null)
 
+export const AuthContext = createContext<Auth | null>(null)
 
 export function useAuth() {
   const context = useContext(AuthContext)

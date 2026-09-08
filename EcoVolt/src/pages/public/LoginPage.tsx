@@ -1,8 +1,10 @@
 import { ArrowLeft, Eye, EyeOff } from 'lucide-react'
-import { useState, type FormEvent } from 'react'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { Link, Navigate } from 'react-router-dom'
 
 import { useAuth } from '../../auth/useAuth'
+import { demoCredentials } from '../../data/mockUsers'
 import ecovoltLogoDark from '../../assets/ecovolt-logo-dark.png'
 import ecovoltLogo from '../../assets/ecovolt-logo.png'
 import Button from '../../components/common/Button'
@@ -10,26 +12,24 @@ import ThemeToggle from '../../components/common/ThemeToggle'
 
 const inputClasses = 'w-full rounded-xl border border-emerald-200 bg-white px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 dark:border-emerald-800 dark:bg-emerald-950 dark:text-white dark:placeholder:text-emerald-200/60'
 
+type LoginFormData = { email: string; password: string }
+
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [message, setMessage] = useState('')
 
-  const { user, loading, login } = useAuth()
-  const [submitting, setSubmitting] = useState(false)
+  const { user, login } = useAuth()
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LoginFormData>()
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    const fields = new FormData(event.currentTarget)
-    setSubmitting(true)
+  async function submitLogin(data: LoginFormData) {
     setMessage('')
     try {
-      await login(String(fields.get('username')), String(fields.get('password')))
+      await login(data.email, data.password)
     } catch (error) {
-      setMessage(error instanceof Error && error.message !== 'Failed to fetch' ? error.message : 'Não foi possível conectar. Tente novamente.')
-    } finally { setSubmitting(false) }
+      setMessage(error instanceof Error ? error.message : 'Não foi possível iniciar a demonstração.')
+    }
   }
 
-  if (loading) return <main className="p-10 text-center" role="status">Verificando seu acesso…</main>
   if (user) return <Navigate to="/app" replace />
 
   return (
@@ -52,19 +52,30 @@ function LoginPage() {
 
           <h1 id="login-title" className="mt-8 text-center text-3xl font-bold">Boas-vindas de volta!</h1>
           <p className="mt-3 text-center text-sm leading-relaxed text-slate-600 dark:text-emerald-100">
-            Entre na sua conta para acompanhar seu impacto sustentável.
+            Explore o dashboard com uma conta fictícia. Este acesso é uma demonstração, sem autenticação real.
           </p>
 
-          <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+          <div className="mt-5 rounded-xl bg-emerald-50 p-4 text-sm text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200">
+            <p className="font-bold">Dados públicos para demonstração</p>
+            <p className="mt-2 break-all">E-mail: {demoCredentials.email}</p>
+            <p className="mt-1 break-all">Senha: {demoCredentials.password}</p>
+          </div>
+
+          <form onSubmit={handleSubmit(submitLogin)} noValidate className="mt-8 space-y-5">
             <div>
-              <label htmlFor="login-username" className="mb-2 block text-sm font-semibold">Usuário</label>
-              <input id="login-username" name="username" type="text" autoComplete="username" required placeholder="Digite seu usuário" className={inputClasses} />
+              <label htmlFor="login-email" className="mb-2 block text-sm font-semibold">E-mail</label>
+              <input id="login-email" type="email" autoComplete="username" required placeholder="Digite o e-mail demonstrativo" className={inputClasses}
+                aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'email-error' : undefined}
+                {...register('email', { required: 'Informe o e-mail.', setValueAs: (value: string) => value.trim(), pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Informe um e-mail válido.' } })} />
+              {errors.email && <p id="email-error" role="alert" className="mt-2 text-sm text-red-700 dark:text-red-300">{errors.email.message}</p>}
             </div>
 
             <div>
               <label htmlFor="login-password" className="mb-2 block text-sm font-semibold">Senha</label>
               <div className="relative">
-                <input id="login-password" name="password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" required placeholder="Digite sua senha" className={`${inputClasses} pr-14`} />
+                <input id="login-password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" required placeholder="Digite sua senha" className={`${inputClasses} pr-14`}
+                  aria-invalid={Boolean(errors.password)} aria-describedby={errors.password ? 'password-error' : undefined}
+                  {...register('password', { required: 'Informe a senha demonstrativa.' })} />
                 <button
                   type="button"
                   onClick={() => setShowPassword((current) => !current)}
@@ -76,19 +87,20 @@ function LoginPage() {
                   {showPassword ? <EyeOff aria-hidden="true" size={20} /> : <Eye aria-hidden="true" size={20} />}
                 </button>
               </div>
+              {errors.password && <p id="password-error" role="alert" className="mt-2 text-sm text-red-700 dark:text-red-300">{errors.password.message}</p>}
             </div>
 
             <div className="flex justify-end">
               <button
                 type="button"
-                onClick={() => setMessage('Entre em contato com um administrador para alterar sua senha.')}
+                onClick={() => setMessage('Use a senha fictícia exibida acima. A demonstração não tem recuperação ou alteração de senha.')}
                 className="rounded px-1 py-2 text-sm font-semibold text-emerald-700 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-emerald-300"
               >
                 Esqueci minha senha
               </button>
             </div>
 
-            <Button type="submit" fullWidth disabled={submitting}>{submitting ? 'Entrando…' : 'Entrar'}</Button>
+            <Button type="submit" fullWidth disabled={isSubmitting}>{isSubmitting ? 'Entrando…' : 'Entrar'}</Button>
             {message && <p role="status" className="rounded-lg bg-emerald-50 p-3 text-sm text-emerald-800 dark:bg-emerald-900 dark:text-emerald-100">{message}</p>}
           </form>
         </section>

@@ -92,7 +92,7 @@ function HomePage() {
           <div>
             <p className="text-xs font-bold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">Uma jornada em construção</p>
             <h2 id="journey-title" className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Cada contribuição terá seu lugar.</h2>
-            <p className="mt-5 leading-relaxed text-slate-600 dark:text-emerald-100">Já é possível entrar na sua conta e conhecer o dashboard. Estamos preparando os próximos passos para registrar atitudes e acompanhar sua evolução.</p>
+            <p className="mt-5 leading-relaxed text-slate-600 dark:text-emerald-100">Já é possível conhecer o dashboard com uma conta e dados demonstrativos. Estamos preparando os próximos passos para registrar atitudes e acompanhar sua evolução.</p>
             <p className="mt-4 text-sm leading-relaxed text-slate-500 dark:text-emerald-200">Envio de ações, validações, missões, ranking e recompensas ainda não estão disponíveis.</p>
             <Link to="/como-funciona" className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-lg font-bold text-emerald-700 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-emerald-300">Entenda como vai funcionar <ArrowRight aria-hidden="true" size={18} /></Link>
           </div>
@@ -121,7 +121,7 @@ function HomePage() {
           <div aria-hidden="true" className="absolute -bottom-24 -left-24 -z-10 size-80 rounded-full border-[40px] border-emerald-800" />
           <Leaf aria-hidden="true" size={30} className="mx-auto text-emerald-300" />
           <h2 id="start-title" className="mt-5 text-3xl font-bold tracking-tight sm:text-4xl">O futuro começa com o que fazemos hoje.</h2>
-          <p className="mx-auto mt-4 max-w-xl leading-relaxed text-emerald-100">Conheça seu espaço no EcoVolt. Se ainda não tem uma conta, fale com a equipe para saber sobre o acesso.</p>
+          <p className="mx-auto mt-4 max-w-xl leading-relaxed text-emerald-100">Conheça seu espaço no EcoVolt usando os dados fictícios exibidos na página de login. O acesso é uma demonstração local.</p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link to={accountPath} className={`${linkClasses} bg-emerald-300 text-emerald-950 hover:bg-emerald-200 focus-visible:ring-offset-emerald-900`}>{accountLabel} <ArrowRight aria-hidden="true" size={18} /></Link>
             <Link to="/contato" className={`${linkClasses} border border-emerald-600 text-white hover:bg-emerald-800 focus-visible:ring-offset-emerald-900`}>Falar com a equipe</Link>

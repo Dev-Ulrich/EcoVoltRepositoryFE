@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import Card from '../../components/common/Card'
 
 const steps = [
-  { number: '01', title: 'Entre na sua conta', description: 'Use seu usuário e sua senha de acesso para conhecer o dashboard e acompanhar seus indicadores individuais.', icon: LogIn, available: true },
+  { number: '01', title: 'Entre na sua conta', description: 'Use o e-mail e a senha fictícios exibidos no login para conhecer o dashboard demonstrativo.', icon: LogIn, available: true },
   { number: '02', title: 'Transforme hábitos em ações', description: 'O próximo passo será registrar suas atitudes sustentáveis e enviar uma evidência do que você fez.', icon: Leaf, available: false },
   { number: '03', title: 'Acompanhe a validação', description: 'Você poderá acompanhar a análise de cada envio e conferir o resultado da sua ação na plataforma.', icon: ClipboardCheck, available: false },
   { number: '04', title: 'Veja sua evolução', description: 'Ações aprovadas farão parte da sua jornada, com pontos, experiência e novos desafios para continuar participando.', icon: Trophy, available: false },
@@ -17,7 +17,7 @@ const examples = [
 ]
 
 const questions = [
-  { title: 'Como consigo meu acesso?', answer: 'O acesso é feito com uma conta disponibilizada pela equipe EcoVolt. Se você ainda não tem usuário e senha, procure um administrador. Não é necessário usar um e-mail para entrar.' },
+  { title: 'Como consigo meu acesso?', answer: 'O e-mail e a senha de demonstração estão na página de login. O acesso e os indicadores são simulados no navegador, sem cadastro ou autenticação real.' },
   { title: 'Já posso enviar uma ação?', answer: 'Ainda não. O login e o dashboard estão disponíveis. O envio de ações, as validações, as missões, o ranking e as recompensas fazem parte das próximas etapas do projeto.' },
   { title: 'Qual é a diferença entre pontos e experiência?', answer: 'Os pontos representarão a pontuação das suas contribuições, enquanto a experiência (XP) acompanhará sua evolução de nível. As regras de concessão serão apresentadas junto com as funcionalidades de ações e missões.' },
 ]
