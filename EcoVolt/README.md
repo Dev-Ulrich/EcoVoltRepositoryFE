@@ -143,3 +143,19 @@ Fluxo conferido em Chromium com a versão de produção via preview:
 - Nenhuma requisição aos antigos endpoints de API ou erro JavaScript foi observado no fluxo desktop.
 
 Para repetir manualmente, execute `npm run dev` e percorra os cenários acima. Build, lint e testes locais também devem passar antes de integrar a alteração.
+
+## Etapa 5 — Dashboard demonstrativo
+
+- [x] Usuário, ações, missões e posição no ranking consumidos de `useDemoData()`.
+- [x] Pontos, XP, tier, missões e atividades simuladas apresentados com valores consistentes.
+- [x] Reutilização de `Card`, `Badge` e `ProgressBar`; novo `MissionCard` com props tipadas para reutilização na futura página de missões.
+- [x] Atalhos funcionais para missões/atividades dentro do dashboard e para Como funciona. Links para novas telas internas serão adicionados quando as rotas existirem.
+- [x] Mensagens distinguem pontos possíveis dos recebidos e explicam o reinício dos mocks.
+
+O cenário inicial exibe 115 pontos, 90 XP, uma ação aprovada, duas missões ativas, tier Bronze e posição #3 no ranking mensal do tier. Uma das três missões está concluída (33% do ciclo); os progressos individuais são 100%, 50% e 0%.
+
+XP é exibido como experiência acumulada. Não foi inventada uma regra de evolução de nível: as barras representam o progresso das missões, cujos valores já existem nos mocks. Tier e XP aparecem como indicadores diferentes.
+
+As atividades mostram até cinco ações, ordenadas por envio ou solicitação de revisão mais recente, incluindo data, status, pontuação, motivo de recusa e justificativa de revisão quando aplicável. Há estados vazios para ausência de ações ou missões. Novos envios e revisões aparecerão via contexto quando as respectivas telas forem implementadas.
+
+Validação: build, lint e testes locais passaram. No Chromium foram conferidos os totais, três missões, quatro status, barras de progresso e atalho para missões; não houve overflow horizontal em 390, 768 e 1440 pixels nos temas claro e escuro.
