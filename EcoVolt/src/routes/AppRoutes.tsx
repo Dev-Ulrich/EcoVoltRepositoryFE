@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import AppLayout from '../components/layout/AppLayout'
 import PublicLayout from '../components/layout/PublicLayout'
 import DashboardPage from '../pages/app/DashboardPage'
+import RankingPage from '../pages/app/RankingPage'
 import HomePage from '../pages/public/HomePage'
 import ComoFuncionaPage from '../pages/public/ComoFuncionaPage'
 import SobrePage from '../pages/public/SobrePage'
@@ -27,6 +28,7 @@ function AppRoutes() {
 
       <Route path="app" element={<AppLayout />}>
         <Route index element={<DashboardPage />} />
+        <Route path="ranking" element={<RankingPage />} />
       </Route>
     </Routes>
   )
