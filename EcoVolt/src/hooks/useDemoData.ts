@@ -3,13 +3,14 @@ import type { ActionId, SubmitActionInput, SustainableAction } from '../types/ac
 import type { Mission } from '../types/mission'
 import type { RankedEntry } from '../types/ranking'
 import type { Reward } from '../types/reward'
-import type { User } from '../types/user'
+import type { Tier, User } from '../types/user'
 
 export type DemoData = {
   user: User | null
   actions: readonly SustainableAction[]
   missions: readonly Mission[]
   ranking: readonly RankedEntry[]
+  getRankingByTier: (tier: Tier) => readonly RankedEntry[]
   rewards: readonly Reward[]
   getAction: (id: ActionId) => SustainableAction | undefined
   submitAction: (input: SubmitActionInput) => ActionId

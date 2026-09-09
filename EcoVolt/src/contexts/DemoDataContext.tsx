@@ -1,7 +1,7 @@
 import { useReducer, type ReactNode } from 'react'
 import { useAuth } from '../auth/useAuth'
 import { DemoDataContext } from '../hooks/useDemoData'
-import { createDemoState, createSubmission, demoReducer, selectDemoUser, selectRanking, validateReview } from '../data/demoState'
+import { createDemoState, createSubmission, demoReducer, selectDemoUser, selectRanking, selectRankingByTier, validateReview } from '../data/demoState'
 import type { ActionId, SubmitActionInput } from '../types/action'
 
 export function DemoDataProvider({ children }: { children: ReactNode }) {
@@ -28,6 +28,7 @@ export function DemoDataProvider({ children }: { children: ReactNode }) {
     <DemoDataContext.Provider value={{
       user: user ? selectDemoUser(state, user) : null,
       actions, missions, ranking: user ? selectRanking(state, user) : [],
+      getRankingByTier: tier => user ? selectRankingByTier(state, user, tier) : [],
       rewards: user ? state.rewards : [],
       getAction: id => actions.find(action => action.id === id),
       submitAction, requestReview,
