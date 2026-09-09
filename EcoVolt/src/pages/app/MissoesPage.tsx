@@ -1,15 +1,34 @@
-import { Info, Target } from 'lucide-react'
+import { Info, Search, Target } from 'lucide-react'
+import { useState } from 'react'
 
 import Card from '../../components/common/Card'
 import ProgressBar from '../../components/common/ProgressBar'
 import MissionCard from '../../components/missions/MissionCard'
+import {
+  missionDifficultyLabels,
+  missionStatusLabels,
+} from '../../data/mockMissions'
 import { useDemoData } from '../../hooks/useDemoData'
+import type { MissionDifficulty, MissionStatus } from '../../types/mission'
 
 const formatDate = (value: string) =>
   new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeZone: 'America/Sao_Paulo' }).format(new Date(value))
 
+const difficulties: MissionDifficulty[] = ['easy', 'medium', 'hard']
+const statuses: MissionStatus[] = ['pending', 'in_progress', 'completed']
+
+const filterButtonClass = (active: boolean) =>
+  `min-h-11 rounded-full border px-4 py-2 text-sm font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-emerald-950 ${
+    active
+      ? 'border-emerald-700 bg-emerald-700 text-white dark:border-emerald-400 dark:bg-emerald-400 dark:text-emerald-950'
+      : 'border-emerald-200 bg-white text-emerald-800 hover:bg-emerald-100 dark:border-emerald-800 dark:bg-emerald-900/20 dark:text-emerald-200 dark:hover:bg-emerald-900'
+  }`
+
 function MissoesPage() {
   const { user, missions } = useDemoData()
+  const [difficultyFilter, setDifficultyFilter] = useState<MissionDifficulty | 'all'>('all')
+  const [statusFilter, setStatusFilter] = useState<MissionStatus | 'all'>('all')
+
   if (!user) return null
 
   const completedMissions = missions.filter(mission => mission.status === 'completed')
@@ -19,6 +38,19 @@ function MissoesPage() {
   const earnedPoints = completedMissions.reduce((total, mission) => total + mission.points, 0)
   const earnedXp = completedMissions.reduce((total, mission) => total + mission.xp, 0)
   const cycleEndsAt = missions[0]?.endsAt
+
+  const filteredMissions = missions.filter(mission => {
+    const matchesDifficulty = difficultyFilter === 'all' || mission.difficulty === difficultyFilter
+    const matchesStatus = statusFilter === 'all' || mission.status === statusFilter
+    return matchesDifficulty && matchesStatus
+  })
+
+  const hasActiveFilters = difficultyFilter !== 'all' || statusFilter !== 'all'
+
+  const clearFilters = () => {
+    setDifficultyFilter('all')
+    setStatusFilter('all')
+  }
 
   return (
     <section aria-labelledby="missoes-title">
@@ -76,22 +108,94 @@ function MissoesPage() {
       </Card>
 
       <section aria-labelledby="missoes-lista-title" className="mt-10">
-        <h2 id="missoes-lista-title" className="text-2xl font-bold">Suas missões</h2>
-        <p className="mt-2 text-sm text-slate-500 dark:text-emerald-200">
-          {missions.length} {missions.length === 1 ? 'missão disponível' : 'missões disponíveis'} nesta demonstração.
-        </p>
-
-        {missions.length === 0 ? (
-          <Card className="mt-5 shadow-sm">
-            <p>Nenhuma missão disponível nesta demonstração.</p>
-          </Card>
-        ) : (
-          <div className="mt-5 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-            {missions.map(mission => (
-              <MissionCard key={mission.id} mission={mission} />
-            ))}
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <h2 id="missoes-lista-title" className="text-2xl font-bold">Suas missões</h2>
+            <p role="status" className="mt-2 text-sm text-slate-500 dark:text-emerald-200">
+              {filteredMissions.length}{' '}
+              {filteredMissions.length === 1 ? 'resultado' : 'resultados'}
+              {hasActiveFilters ? ' com os filtros atuais' : ' nesta demonstração'}.
+            </p>
           </div>
-        )}
+          {hasActiveFilters && (
+            <button
+              type="button"
+              onClick={clearFilters}
+              className="min-h-11 rounded-lg border border-emerald-300 bg-white px-4 py-2 text-sm font-semibold text-emerald-800 transition hover:bg-emerald-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200 dark:hover:bg-emerald-900"
+            >
+              Limpar filtros
+            </button>
+          )}
+        </div>
+
+        <div className="mt-6 space-y-5">
+          <fieldset>
+            <legend className="text-sm font-bold text-slate-700 dark:text-emerald-100">Dificuldade</legend>
+            <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label="Filtrar por dificuldade">
+              <button type="button" aria-pressed={difficultyFilter === 'all'} onClick={() => setDifficultyFilter('all')} className={filterButtonClass(difficultyFilter === 'all')}>
+                Todas
+              </button>
+              {difficulties.map(difficulty => (
+                <button
+                  key={difficulty}
+                  type="button"
+                  aria-pressed={difficultyFilter === difficulty}
+                  onClick={() => setDifficultyFilter(difficulty)}
+                  className={filterButtonClass(difficultyFilter === difficulty)}
+                >
+                  {missionDifficultyLabels[difficulty]}
+                </button>
+              ))}
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend className="text-sm font-bold text-slate-700 dark:text-emerald-100">Status</legend>
+            <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label="Filtrar por status">
+              <button type="button" aria-pressed={statusFilter === 'all'} onClick={() => setStatusFilter('all')} className={filterButtonClass(statusFilter === 'all')}>
+                Todos
+              </button>
+              {statuses.map(status => (
+                <button
+                  key={status}
+                  type="button"
+                  aria-pressed={statusFilter === status}
+                  onClick={() => setStatusFilter(status)}
+                  className={filterButtonClass(statusFilter === status)}
+                >
+                  {missionStatusLabels[status]}
+                </button>
+              ))}
+            </div>
+          </fieldset>
+        </div>
+
+        <div id="missoes-results" className="mt-6" aria-live="polite">
+          {filteredMissions.length === 0 ? (
+            <div className="rounded-2xl border border-dashed border-emerald-300 p-8 text-center dark:border-emerald-700">
+              <Search aria-hidden="true" className="mx-auto text-emerald-600 dark:text-emerald-400" size={28} />
+              <h3 className="mt-4 text-lg font-bold">Nenhuma missão encontrada</h3>
+              <p className="mt-2 text-sm text-slate-600 dark:text-emerald-100">
+                Nenhum resultado para a combinação de dificuldade e status selecionada.
+              </p>
+              {hasActiveFilters && (
+                <button
+                  type="button"
+                  onClick={clearFilters}
+                  className="mt-5 min-h-11 rounded-lg bg-emerald-700 px-4 py-3 font-semibold text-white hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:bg-emerald-400 dark:text-emerald-950 dark:hover:bg-emerald-300"
+                >
+                  Limpar filtros
+                </button>
+              )}
+            </div>
+          ) : (
+            <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+              {filteredMissions.map(mission => (
+                <MissionCard key={mission.id} mission={mission} />
+              ))}
+            </div>
+          )}
+        </div>
       </section>
     </section>
   )
