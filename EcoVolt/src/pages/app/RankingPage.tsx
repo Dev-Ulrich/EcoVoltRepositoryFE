@@ -60,7 +60,7 @@ function RankingPage() {
         </Card>
       </div>
 
-      <Card className="mt-6 shadow-sm">
+      <Card className="mt-6 shadow-sm" aria-live="polite">
         {entries.length === 0 ? (
           <div className="py-8 text-center">
             <Award aria-hidden="true" className="mx-auto text-emerald-600 dark:text-emerald-400" size={30} />
