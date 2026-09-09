@@ -4,7 +4,7 @@ import { NavLink, useLocation } from 'react-router-dom'
 const navigationItems = [
   { label: 'Enviar ação', icon: Leaf, path: null },
   { label: 'Validações', icon: ClipboardCheck, path: null },
-  { label: 'Missões', icon: Target, path: null },
+  { label: 'Missões', icon: Target, path: '/app/missoes' },
   { label: 'Ranking', icon: Award, path: '/app/ranking' },
   { label: 'Recompensas', icon: Gift, path: null },
   { label: 'Perfil', icon: UserRound, path: null },

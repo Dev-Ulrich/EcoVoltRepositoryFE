@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import AppLayout from '../components/layout/AppLayout'
 import PublicLayout from '../components/layout/PublicLayout'
 import DashboardPage from '../pages/app/DashboardPage'
+import MissoesPage from '../pages/app/MissoesPage'
 import RankingPage from '../pages/app/RankingPage'
 import HomePage from '../pages/public/HomePage'
 import ComoFuncionaPage from '../pages/public/ComoFuncionaPage'
@@ -28,6 +29,7 @@ function AppRoutes() {
 
       <Route path="app" element={<AppLayout />}>
         <Route index element={<DashboardPage />} />
+        <Route path="missoes" element={<MissoesPage />} />
         <Route path="ranking" element={<RankingPage />} />
       </Route>
     </Routes>
