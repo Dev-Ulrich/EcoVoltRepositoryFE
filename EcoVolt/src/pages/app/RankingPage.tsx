@@ -51,12 +51,12 @@ function RankingPage() {
           </div>
         </Card>
 
-        <Card className="border-emerald-700 bg-emerald-800 text-white shadow-sm dark:border-emerald-500 dark:bg-emerald-900">
-          <div className="flex items-center gap-3"><Trophy aria-hidden="true" className="text-emerald-300" /><h2 className="text-lg font-bold">Seu destaque</h2></div>
+        <Card className="border-emerald-300 bg-white text-slate-900 shadow-sm dark:border-emerald-500 dark:bg-emerald-900 dark:text-white">
+          <div className="flex items-center gap-3"><Trophy aria-hidden="true" className="text-emerald-700 dark:text-emerald-300" /><h2 className="text-lg font-bold">Seu destaque</h2></div>
           <div className="mt-5 flex items-center justify-between gap-3"><span className="break-words font-semibold">{user.displayName}</span><TierBadge tier={user.tier} /></div>
-          <p className="mt-5 text-3xl font-black">{user.points.toLocaleString('pt-BR')} <span className="text-base font-semibold text-emerald-200">pontos</span></p>
-          <p className="mt-3 text-sm text-emerald-100">{currentRanking ? `Posição #${currentRanking.position} no tier ${user.tier}.` : 'Sem posição registrada no ranking demonstrativo.'}</p>
-          {selectedTier !== user.tier && <p className="mt-3 text-xs text-emerald-200">O filtro mostra o tier {selectedTier}; seus pontos continuam os do seu perfil.</p>}
+          <p className="mt-5 text-3xl font-black">{user.points.toLocaleString('pt-BR')} <span className="text-base font-semibold text-emerald-700 dark:text-emerald-200">pontos</span></p>
+          <p className="mt-3 text-sm text-slate-600 dark:text-emerald-100">{currentRanking ? `Posição #${currentRanking.position} no tier ${user.tier}.` : 'Sem posição registrada no ranking demonstrativo.'}</p>
+          {selectedTier !== user.tier && <p className="mt-3 text-xs text-slate-600 dark:text-emerald-200">O filtro mostra o tier {selectedTier}; seus pontos continuam os do seu perfil.</p>}
         </Card>
       </div>
 

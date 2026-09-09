@@ -1,3 +1,11 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root:not([data-theme="dark"]) .text-slate-500 {
+	color: rgb(71 85 105);
+}
+
+:root:not([data-theme="dark"]) .text-slate-600 {
+	color: rgb(51 65 85);
+}
