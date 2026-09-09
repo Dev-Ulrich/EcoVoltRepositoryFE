@@ -79,25 +79,25 @@ function MissoesPage() {
           {cycleEndsAt ? <> Prazo ilustrativo até <time dateTime={cycleEndsAt}>{formatDate(cycleEndsAt)}</time>.</> : null}
         </p>
 
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <dl className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <div>
-            <p className="text-sm font-medium text-slate-600 dark:text-emerald-100">Concluídas</p>
-            <p className="mt-1 text-3xl font-bold">{completedMissions.length}</p>
+            <dt className="text-sm font-medium text-slate-600 dark:text-emerald-100">Concluídas</dt>
+            <dd className="mt-1 text-3xl font-bold">{completedMissions.length}</dd>
           </div>
           <div>
-            <p className="text-sm font-medium text-slate-600 dark:text-emerald-100">Em progresso</p>
-            <p className="mt-1 text-3xl font-bold">{inProgressMissions.length}</p>
+            <dt className="text-sm font-medium text-slate-600 dark:text-emerald-100">Em progresso</dt>
+            <dd className="mt-1 text-3xl font-bold">{inProgressMissions.length}</dd>
           </div>
           <div>
-            <p className="text-sm font-medium text-slate-600 dark:text-emerald-100">Pendentes</p>
-            <p className="mt-1 text-3xl font-bold">{pendingMissions.length}</p>
+            <dt className="text-sm font-medium text-slate-600 dark:text-emerald-100">Pendentes</dt>
+            <dd className="mt-1 text-3xl font-bold">{pendingMissions.length}</dd>
           </div>
           <div>
-            <p className="text-sm font-medium text-slate-600 dark:text-emerald-100">Recebidos no ciclo</p>
-            <p className="mt-1 text-3xl font-bold">{earnedPoints}</p>
-            <p className="mt-1 text-sm text-slate-500 dark:text-emerald-200">{earnedXp} XP das missões concluídas</p>
+            <dt className="text-sm font-medium text-slate-600 dark:text-emerald-100">Recebidos no ciclo</dt>
+            <dd className="mt-1 text-3xl font-bold">{earnedPoints}</dd>
+            <dd className="mt-1 text-sm text-slate-500 dark:text-emerald-200">{earnedXp} XP das missões concluídas</dd>
           </div>
-        </div>
+        </dl>
 
         <div className="mt-6 border-t border-emerald-100 pt-5 dark:border-emerald-800">
           <ProgressBar value={missionProgress} label="Missões concluídas no ciclo demonstrativo" />
@@ -108,71 +108,90 @@ function MissoesPage() {
       </Card>
 
       <section aria-labelledby="missoes-lista-title" className="mt-10">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <h2 id="missoes-lista-title" className="text-2xl font-bold">Suas missões</h2>
-            <p role="status" className="mt-2 text-sm text-slate-500 dark:text-emerald-200">
-              {filteredMissions.length}{' '}
-              {filteredMissions.length === 1 ? 'resultado' : 'resultados'}
-              {hasActiveFilters ? ' com os filtros atuais' : ' nesta demonstração'}.
-            </p>
+        <h2 id="missoes-lista-title" className="text-2xl font-bold">Suas missões</h2>
+        <p className="mt-2 max-w-2xl text-sm text-slate-500 dark:text-emerald-200">
+          Combine dificuldade e status para explorar a lista. O resumo acima continua considerando todas as missões.
+        </p>
+
+        <Card className="mt-5 shadow-sm">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div className="space-y-5">
+              <fieldset>
+                <legend className="text-sm font-bold text-slate-700 dark:text-emerald-100">Dificuldade</legend>
+                <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label="Filtrar por dificuldade">
+                  <button
+                    type="button"
+                    aria-pressed={difficultyFilter === 'all'}
+                    aria-controls="missoes-results"
+                    onClick={() => setDifficultyFilter('all')}
+                    className={filterButtonClass(difficultyFilter === 'all')}
+                  >
+                    Todas
+                  </button>
+                  {difficulties.map(difficulty => (
+                    <button
+                      key={difficulty}
+                      type="button"
+                      aria-pressed={difficultyFilter === difficulty}
+                      aria-controls="missoes-results"
+                      onClick={() => setDifficultyFilter(difficulty)}
+                      className={filterButtonClass(difficultyFilter === difficulty)}
+                    >
+                      {missionDifficultyLabels[difficulty]}
+                    </button>
+                  ))}
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend className="text-sm font-bold text-slate-700 dark:text-emerald-100">Status</legend>
+                <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label="Filtrar por status">
+                  <button
+                    type="button"
+                    aria-pressed={statusFilter === 'all'}
+                    aria-controls="missoes-results"
+                    onClick={() => setStatusFilter('all')}
+                    className={filterButtonClass(statusFilter === 'all')}
+                  >
+                    Todos
+                  </button>
+                  {statuses.map(status => (
+                    <button
+                      key={status}
+                      type="button"
+                      aria-pressed={statusFilter === status}
+                      aria-controls="missoes-results"
+                      onClick={() => setStatusFilter(status)}
+                      className={filterButtonClass(statusFilter === status)}
+                    >
+                      {missionStatusLabels[status]}
+                    </button>
+                  ))}
+                </div>
+              </fieldset>
+            </div>
+
+            {hasActiveFilters && (
+              <button
+                type="button"
+                onClick={clearFilters}
+                className="min-h-11 shrink-0 self-start rounded-lg border border-emerald-300 bg-white px-4 py-2 text-sm font-semibold text-emerald-800 transition hover:bg-emerald-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200 dark:hover:bg-emerald-900"
+              >
+                Limpar filtros
+              </button>
+            )}
           </div>
-          {hasActiveFilters && (
-            <button
-              type="button"
-              onClick={clearFilters}
-              className="min-h-11 rounded-lg border border-emerald-300 bg-white px-4 py-2 text-sm font-semibold text-emerald-800 transition hover:bg-emerald-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200 dark:hover:bg-emerald-900"
-            >
-              Limpar filtros
-            </button>
-          )}
-        </div>
+        </Card>
 
-        <div className="mt-6 space-y-5">
-          <fieldset>
-            <legend className="text-sm font-bold text-slate-700 dark:text-emerald-100">Dificuldade</legend>
-            <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label="Filtrar por dificuldade">
-              <button type="button" aria-pressed={difficultyFilter === 'all'} onClick={() => setDifficultyFilter('all')} className={filterButtonClass(difficultyFilter === 'all')}>
-                Todas
-              </button>
-              {difficulties.map(difficulty => (
-                <button
-                  key={difficulty}
-                  type="button"
-                  aria-pressed={difficultyFilter === difficulty}
-                  onClick={() => setDifficultyFilter(difficulty)}
-                  className={filterButtonClass(difficultyFilter === difficulty)}
-                >
-                  {missionDifficultyLabels[difficulty]}
-                </button>
-              ))}
-            </div>
-          </fieldset>
+        <p role="status" className="mt-5 text-sm font-semibold text-slate-600 dark:text-emerald-100">
+          {filteredMissions.length}{' '}
+          {filteredMissions.length === 1 ? 'resultado' : 'resultados'}
+          {hasActiveFilters ? ' com os filtros atuais' : ' nesta demonstração'}.
+        </p>
 
-          <fieldset>
-            <legend className="text-sm font-bold text-slate-700 dark:text-emerald-100">Status</legend>
-            <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label="Filtrar por status">
-              <button type="button" aria-pressed={statusFilter === 'all'} onClick={() => setStatusFilter('all')} className={filterButtonClass(statusFilter === 'all')}>
-                Todos
-              </button>
-              {statuses.map(status => (
-                <button
-                  key={status}
-                  type="button"
-                  aria-pressed={statusFilter === status}
-                  onClick={() => setStatusFilter(status)}
-                  className={filterButtonClass(statusFilter === status)}
-                >
-                  {missionStatusLabels[status]}
-                </button>
-              ))}
-            </div>
-          </fieldset>
-        </div>
-
-        <div id="missoes-results" className="mt-6" aria-live="polite">
+        <div id="missoes-results" className="mt-4" aria-live="polite">
           {filteredMissions.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-emerald-300 p-8 text-center dark:border-emerald-700">
+            <div className="rounded-2xl border border-dashed border-emerald-300 p-6 text-center sm:p-8 dark:border-emerald-700">
               <Search aria-hidden="true" className="mx-auto text-emerald-600 dark:text-emerald-400" size={28} />
               <h3 className="mt-4 text-lg font-bold">Nenhuma missão encontrada</h3>
               <p className="mt-2 text-sm text-slate-600 dark:text-emerald-100">
@@ -189,11 +208,13 @@ function MissoesPage() {
               )}
             </div>
           ) : (
-            <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+            <ul className="grid list-none gap-5 p-0 sm:grid-cols-2 xl:grid-cols-3">
               {filteredMissions.map(mission => (
-                <MissionCard key={mission.id} mission={mission} />
+                <li key={mission.id} className="min-w-0">
+                  <MissionCard mission={mission} />
+                </li>
               ))}
-            </div>
+            </ul>
           )}
         </div>
       </section>

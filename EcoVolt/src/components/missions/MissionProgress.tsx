@@ -8,7 +8,7 @@ function MissionProgress({ mission }: { mission: Mission }) {
   return (
     <div>
       <ProgressBar value={percentage} label={`Progresso: ${mission.title}`} />
-      <p className="mt-2 text-sm text-slate-500 dark:text-emerald-200">
+      <p className="mt-2 break-words text-sm text-slate-500 dark:text-emerald-200">
         {current} de {target} {unit}
       </p>
     </div>
