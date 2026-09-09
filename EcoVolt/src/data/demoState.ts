@@ -74,11 +74,15 @@ export function selectDemoUser(state: DemoState, user: User): User {
   }
 }
 
-export function selectRanking(state: DemoState, user: User): RankedEntry[] {
+export function selectRankingByTier(state: DemoState, user: User, tier: User['tier']): RankedEntry[] {
   const points = selectDemoUser(state, user).points
   return state.ranking
-    .filter(entry => entry.period === 'monthly' && entry.tier === user.tier)
+    .filter(entry => entry.period === 'monthly' && entry.tier === tier)
     .map(entry => entry.userId === user.id ? { ...entry, points } : { ...entry })
     .sort((a, b) => b.points - a.points || a.userId - b.userId)
     .map((entry, index) => ({ ...entry, position: index + 1 }))
+}
+
+export function selectRanking(state: DemoState, user: User): RankedEntry[] {
+  return selectRankingByTier(state, user, user.tier)
 }
