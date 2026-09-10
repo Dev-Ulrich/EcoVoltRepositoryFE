@@ -8,7 +8,7 @@ type RewardBalanceProps = {
 
 function RewardBalance({ points }: RewardBalanceProps) {
   return (
-    <Card className="border-emerald-700 bg-emerald-700 text-white shadow-md dark:border-emerald-500 dark:bg-emerald-800">
+    <Card className="border-emerald-700 bg-emerald-700 !text-white shadow-md dark:border-emerald-500 dark:bg-emerald-800">
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="text-sm font-semibold text-emerald-100">Seu saldo demonstrativo</p>
