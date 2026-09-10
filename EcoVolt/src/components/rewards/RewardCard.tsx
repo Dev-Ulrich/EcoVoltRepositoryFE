@@ -32,8 +32,8 @@ function RewardCard({ reward }: RewardCardProps) {
         </div>
         <Badge variant={statusVariants[reward.status]}>{statusLabels[reward.status]}</Badge>
       </div>
-      <h3 className="mt-5 text-xl font-bold">{reward.title}</h3>
-      <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-600 dark:text-emerald-100">{reward.description}</p>
+      <h3 className="mt-5 break-words text-xl font-bold">{reward.title}</h3>
+      <p className="mt-2 flex-1 break-words text-sm leading-relaxed text-slate-600 dark:text-emerald-100">{reward.description}</p>
       <div className="mt-5 border-t border-emerald-100 pt-4 dark:border-emerald-800">
         <p className="text-sm font-semibold">Requisito</p>
         <p className="mt-1 text-sm text-slate-600 dark:text-emerald-100">{reward.requirement}</p>

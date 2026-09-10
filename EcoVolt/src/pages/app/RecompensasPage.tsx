@@ -74,6 +74,7 @@ function RecompensasPage() {
           ))}
         </div>
 
+        <div aria-live="polite" aria-atomic="true">
         {catalogRewards.length === 0 ? (
           <Card className="mt-5 shadow-sm">
             <div className="flex flex-col items-center px-4 py-8 text-center">
@@ -87,6 +88,7 @@ function RecompensasPage() {
             {catalogRewards.map(reward => <RewardCard key={reward.id} reward={reward} />)}
           </div>
         )}
+        </div>
       </section>
     </section>
   )
