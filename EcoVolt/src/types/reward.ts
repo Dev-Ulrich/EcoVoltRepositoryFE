@@ -6,6 +6,7 @@ export type Reward = {
   id: RewardId
   title: string
   description: string
+  isFeatured?: boolean
   status: RewardStatus
   pointsCost: number
   requirement: string
