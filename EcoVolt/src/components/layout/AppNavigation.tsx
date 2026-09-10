@@ -6,7 +6,7 @@ const navigationItems = [
   { label: 'Validações', icon: ClipboardCheck, path: null },
   { label: 'Missões', icon: Target, path: null },
   { label: 'Ranking', icon: Award, path: '/app/ranking' },
-  { label: 'Recompensas', icon: Gift, path: null },
+  { label: 'Recompensas', icon: Gift, path: '/app/recompensas' },
   { label: 'Perfil', icon: UserRound, path: null },
 ]
 
