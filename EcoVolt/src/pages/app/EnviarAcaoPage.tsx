@@ -99,7 +99,7 @@ export default function EnviarAcaoPage() {
               ))}
             </select>
             {errors.category && (
-              <p id="category-error" role="alert">
+              <p id="category-error" role="alert" className="mt-2 text-sm text-red-700 dark:text-red-300">
                 {errors.category.message}
               </p>
             )}
@@ -140,7 +140,7 @@ export default function EnviarAcaoPage() {
             <p id="description-help" className="mt-2 text-sm">
               De 10 a 2.000 caracteres. Conte o que você fez.
             </p>
-            <p id="description-error" role="alert">
+            <p id="description-error" role="alert" className="mt-2 text-sm text-red-700 dark:text-red-300">
               {errors.description?.message}
             </p>
           </div>
@@ -204,11 +204,11 @@ export default function EnviarAcaoPage() {
                 </button>
               </div>
             )}
-            <p id="evidence-error" role="alert">
+            <p id="evidence-error" role="alert" className="mt-2 text-sm text-red-700 dark:text-red-300">
               {errors.evidence?.message}
             </p>
           </div>
-          {message && <p role="alert">{message}</p>}
+          {message && <p role="alert" className="mt-2 text-sm text-red-700 dark:text-red-300">{message}</p>}
           <div className="flex flex-wrap items-center gap-4">
             <Button type="submit" disabled={isSubmitting}>
               {isSubmitting ? 'Registrando…' : 'Enviar para validação'}

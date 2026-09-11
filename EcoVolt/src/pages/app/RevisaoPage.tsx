@@ -81,10 +81,10 @@ export default function RevisaoPage() {
             Explique o contexto em 10 a 2.000 caracteres. O pedido é local e não
             será enviado a um avaliador.
           </p>
-          <p id="review-error" role="alert">
+          <p id="review-error" role="alert" className="mt-2 text-sm text-red-700 dark:text-red-300">
             {errors.justification?.message}
           </p>
-          {errors.root && <p role="alert">{errors.root.message}</p>}
+          {errors.root && <p role="alert" className="mt-2 text-sm text-red-700 dark:text-red-300">{errors.root.message}</p>}
           <div className="flex flex-wrap gap-4">
             <Button type="submit" disabled={isSubmitting}>
               Enviar revisão
