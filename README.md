@@ -340,16 +340,16 @@ Capturas da versão React atual. O dashboard utiliza o cenário inicial da conta
 
 ### Página inicial
 
-![Página inicial do EcoVolt com apresentação da proposta e chamadas para conhecer a plataforma](docs/images/home.jpg)
+![Página inicial do EcoVolt com apresentação da proposta e chamadas para conhecer a plataforma](EcoVolt/docs/images/home.jpg)
 
 ### Dashboard
 
-![Dashboard demonstrativo com 115 pontos, 90 XP, missões e atividades recentes](docs/images/dashboard.jpg)
+![Dashboard demonstrativo com 115 pontos, 90 XP, missões e atividades recentes](EcoVolt/docs/images/dashboard.jpg)
 
 ### Aplicativo no celular
 
 <p align="center">
-  <img src="docs/images/app-mobile.jpg" alt="Dashboard do EcoVolt no celular, com navegação inferior" width="320" />
+  <img src="EcoVolt/docs/images/app-mobile.jpg" alt="Dashboard do EcoVolt no celular, com navegação inferior" width="320" />
 </p>
 
 <a id="roadmap"></a>
@@ -391,10 +391,10 @@ Projeto desenvolvido pela equipe EcoVolt — **FIAP · Turma 1TDSPW**.
 
 | Foto | Integrante | RM | Turma | Perfis |
 |---|---|---|---|---|
-| <img src="src/assets/team/Victor-Ulrich.png" alt="Foto de Victor Ulrich Costa Alves da Silva" width="90" /> | Victor Ulrich Costa Alves da Silva | 568634 | 1TDSPW | [GitHub](https://github.com/Dev-Ulrich) · [LinkedIn](https://www.linkedin.com/in/victorulrichcosta/) |
-| <img src="src/assets/team/Matheus-Pereira.jpeg" alt="Foto de Matheus Pereira da Silva Franco" width="90" /> | Matheus Pereira da Silva Franco | 569315 | 1TDSPW | [GitHub](https://github.com/MatheusPSFranco) · [LinkedIn](https://www.linkedin.com/in/matheus-pereira-da-silva-franco-b7a7b03b7/) |
-| <img src="src/assets/team/Matheus-Luca.png" alt="Foto de Matheus Luca Fouad Barragão" width="90" /> | Matheus Luca Fouad Barragão | 572228 | 1TDSPW | [GitHub](https://github.com/MatheusLuca) · [LinkedIn](https://www.linkedin.com/in/matheusbarragao/) |
-| <img src="src/assets/team/Arthur-da-Silva.jpg" alt="Foto de Arthur da Silva Santana" width="90" /> | Arthur da Silva Santana | 571075 | 1TDSPW | [GitHub](https://github.com/arthursantana1521) · [LinkedIn](https://www.linkedin.com/in/arthur-da-silva-santana-a6061a310/) |
+| <img src="EcoVolt/src/assets/team/Victor-Ulrich.png" alt="Foto de Victor Ulrich Costa Alves da Silva" width="90" /> | Victor Ulrich Costa Alves da Silva | 568634 | 1TDSPW | [GitHub](https://github.com/Dev-Ulrich) · [LinkedIn](https://www.linkedin.com/in/victorulrichcosta/) |
+| <img src="EcoVolt/src/assets/team/Matheus-Pereira.jpeg" alt="Foto de Matheus Pereira da Silva Franco" width="90" /> | Matheus Pereira da Silva Franco | 569315 | 1TDSPW | [GitHub](https://github.com/MatheusPSFranco) · [LinkedIn](https://www.linkedin.com/in/matheus-pereira-da-silva-franco-b7a7b03b7/) |
+| <img src="EcoVolt/src/assets/team/Matheus-Luca.png" alt="Foto de Matheus Luca Fouad Barragão" width="90" /> | Matheus Luca Fouad Barragão | 572228 | 1TDSPW | [GitHub](https://github.com/MatheusLuca) · [LinkedIn](https://www.linkedin.com/in/matheusbarragao/) |
+| <img src="EcoVolt/src/assets/team/Arthur-da-Silva.jpg" alt="Foto de Arthur da Silva Santana" width="90" /> | Arthur da Silva Santana | 571075 | 1TDSPW | [GitHub](https://github.com/arthursantana1521) · [LinkedIn](https://www.linkedin.com/in/arthur-da-silva-santana-a6061a310/) |
 
 <a id="contato-licenca"></a>
 ## ✉️ Contato e licença
