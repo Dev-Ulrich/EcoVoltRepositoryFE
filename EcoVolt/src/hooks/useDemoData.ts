@@ -14,6 +14,7 @@ export type DemoData = {
   rewards: readonly Reward[]
   getAction: (id: ActionId) => SustainableAction | undefined
   submitAction: (input: SubmitActionInput) => ActionId
+  resolveAction: (id: ActionId, approved: boolean, reason?: string) => void
   requestReview: (id: ActionId, justification: string) => void
 }
 

@@ -1,4 +1,10 @@
-import { Route, Routes } from 'react-router-dom'
+import EnviarAcaoPage from '../pages/app/EnviarAcaoPage'
+import ValidacoesPage from '../pages/app/ValidacoesPage'
+import DetalhesAcaoPage from '../pages/app/DetalhesAcaoPage'
+import RevisaoPage from '../pages/app/RevisaoPage'
+import PerfilPage from '../pages/app/PerfilPage'
+import { useEffect } from 'react'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import AppLayout from '../components/layout/AppLayout'
 import PublicLayout from '../components/layout/PublicLayout'
 import DashboardPage from '../pages/app/DashboardPage'
@@ -15,6 +21,8 @@ import QuemSomosPage from '../pages/public/QuemSomosPage'
 import LoginPage from '../pages/public/LoginPage'
 
 function AppRoutes() {
+  const { pathname } = useLocation()
+  useEffect(() => { window.scrollTo(0, 0) }, [pathname])
   return (
     <Routes>
       <Route path="login" element={<LoginPage />} />
@@ -30,6 +38,12 @@ function AppRoutes() {
 
       <Route path="app" element={<AppLayout />}>
         <Route index element={<DashboardPage />} />
+        <Route path="enviar-acao" element={<EnviarAcaoPage />} />
+        <Route path="validacoes" element={<ValidacoesPage />} />
+        <Route path="validacoes/:acaoId" element={<DetalhesAcaoPage />} />
+        <Route path="validacoes/:acaoId/revisao" element={<RevisaoPage />} />
+        <Route path="perfil" element={<PerfilPage />} />
+        <Route path="*" element={<NotFoundPage />} />
         <Route path="missoes" element={<MissoesPage />} />
         <Route path="ranking" element={<RankingPage />} />
         <Route path="recompensas" element={<RecompensasPage />} />

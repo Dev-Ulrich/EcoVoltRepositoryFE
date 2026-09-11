@@ -108,8 +108,8 @@ function SobrePage() {
               e ao envolvimento das pessoas.
             </p>
             <p className="mt-4 leading-relaxed text-slate-600 dark:text-emerald-100">
-              Estamos construindo a plataforma por etapas. O envio de ações, as validações,
-              as missões e as recompensas fazem parte da evolução planejada do projeto.
+              Esta versão apresenta envio de ações, validações, missões e recompensas
+              em uma demonstração de Front-End com dados locais.
               Queremos aprender com cada etapa e dar forma a uma experiência simples de participar.
             </p>
             <Link to="/quem-somos" className="mt-6 inline-flex items-center gap-2 rounded-lg py-2 font-bold text-emerald-700 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-emerald-300">

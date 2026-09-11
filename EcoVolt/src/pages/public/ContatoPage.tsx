@@ -6,6 +6,7 @@ import lucaPhoto from '../../assets/team/Matheus-Luca.png'
 import pereiraPhoto from '../../assets/team/Matheus-Pereira.jpeg'
 import victorPhoto from '../../assets/team/Victor-Ulrich.png'
 import Card from '../../components/common/Card'
+import ContactForm from '../../components/common/ContactForm'
 
 const contacts = [
   { name: 'Victor Ulrich', photo: victorPhoto, photoPosition: 'object-[center_25%]', url: 'https://www.linkedin.com/in/victorulrichcosta/' },
@@ -60,13 +61,18 @@ function ContatoPage() {
           </div>
         </section>
 
+        <section aria-labelledby="contact-form-title" className="mt-12 rounded-3xl border border-emerald-200 bg-white p-6 sm:p-8 dark:border-emerald-800 dark:bg-emerald-900/20">
+          <h2 id="contact-form-title" className="text-2xl font-bold">Envie uma mensagem de demonstração</h2>
+          <p className="mb-6 mt-3 text-sm">Este formulário apenas valida os campos localmente. Para falar com a equipe, use os perfis acima.</p>
+          <ContactForm />
+        </section>
         <section aria-labelledby="resources-title" className="mt-16">
           <h2 id="resources-title" className="text-3xl font-bold">Outros caminhos para encontrar o que precisa</h2>
           <div className="mt-8 grid gap-6 md:grid-cols-3">
             <Card className="flex flex-col shadow-sm">
               <CircleHelp aria-hidden="true" size={28} className="text-emerald-700 dark:text-emerald-400" />
               <h3 className="mt-5 text-xl font-bold">Perguntas frequentes</h3>
-              <p className="mb-6 mt-3 text-sm leading-relaxed text-slate-600 dark:text-emerald-100">Consulte respostas sobre acesso, ações sustentáveis e funcionalidades planejadas.</p>
+              <p className="mb-6 mt-3 text-sm leading-relaxed text-slate-600 dark:text-emerald-100">Consulte respostas sobre acesso, ações sustentáveis e funcionalidades da demonstração.</p>
               <Link to="/faq" className="mt-auto inline-flex min-h-11 items-center gap-2 rounded-lg font-bold text-emerald-700 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-emerald-300">Consultar o FAQ <ArrowRight aria-hidden="true" size={18} /></Link>
             </Card>
             <Card className="flex flex-col shadow-sm">

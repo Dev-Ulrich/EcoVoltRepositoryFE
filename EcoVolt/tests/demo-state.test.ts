@@ -72,3 +72,34 @@ test('nova sessão restaura os mocks sem compartilhar objetos mutáveis', () => 
   assert.equal(fresh.missions[0].progress.current, 1)
   assert.equal(fresh.rewards[0].progress.current, 1)
 })
+
+test('aprovação atualiza pontos, XP, missão e ranking sem conceder bônus duplicados', async () => {
+  const { selectMissions, selectRewards } = await import('../src/data/demoState.ts')
+  const initial = createDemoState()
+  const action = createSubmission({ ...input, category: 'composting' }, 1, 'new-compost', now)
+  const sent = demoReducer(initial, { type: 'submit', action })
+  const approved = demoReducer(sent, { type: 'resolve', userId: 1, id: action.id, approved: true, reason: '' })
+  const user = selectDemoUser(approved, mockUsers[0])
+  assert.equal(user.points, 325) // 115 + 80 da ação + 50 e 80 das duas missões.
+  assert.equal(user.xp, 380) // 90 + 40 da ação + 100 e 150 das missões.
+  assert.equal(user.completedActions, 2)
+  assert.equal(user.activeMissions, 0)
+  assert.ok(selectMissions(approved, 1).every(mission => mission.status === 'completed'))
+  assert.equal(selectRewards(approved, user).find(reward => reward.id === 'reward-2')?.status, 'available')
+  assert.equal(selectRanking(approved, user).find(entry => entry.userId === 1)?.position, 1)
+  assert.equal(demoReducer(approved, { type: 'resolve', userId: 1, id: action.id, approved: true, reason: '' }), approved)
+  assert.equal(demoReducer(sent, { type: 'resolve', userId: 2, id: action.id, approved: true, reason: '' }), sent)
+})
+
+test('recusa exige motivo e permite revisão seguida de aprovação', () => {
+  const initial = createDemoState()
+  const invalid = demoReducer(initial, { type: 'resolve', userId: 1, id: 'action-1', approved: false, reason: '' })
+  assert.equal(invalid, initial)
+  const rejected = demoReducer(initial, { type: 'resolve', userId: 1, id: 'action-1', approved: false, reason: 'O vídeo não mostra a separação dos resíduos.' })
+  validateReview(rejected.actions, 1, 'action-1', 'A separação está visível ao final do vídeo.')
+  const review = demoReducer(rejected, { type: 'review', userId: 1, id: 'action-1', justification: 'A separação está visível ao final do vídeo.', now })
+  const approved = demoReducer(review, { type: 'resolve', userId: 1, id: 'action-1', approved: true, reason: '' })
+  assert.equal(approved.actions.find(action => action.id === 'action-1')?.status, 'approved')
+  assert.equal(approved.actions.find(action => action.id === 'action-1')?.rejectionReason, undefined)
+  assert.equal(selectDemoUser(approved, mockUsers[0]).points, 235)
+})

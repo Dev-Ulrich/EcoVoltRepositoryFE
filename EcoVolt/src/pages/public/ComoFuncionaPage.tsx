@@ -5,9 +5,9 @@ import Card from '../../components/common/Card'
 
 const steps = [
   { number: '01', title: 'Entre na sua conta', description: 'Use o e-mail e a senha fictícios exibidos no login para conhecer o dashboard demonstrativo.', icon: LogIn, available: true },
-  { number: '02', title: 'Transforme hábitos em ações', description: 'O próximo passo será registrar suas atitudes sustentáveis e enviar uma evidência do que você fez.', icon: Leaf, available: false },
-  { number: '03', title: 'Acompanhe a validação', description: 'Você poderá acompanhar a análise de cada envio e conferir o resultado da sua ação na plataforma.', icon: ClipboardCheck, available: false },
-  { number: '04', title: 'Veja sua evolução', description: 'Ações aprovadas farão parte da sua jornada, com pontos, experiência e novos desafios para continuar participando.', icon: Trophy, available: false },
+  { number: '02', title: 'Transforme hábitos em ações', description: 'Registre sua atitude e selecione um vídeo demonstrativo, sem upload real.', icon: Leaf, available: true },
+  { number: '03', title: 'Acompanhe a validação', description: 'Abra os detalhes e simule aprovação ou recusa. Uma recusa pode receber revisão.', icon: ClipboardCheck, available: true },
+  { number: '04', title: 'Veja sua evolução', description: 'As aprovações simuladas atualizam pontos, experiência, missões e ranking.', icon: Trophy, available: true },
 ]
 
 const examples = [
@@ -18,8 +18,8 @@ const examples = [
 
 const questions = [
   { title: 'Como consigo meu acesso?', answer: 'O e-mail e a senha de demonstração estão na página de login. O acesso e os indicadores são simulados no navegador, sem cadastro ou autenticação real.' },
-  { title: 'Já posso enviar uma ação?', answer: 'Ainda não. O login e o dashboard estão disponíveis. O envio de ações, as validações, as missões, o ranking e as recompensas fazem parte das próximas etapas do projeto.' },
-  { title: 'Qual é a diferença entre pontos e experiência?', answer: 'Os pontos representarão a pontuação das suas contribuições, enquanto a experiência (XP) acompanhará sua evolução de nível. As regras de concessão serão apresentadas junto com as funcionalidades de ações e missões.' },
+  { title: 'Já posso enviar uma ação?', answer: 'Sim, na área Enviar ação. Escolha a categoria, descreva a atitude e selecione um vídeo. Apenas os metadados ficam na sessão, sem upload. Os registros reiniciam ao recarregar ou sair.' },
+  { title: 'Qual é a diferença entre pontos e experiência?', answer: 'Na demonstração, aprovar uma ação concede os pontos da categoria e 40 XP. Missões concluídas somam seus bônus. O tier é fixo e o ranking mensal acompanha a pontuação local.' },
 ]
 
 function ComoFuncionaPage() {
@@ -52,7 +52,7 @@ function ComoFuncionaPage() {
         <section id="passo-a-passo" aria-labelledby="steps-title" className="mt-20 scroll-mt-32">
           <p className="text-sm font-bold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">Sua jornada no EcoVolt</p>
           <h2 id="steps-title" className="mt-3 text-3xl font-bold">Do primeiro acesso à evolução</h2>
-          <p className="mt-4 max-w-2xl leading-relaxed text-slate-600 dark:text-emerald-100">Comece conhecendo seu dashboard. As próximas etapas ampliarão as formas de participar e acompanhar seu impacto.</p>
+          <p className="mt-4 max-w-2xl leading-relaxed text-slate-600 dark:text-emerald-100">Comece conhecendo seu dashboard. Explore todas as etapas com dados simulados.</p>
           <ol className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
             {steps.map(({ number, title, description, icon: Icon, available }) => (
               <li key={number}>
@@ -76,7 +76,7 @@ function ComoFuncionaPage() {
         </section>
 
         <section aria-labelledby="questions-title" className="mt-20 grid gap-8 lg:grid-cols-[1fr_1.5fr]">
-          <div><p className="text-sm font-bold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">Antes de começar</p><h2 id="questions-title" className="mt-3 text-3xl font-bold">Tire suas dúvidas</h2><p className="mt-4 leading-relaxed text-slate-600 dark:text-emerald-100">Entenda o acesso e o que vem por aí na plataforma.</p></div>
+          <div><p className="text-sm font-bold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">Antes de começar</p><h2 id="questions-title" className="mt-3 text-3xl font-bold">Tire suas dúvidas</h2><p className="mt-4 leading-relaxed text-slate-600 dark:text-emerald-100">Entenda o acesso e os limites da demonstração.</p></div>
           <div className="space-y-3">
             {questions.map(({ title, answer }) => <details key={title} className="rounded-2xl border border-emerald-200 bg-white p-5 dark:border-emerald-800 dark:bg-emerald-900/20"><summary className="cursor-pointer rounded font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500">{title}</summary><p className="mt-4 text-sm leading-relaxed text-slate-600 dark:text-emerald-100">{answer}</p></details>)}
           </div>

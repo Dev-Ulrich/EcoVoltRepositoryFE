@@ -39,6 +39,8 @@ function DashboardPage() {
         <nav aria-label="Atalhos do dashboard" className="mt-6 flex flex-wrap gap-3">
           <a href="#dashboard-missions" className={shortcutClasses}><Target aria-hidden="true" size={18} /> Minhas missões <ArrowDown aria-hidden="true" size={16} /></a>
           <a href="#dashboard-activities" className={shortcutClasses}><ClipboardList aria-hidden="true" size={18} /> Minhas atividades <ArrowDown aria-hidden="true" size={16} /></a>
+          <Link to="/app/enviar-acao" className={shortcutClasses}>Nova ação</Link>
+          <Link to="/app/validacoes" className={shortcutClasses}>Ver validações</Link>
           <Link to="/como-funciona" className={shortcutClasses}>Como funciona <ArrowRight aria-hidden="true" size={16} /></Link>
         </nav>
       </header>
@@ -69,15 +71,15 @@ function DashboardPage() {
           <p className="mt-4 leading-relaxed text-slate-600 dark:text-emerald-100">{pendingActions > 0 ? `${pendingActions} ações estão em análise ou revisão nos exemplos desta demonstração.` : 'Não há ações aguardando análise nesta demonstração.'}</p>
           <p className="mt-4 text-sm leading-relaxed text-slate-500 dark:text-emerald-200">Envios e pedidos de revisão não concedem pontos ou XP automaticamente. Explore as missões e o histórico abaixo para conhecer o fluxo.</p>
           <div className="mt-5 rounded-xl bg-emerald-50 p-4 dark:bg-emerald-900/40">
-            <Badge variant="info">Próximas etapas</Badge>
-            <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-emerald-100">As telas de envio, validações, missões, ranking, recompensas e perfil serão adicionadas à navegação conforme forem implementadas.</p>
+            <Badge variant="info">Explore a demonstração</Badge>
+            <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-emerald-100">Registre uma ação, simule a análise nos detalhes e acompanhe a evolução nas missões, ranking e perfil.</p>
           </div>
         </Card>
       </div>
 
       <section id="dashboard-missions" aria-labelledby="missions-title" className="mt-10 scroll-mt-48">
         <h2 id="missions-title" className="text-2xl font-bold">Suas missões</h2>
-        <p className="mt-2 text-sm text-slate-500 dark:text-emerald-200">Progresso simulado de um ciclo fixo; não há contagem regressiva ou conclusão automática.</p>
+        <p className="mt-2 text-sm text-slate-500 dark:text-emerald-200">Ciclo demonstrativo: as aprovações simuladas atualizam as missões de ações. Não há contagem regressiva real.</p>
         {missions.length === 0 ? <Card className="mt-5 shadow-sm"><p>Nenhuma missão disponível nesta demonstração.</p></Card> : (
           <div className="mt-5 grid gap-5 md:grid-cols-3">{missions.map(mission => <MissionCard key={mission.id} mission={mission} />)}</div>
         )}
@@ -91,7 +93,7 @@ function DashboardPage() {
             <ul className="divide-y divide-emerald-100 dark:divide-emerald-800">
               {recentActions.map(action => (
                 <li key={action.id} className="py-5 first:pt-0 last:pb-0">
-                  <div className="flex flex-wrap items-center justify-between gap-3"><h3 className="font-bold">{actionCategories[action.category].title}</h3><Badge variant={statusVariants[action.status]}>{actionStatusLabels[action.status]}</Badge></div>
+                  <div className="flex flex-wrap items-center justify-between gap-3"><h3 className="font-bold"><Link className="rounded underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-emerald-500" to={`/app/validacoes/${action.id}`}>{actionCategories[action.category].title}</Link></h3><Badge variant={statusVariants[action.status]}>{actionStatusLabels[action.status]}</Badge></div>
                   <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-emerald-100">{action.description}</p>
                   <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-xs text-slate-500 dark:text-emerald-200">
                     <span>Envio: <time dateTime={action.submittedAt}>{formatDate(action.submittedAt)}</time></span>

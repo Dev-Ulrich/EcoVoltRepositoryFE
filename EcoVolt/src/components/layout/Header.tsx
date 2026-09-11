@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 
 import ecovoltLogoDark from '../../assets/ecovolt-logo-dark.png'
@@ -20,6 +20,17 @@ function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { user, logout } = useAuth()
   const navigate = useNavigate()
+  const headerRef = useRef<HTMLElement>(null)
+  useEffect(() => {
+    if (!isMenuOpen) return
+    function onKey(event: KeyboardEvent) {
+      if (event.key === 'Escape') { setIsMenuOpen(false); headerRef.current?.querySelector<HTMLButtonElement>('[aria-controls="public-navigation"]')?.focus() }
+    }
+    function onClick(event: PointerEvent) { if (!headerRef.current?.contains(event.target as Node)) setIsMenuOpen(false) }
+    document.addEventListener('keydown', onKey)
+    document.addEventListener('pointerdown', onClick)
+    return () => { document.removeEventListener('keydown', onKey); document.removeEventListener('pointerdown', onClick) }
+  }, [isMenuOpen])
   const [logoutError, setLogoutError] = useState('')
   const [isLoggingOut, setIsLoggingOut] = useState(false)
 
@@ -36,7 +47,7 @@ function Header() {
   }
 
   return (
-    <header
+    <header ref={headerRef}
       className="
         sticky top-0 z-50
         border-b border-emerald-200

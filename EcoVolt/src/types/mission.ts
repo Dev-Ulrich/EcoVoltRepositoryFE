@@ -1,3 +1,4 @@
+import type { ActionCategory } from './action'
 import type { UserId } from './user'
 
 export type MissionId = string
@@ -13,5 +14,6 @@ export type Mission = {
   progress: { current: number; target: number; unit: string }
   points: number
   xp: number
+  criterion?: { type: 'approved_actions'; category?: ActionCategory }
   endsAt: string
 }

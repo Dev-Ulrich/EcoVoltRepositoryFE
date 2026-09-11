@@ -34,6 +34,7 @@ export const mockMissions: Mission[] = [
   },
   {
     id: 'mission-2',
+    criterion: { type: 'approved_actions' },
     userId: 1,
     title: 'Concluir duas ações sustentáveis',
     difficulty: 'medium',
@@ -45,6 +46,7 @@ export const mockMissions: Mission[] = [
   },
   {
     id: 'mission-3',
+    criterion: { type: 'approved_actions', category: 'composting' },
     userId: 1,
     title: 'Experimentar compostagem',
     difficulty: 'hard',

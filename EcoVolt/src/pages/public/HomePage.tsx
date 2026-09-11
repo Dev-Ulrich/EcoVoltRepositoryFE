@@ -11,9 +11,9 @@ const habits = [
 ]
 
 const journey = [
-  { icon: Leaf, title: 'Registre sua atitude', description: 'Você poderá enviar uma ação sustentável com uma evidência do que fez.' },
-  { icon: ClipboardCheck, title: 'Acompanhe a análise', description: 'Cada envio terá um status para você acompanhar o resultado da validação.' },
-  { icon: Trophy, title: 'Veja sua evolução', description: 'A proposta é reconhecer suas contribuições com pontos, experiência e missões.' },
+  { icon: Leaf, title: 'Registre sua atitude', description: 'Registre uma ação sustentável e selecione uma evidência na demonstração.' },
+  { icon: ClipboardCheck, title: 'Acompanhe a análise', description: 'Consulte os status e experimente os resultados da análise simulada.' },
+  { icon: Trophy, title: 'Veja sua evolução', description: 'Veja pontos, experiência e missões mudarem com as aprovações simuladas.' },
 ]
 
 const linkClasses = 'inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-emerald-950'
@@ -90,14 +90,14 @@ function HomePage() {
 
         <section aria-labelledby="journey-title" className="mt-20 grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">Uma jornada em construção</p>
-            <h2 id="journey-title" className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Cada contribuição terá seu lugar.</h2>
-            <p className="mt-5 leading-relaxed text-slate-600 dark:text-emerald-100">Já é possível conhecer o dashboard com uma conta e dados demonstrativos. Estamos preparando os próximos passos para registrar atitudes e acompanhar sua evolução.</p>
-            <p className="mt-4 text-sm leading-relaxed text-slate-500 dark:text-emerald-200">Envio de ações, validações, missões, ranking e recompensas ainda não estão disponíveis.</p>
-            <Link to="/como-funciona" className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-lg font-bold text-emerald-700 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-emerald-300">Entenda como vai funcionar <ArrowRight aria-hidden="true" size={18} /></Link>
+            <p className="text-xs font-bold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">Sua jornada no EcoVolt</p>
+            <h2 id="journey-title" className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Cada contribuição tem seu lugar.</h2>
+            <p className="mt-5 leading-relaxed text-slate-600 dark:text-emerald-100">Já é possível conhecer o dashboard com uma conta e dados demonstrativos. Registre atitudes e acompanhe sua evolução durante a sessão.</p>
+            <p className="mt-4 text-sm leading-relaxed text-slate-500 dark:text-emerald-200">Envios, validações, missões, ranking, recompensas e perfil estão disponíveis como demonstração local.</p>
+            <Link to="/como-funciona" className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-lg font-bold text-emerald-700 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-emerald-300">Entenda como funciona <ArrowRight aria-hidden="true" size={18} /></Link>
           </div>
           <div className="rounded-3xl border border-emerald-200 bg-white p-6 sm:p-8 dark:border-emerald-800 dark:bg-emerald-900/20">
-            <p className="mb-6 inline-block rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200">Próximas etapas</p>
+            <p className="mb-6 inline-block rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200">Etapas da demonstração</p>
             <ol className="space-y-6">
               {journey.map(({ icon: Icon, title, description }, index) => (
                 <li key={title} className="flex gap-4">
