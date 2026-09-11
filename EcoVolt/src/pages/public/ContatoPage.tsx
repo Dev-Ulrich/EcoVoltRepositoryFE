@@ -1,94 +1,70 @@
-import { ArrowRight, ArrowUpRight, BookOpen, CircleHelp, Code, MessageCircle, Users } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Bug, CircleHelp, Code, Gift, Handshake, Leaf, Mail, MapPin, MessageCircle, Users } from 'lucide-react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import arthurPhoto from '../../assets/team/Arthur-da-Silva.jpg'
-import lucaPhoto from '../../assets/team/Matheus-Luca.png'
-import pereiraPhoto from '../../assets/team/Matheus-Pereira.jpeg'
-import victorPhoto from '../../assets/team/Victor-Ulrich.png'
-import Card from '../../components/common/Card'
+import heroBackground from '../../assets/public/contato/hero-contato-reference.png'
+import communityBackground from '../../assets/public/home/backgroun-section-homepage.png'
 import ContactForm from '../../components/common/ContactForm'
 
-const contacts = [
-  { name: 'Victor Ulrich', photo: victorPhoto, photoPosition: 'object-[center_25%]', url: 'https://www.linkedin.com/in/victorulrichcosta/' },
-  { name: 'Matheus Pereira', photo: pereiraPhoto, photoPosition: 'object-center', url: 'https://www.linkedin.com/in/matheus-pereira-da-silva-franco-b7a7b03b7/' },
-  { name: 'Matheus Luca', photo: lucaPhoto, photoPosition: 'object-center', url: 'https://www.linkedin.com/in/matheusbarragao/' },
-  { name: 'Arthur da Silva', photo: arthurPhoto, photoPosition: 'object-[center_25%]', url: 'https://www.linkedin.com/in/arthur-da-silva-santana-a6061a310/' },
-]
-
 const topics = [
-  { title: 'Dúvidas sobre o projeto', description: 'Quer entender melhor a proposta ou saber em que etapa estamos? Converse com a equipe.' },
-  { title: 'Sugestões e ideias', description: 'Compartilhe o que poderia tornar a experiência mais clara, acessível e útil no seu dia a dia.' },
-  { title: 'Problemas ao navegar', description: 'Conte em qual página aconteceu, o que você tentou fazer e qual resultado apareceu.' },
+  { icon: CircleHelp, title: 'Dúvidas sobre o projeto', description: 'Entenda mais sobre o EcoVolt' },
+  { icon: Gift, title: 'Problemas com recompensas', description: 'Pontos, cupons e resgates' },
+  { icon: Bug, title: 'Reportar um problema', description: 'Encontrou um erro? Nos avise!' },
+  { icon: Handshake, title: 'Parcerias', description: 'Quer colaborar com o EcoVolt?' },
 ]
+const focus = 'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-emerald-950'
+const body = 'text-slate-600 dark:text-slate-300'
+const mapQuery = encodeURIComponent('FIAP Av. Paulista, 1106, São Paulo - SP')
 
 function ContatoPage() {
+  const [selectedSubject, setSelectedSubject] = useState<{ value: string }>()
+  function chooseSubject(value: string) {
+    setSelectedSubject({ value })
+    document.getElementById('contact-form-title')?.scrollIntoView({ block: 'start' })
+  }
+
   return (
-    <main className="bg-emerald-50 px-6 py-12 text-slate-900 transition-colors sm:py-16 dark:bg-emerald-950 dark:text-white">
-      <div className="mx-auto max-w-6xl">
-        <header className="mx-auto max-w-3xl text-center">
-          <h1 className="mt-6 text-4xl font-black tracking-tight sm:text-5xl lg:text-6xl">Vamos <span className="text-emerald-700 dark:text-emerald-400">conversar?</span></h1>
-          <p className="mt-6 text-lg leading-relaxed text-slate-600 dark:text-emerald-100">Uma dúvida, uma ideia ou uma sugestão? Conheça os canais para falar com quem está construindo o EcoVolt.</p>
-        </header>
+    <main className="bg-[#fcfefd] text-[#09243a] transition-colors dark:bg-emerald-950 dark:text-white">
+      <section aria-labelledby="contact-title" className="relative isolate overflow-hidden bg-emerald-950 text-white">
+        <img src={heroBackground} alt="" fetchPriority="high" width={2172} height={724} className="absolute inset-0 -z-20 h-full w-full object-cover object-[65%_center] lg:object-center" />
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(0,25,19,.85)_0%,rgba(0,25,19,.6)_38%,transparent_72%)] max-lg:bg-emerald-950/75" />
+        <div className="relative mx-auto flex min-h-[360px] max-w-6xl items-center px-6 py-10 lg:min-h-[390px]">
+          <div className="max-w-lg"><p className="text-xs font-bold uppercase tracking-[0.16em] text-emerald-300">Contato</p><h1 id="contact-title" className="mt-3 text-4xl font-extrabold leading-[1.06] tracking-tight sm:text-5xl lg:text-[3.4rem]">Estamos aqui<span className="block text-emerald-300">para te ouvir.</span></h1><p className="mt-5 text-base leading-relaxed text-emerald-50 sm:text-lg">Tem dúvidas, sugestões, encontrou um problema ou quer fazer uma parceria? Fale com a nossa equipe! Sua mensagem é muito importante para continuarmos construindo um amanhã mais sustentável.</p></div>
+          <p className="absolute right-8 top-9 hidden -rotate-[8deg] text-center font-serif text-3xl italic leading-tight text-emerald-950 [text-shadow:0_1px_8px_rgba(255,255,255,.65)] lg:block">Vamos<br />conversar?<span aria-hidden="true" className="mx-auto mt-3 block h-1 w-28 -rotate-6 rounded-full bg-emerald-600" /></p>
+        </div>
+      </section>
 
-        <section aria-labelledby="contact-title" className="mt-12 grid gap-8 lg:grid-cols-[1fr_1.2fr]">
-          <div className="relative overflow-hidden rounded-3xl bg-emerald-900 p-8 text-white sm:p-10">
-            <div aria-hidden="true" className="absolute -bottom-20 -left-20 size-72 rounded-full border-[40px] border-emerald-800/60" />
-            <div className="relative">
-              <div className="flex size-14 items-center justify-center rounded-2xl bg-emerald-400 text-emerald-950"><MessageCircle aria-hidden="true" size={28} /></div>
-              <p className="mt-8 text-xs font-bold uppercase tracking-widest text-emerald-300">Sua participação importa</p>
-              <h2 id="contact-title" className="mt-3 text-3xl font-bold">Boas conversas ajudam o projeto a crescer.</h2>
-              <p className="mt-4 leading-relaxed text-emerald-100">O EcoVolt é um projeto acadêmico do Challenge FIAP x SoulUp. Estamos construindo essa experiência e queremos ouvir suas contribuições.</p>
-              <ul className="mt-8 space-y-6 border-t border-emerald-700 pt-6">
-                {topics.map(topic => <li key={topic.title}><h3 className="font-semibold">{topic.title}</h3><p className="mt-2 text-sm leading-relaxed text-emerald-100">{topic.description}</p></li>)}
-              </ul>
-            </div>
-          </div>
-
-          <div className="rounded-3xl border border-emerald-200 bg-white p-6 sm:p-8 dark:border-emerald-800 dark:bg-emerald-900/20">
-            <div className="flex items-center gap-3"><Users aria-hidden="true" size={24} className="shrink-0 text-emerald-700 dark:text-emerald-400" /><h2 className="text-2xl font-bold">Fale com a equipe</h2></div>
-            <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-emerald-100">Escolha um integrante para abrir seu perfil no LinkedIn e entrar em contato por lá.</p>
-            <ul className="mt-6 space-y-3">
-              {contacts.map(contact => (
-                <li key={contact.url}>
-                  <a href={contact.url} target="_blank" rel="noopener noreferrer" aria-label={`Abrir LinkedIn de ${contact.name} (nova aba)`} className="group flex items-center gap-3 rounded-2xl border border-emerald-100 p-4 transition hover:border-emerald-400 hover:bg-emerald-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-emerald-800 dark:hover:border-emerald-600 dark:hover:bg-emerald-900">
-                    <img src={contact.photo} alt="" width={44} height={44} loading="lazy" className={`size-11 shrink-0 rounded-full bg-emerald-100 object-cover dark:bg-emerald-800 ${contact.photoPosition}`} />
-                    <span className="min-w-0 flex-1"><span className="block font-semibold text-slate-900 dark:text-white">{contact.name}</span><span className="mt-1 block text-sm text-emerald-700 dark:text-emerald-300">Ver perfil no LinkedIn</span></span>
-                    <ArrowUpRight aria-hidden="true" size={19} className="shrink-0 text-emerald-700 dark:text-emerald-300" />
-                  </a>
-                </li>
-              ))}
+      <div className="mx-auto max-w-6xl px-6 pb-8">
+        <div className="mt-7 grid gap-5 lg:grid-cols-[1fr_2.1fr]">
+          <section aria-labelledby="channels-title" className="rounded-2xl bg-[#f1f8f4] p-6 dark:bg-emerald-900/35">
+            <h2 id="channels-title" className="text-2xl font-bold tracking-tight">Nossos canais</h2><p className={`mt-2 text-sm leading-relaxed ${body}`}>Escolha a melhor forma de falar com a gente.</p>
+            <ul className="mt-7 space-y-7">
+              <li className="flex items-start gap-4"><span className="flex size-14 shrink-0 items-center justify-center rounded-full border border-emerald-100 bg-emerald-50 text-emerald-600 dark:border-emerald-700 dark:bg-emerald-900 dark:text-emerald-300"><Mail aria-hidden="true" size={29} /></span><div className="min-w-0 pt-1"><h3 className="text-sm font-bold">E-mail</h3><a href="mailto:contato@ecovolt.com.br" className={`mt-1 block break-all text-sm hover:underline ${focus}`}>contato@ecovolt.com.br</a><p className={`mt-1 text-xs ${body}`}>Canal informado pelo projeto</p></div></li>
+              <li className="flex items-start gap-4"><span className="flex size-14 shrink-0 items-center justify-center rounded-full border border-emerald-100 bg-emerald-50 text-emerald-600 dark:border-emerald-700 dark:bg-emerald-900 dark:text-emerald-300"><MapPin aria-hidden="true" size={29} /></span><div className="pt-1"><h3 className="text-sm font-bold">Localização</h3><p className={`mt-1 text-sm ${body}`}>São Paulo - SP</p><p className={`mt-1 text-xs ${body}`}>FIAP (Campus Paulista)</p></div></li>
+              <li className="flex items-start gap-4"><span className="flex size-14 shrink-0 items-center justify-center rounded-full border border-emerald-100 bg-emerald-50 text-emerald-600 dark:border-emerald-700 dark:bg-emerald-900 dark:text-emerald-300"><Users aria-hidden="true" size={29} /></span><div className="pt-1"><h3 className="text-sm font-bold">Projeto acadêmico</h3><p className="mt-1 text-sm">FIAP x SoulUp</p><p className={`mt-1 text-xs ${body}`}>Turma 1TDSPW</p></div></li>
+              <li className="flex items-start gap-4"><span className="flex size-14 shrink-0 items-center justify-center rounded-full border border-emerald-100 bg-emerald-50 text-emerald-600 dark:border-emerald-700 dark:bg-emerald-900 dark:text-emerald-300"><MessageCircle aria-hidden="true" size={29} /></span><div className="pt-1"><h3 className="text-sm font-bold">Conecte-se com a equipe</h3><div className="mt-2 flex flex-wrap gap-3"><a href="https://github.com/Dev-Ulrich/EcoVoltRepositoryFE" target="_blank" rel="noopener noreferrer" aria-label="GitHub do projeto (abre em nova aba)" className={`inline-flex min-h-11 items-center gap-1 text-sm hover:text-emerald-600 ${focus}`}><Code aria-hidden="true" size={19} />GitHub</a><Link to="/quem-somos" className={`inline-flex min-h-11 items-center gap-1 text-sm hover:text-emerald-600 ${focus}`}><Users aria-hidden="true" size={19} />Perfis</Link></div></div></li>
             </ul>
-          </div>
+            <div className="mt-6 border-t border-emerald-100 pt-5 dark:border-emerald-800"><div className="flex items-start gap-3 rounded-xl bg-emerald-100/65 p-4 dark:bg-emerald-800/40"><Leaf aria-hidden="true" size={30} className="shrink-0 text-emerald-600 dark:text-emerald-300" /><div><p className="text-sm font-bold leading-snug text-emerald-700 dark:text-emerald-300">Juntos por um amanhã mais verde.</p><p className={`mt-1 text-xs leading-relaxed ${body}`}>Cada mensagem nos ajuda a evoluir!</p></div></div></div>
+          </section>
+
+          <section aria-labelledby="contact-form-title" className="rounded-2xl border border-slate-200/80 bg-slate-50/60 p-6 dark:border-emerald-800 dark:bg-emerald-900/20">
+            <h2 id="contact-form-title" className="scroll-mt-24 text-2xl font-bold tracking-tight">Envie sua mensagem</h2><p className={`mb-6 mt-2 text-sm leading-relaxed ${body}`}>Experimente o formulário abaixo. Para falar com a equipe, use nossos canais de contato.</p>
+            <ContactForm selectedSubject={selectedSubject} />
+          </section>
+        </div>
+
+        <section aria-labelledby="topics-title" className="mt-6 rounded-2xl bg-slate-50 p-6 dark:bg-emerald-900/20">
+          <div className="flex flex-wrap items-center justify-between gap-3"><div><h2 id="topics-title" className="text-2xl font-bold tracking-tight">Assuntos mais comuns</h2><p className={`mt-1 text-sm ${body}`}>Talvez você encontre sua resposta mais rapidamente por aqui.</p></div></div>
+          <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{topics.map(({ icon: Icon, title, description }) => <button key={title} type="button" onClick={() => chooseSubject(title)} className={`relative rounded-2xl border border-emerald-100 bg-[#eff8f2] p-5 text-left transition-colors hover:bg-emerald-100 dark:border-emerald-800 dark:bg-emerald-900/40 dark:hover:bg-emerald-900 ${focus}`}><ArrowRight aria-hidden="true" size={16} className="absolute right-5 top-5 text-emerald-600 dark:text-emerald-300" /><span className="flex size-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-600 dark:bg-emerald-800 dark:text-emerald-300"><Icon aria-hidden="true" size={29} /></span><span className="mt-3 block text-sm font-bold">{title}</span><span className={`mt-1 block text-sm leading-relaxed ${body}`}>{description}</span></button>)}</div>
         </section>
 
-        <section aria-labelledby="contact-form-title" className="mt-12 rounded-3xl border border-emerald-200 bg-white p-6 sm:p-8 dark:border-emerald-800 dark:bg-emerald-900/20">
-          <h2 id="contact-form-title" className="text-2xl font-bold">Envie uma mensagem de demonstração</h2>
-          <p className="mb-6 mt-3 text-sm">Este formulário apenas valida os campos localmente. Para falar com a equipe, use os perfis acima.</p>
-          <ContactForm />
-        </section>
-        <section aria-labelledby="resources-title" className="mt-16">
-          <h2 id="resources-title" className="text-3xl font-bold">Outros caminhos para encontrar o que precisa</h2>
-          <div className="mt-8 grid gap-6 md:grid-cols-3">
-            <Card className="flex flex-col shadow-sm">
-              <CircleHelp aria-hidden="true" size={28} className="text-emerald-700 dark:text-emerald-400" />
-              <h3 className="mt-5 text-xl font-bold">Perguntas frequentes</h3>
-              <p className="mb-6 mt-3 text-sm leading-relaxed text-slate-600 dark:text-emerald-100">Consulte respostas sobre acesso, ações sustentáveis e funcionalidades da demonstração.</p>
-              <Link to="/faq" className="mt-auto inline-flex min-h-11 items-center gap-2 rounded-lg font-bold text-emerald-700 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-emerald-300">Consultar o FAQ <ArrowRight aria-hidden="true" size={18} /></Link>
-            </Card>
-            <Card className="flex flex-col shadow-sm">
-              <BookOpen aria-hidden="true" size={28} className="text-emerald-700 dark:text-emerald-400" />
-              <h3 className="mt-5 text-xl font-bold">Entenda a jornada</h3>
-              <p className="mb-6 mt-3 text-sm leading-relaxed text-slate-600 dark:text-emerald-100">Conheça as etapas da proposta EcoVolt e as formas de participação previstas.</p>
-              <Link to="/como-funciona" className="mt-auto inline-flex min-h-11 items-center gap-2 rounded-lg font-bold text-emerald-700 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-emerald-300">Ver como funciona <ArrowRight aria-hidden="true" size={18} /></Link>
-            </Card>
-            <Card className="flex flex-col shadow-sm">
-              <Code aria-hidden="true" size={28} className="text-emerald-700 dark:text-emerald-400" />
-              <h3 className="mt-5 text-xl font-bold">Projeto no GitHub</h3>
-              <p className="mb-6 mt-3 text-sm leading-relaxed text-slate-600 dark:text-emerald-100">Explore o repositório e acompanhe o desenvolvimento do frontend do EcoVolt.</p>
-              <a href="https://github.com/Dev-Ulrich/EcoVoltRepositoryFE" target="_blank" rel="noopener noreferrer" aria-label="Abrir repositório EcoVolt no GitHub (nova aba)" className="mt-auto inline-flex min-h-11 items-center gap-2 rounded-lg font-bold text-emerald-700 underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-emerald-300">Abrir repositório <ArrowUpRight aria-hidden="true" size={18} /></a>
-            </Card>
-          </div>
-        </section>
+        <div className="mt-5 grid gap-4 lg:grid-cols-[2.1fr_1fr]">
+          <section aria-labelledby="idea-title" className="relative isolate overflow-hidden rounded-2xl bg-emerald-950 px-6 py-10 text-white sm:px-10">
+            <img src={communityBackground} alt="" loading="lazy" className="absolute inset-0 -z-20 h-full w-full object-cover object-[65%_center]" /><div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-emerald-950/95 via-emerald-950/85 to-emerald-950/40" />
+            <div className="max-w-md"><p className="text-xs font-bold uppercase tracking-[0.14em] text-lime-200">Fazer a diferença é melhor juntos</p><h2 id="idea-title" className="mt-3 text-3xl font-bold leading-tight tracking-tight">Tem uma <span className="text-emerald-300">ideia incrível?</span></h2><p className="mt-3 text-sm leading-relaxed text-emerald-50">Seja para parcerias, projetos, sugestões ou apenas um elogio, queremos ouvir você. Toda conversa pode gerar um impacto positivo.</p><button type="button" onClick={() => chooseSubject('Sugestões e elogios')} className={`mt-6 inline-flex min-h-12 items-center gap-3 rounded-xl bg-lime-300 px-6 py-3 text-sm font-bold text-emerald-950 hover:bg-lime-200 ${focus}`}><MessageCircle aria-hidden="true" size={21} />Falar com a equipe <ArrowRight aria-hidden="true" size={18} /></button></div>
+          </section>
+          <section aria-labelledby="location-title" className="rounded-2xl bg-[#f3f8f5] p-5 dark:bg-emerald-900/30"><h2 id="location-title" className="text-lg font-bold tracking-tight">Onde estamos</h2><p className={`mt-1 text-xs leading-relaxed ${body}`}>Nosso projeto é desenvolvido na FIAP, em São Paulo, em parceria com a SoulUp.</p><iframe title="Localização da FIAP Campus Paulista no Google Maps" src={`https://maps.google.com/maps?q=${mapQuery}&output=embed`} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="mt-3 h-40 w-full rounded-xl border-0" /><p className="mt-3 flex items-start gap-2 text-xs leading-relaxed"><MapPin aria-hidden="true" size={20} className="shrink-0 text-emerald-700 dark:text-emerald-300" />Av. Paulista, 1106 - Bela Vista, São Paulo - SP</p><a href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`} target="_blank" rel="noopener noreferrer" className={`mt-2 inline-flex min-h-11 items-center gap-2 rounded-lg text-xs font-bold text-emerald-700 dark:text-emerald-300 ${focus}`}>Ver no Google Maps <ArrowUpRight aria-hidden="true" size={15} /><span className="sr-only">(abre em nova aba)</span></a></section>
+        </div>
       </div>
     </main>
   )

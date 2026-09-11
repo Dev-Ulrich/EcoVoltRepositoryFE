@@ -5,8 +5,8 @@ import { Link, Navigate } from 'react-router-dom'
 
 import { useAuth } from '../../auth/useAuth'
 import { demoCredentials } from '../../data/mockUsers'
-import ecovoltLogoDark from '../../assets/ecovolt-logo-dark.png'
-import ecovoltLogo from '../../assets/ecovolt-logo.png'
+import ecovoltLogoDark from '../../assets/brand/ecovolt-logo-dark.png'
+import ecovoltLogo from '../../assets/brand/ecovolt-logo.png'
 import Button from '../../components/common/Button'
 import ThemeToggle from '../../components/common/ThemeToggle'
 

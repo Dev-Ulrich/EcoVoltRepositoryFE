@@ -2,7 +2,7 @@ import { Globe, Leaf, Mail, MapPin } from 'lucide-react'
 import type { SVGProps } from 'react'
 import { Link } from 'react-router-dom'
 
-import ecovoltLogoDark from '../../assets/ecovolt-logo-dark.png'
+import ecovoltLogoDark from '../../assets/brand/ecovolt-logo-dark.png'
 
 const footerLinks = [
   { label: 'Início', path: '/' },

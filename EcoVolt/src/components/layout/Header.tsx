@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 
-import ecovoltLogoDark from '../../assets/ecovolt-logo-dark.png'
-import ecovoltLogo from '../../assets/ecovolt-logo.png'
+import ecovoltLogoDark from '../../assets/brand/ecovolt-logo-dark.png'
+import ecovoltLogo from '../../assets/brand/ecovolt-logo.png'
 import { useAuth } from '../../auth/useAuth'
 import AppNavigation from './AppNavigation'
 import ThemeToggle from '../common/ThemeToggle'

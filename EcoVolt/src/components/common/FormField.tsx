@@ -4,6 +4,7 @@ type FormFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string
   error?: string
   helperText?: string
+  tone?: 'slate' | 'emerald'
 }
 
 function FormField({
@@ -12,6 +13,7 @@ function FormField({
   error,
   helperText,
   className = '',
+  tone = 'slate',
   required,
   ...inputProps
 }: FormFieldProps) {
@@ -54,10 +56,15 @@ function FormField({
           'placeholder:text-slate-400',
           'focus:ring-2 focus:ring-emerald-500',
           'disabled:cursor-not-allowed disabled:opacity-60',
-          'dark:bg-slate-900 dark:text-white dark:placeholder:text-slate-500',
+          'dark:text-white',
+          tone === 'emerald'
+            ? 'text-sm placeholder:text-slate-500 dark:bg-emerald-950 dark:placeholder:text-slate-400'
+            : 'dark:bg-slate-900 dark:placeholder:text-slate-500',
           error
             ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-            : 'border-slate-300 focus:border-emerald-500 dark:border-slate-700',
+            : tone === 'emerald'
+              ? 'border-slate-300 focus:border-emerald-500 dark:border-emerald-700'
+              : 'border-slate-300 focus:border-emerald-500 dark:border-slate-700',
           className,
         ].join(' ')}
       />
