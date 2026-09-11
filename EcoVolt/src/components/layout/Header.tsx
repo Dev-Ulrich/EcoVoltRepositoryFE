@@ -59,33 +59,33 @@ function Header() {
     >
       <nav
         className="
-          relative mx-auto flex min-h-22
+          relative mx-auto flex min-h-20 gap-4
           max-w-6xl items-center justify-between px-6
         "
         aria-label="Navegação principal"
       >
         <Link
           to={user ? "/app" : "/"}
-          className="flex shrink-0 items-center"
+          className="flex shrink-0 items-center rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
           onClick={closeMenu}
           aria-label={user ? "EcoVolt - Dashboard" : "EcoVolt - Início"}
         >
           <img
             src={ecovoltLogo}
             alt="EcoVolt"
-            className="h-16 w-auto max-w-56 object-contain dark:hidden sm:max-w-72"
+            className="h-12 w-auto max-w-40 object-contain dark:hidden"
           />
           <img
             src={ecovoltLogoDark}
             alt="EcoVolt"
-            className="hidden h-16 w-auto max-w-56 object-contain dark:block sm:max-w-72"
+            className="hidden h-12 w-auto max-w-40 object-contain dark:block"
           />
         </Link>
 
         <button
           type="button"
           className="
-            rounded-lg border border-emerald-600
+            min-h-11 rounded-lg border border-emerald-600
             px-4 py-2 font-semibold text-emerald-700
             transition hover:bg-emerald-100
             focus-visible:outline-none
@@ -115,7 +115,7 @@ function Header() {
           id="public-navigation"
           className={`
             absolute left-0 top-full w-full
-            flex-col gap-2
+            flex-col gap-1
             border-b border-emerald-200
             bg-white p-6
             transition-colors
@@ -134,8 +134,8 @@ function Header() {
                 to={item.path}
                 onClick={closeMenu}
                 className={({ isActive }) => `
-                  block whitespace-nowrap rounded-lg px-3 py-2
-                  font-semibold transition
+                  flex min-h-11 items-center whitespace-nowrap rounded-lg px-2.5 py-2 text-sm
+                  font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500
                   ${
                     isActive
                       ? `
@@ -159,7 +159,7 @@ function Header() {
             </li>
           ))}
 
-          <li>
+          <li className="[&>button]:min-h-11 [&>button]:whitespace-nowrap">
             <ThemeToggle />
           </li>
 
@@ -172,10 +172,10 @@ function Header() {
               to="/login"
               onClick={closeMenu}
               className="
-                block rounded-lg bg-emerald-500
-                px-4 py-2 text-center
+                flex min-h-11 items-center justify-center rounded-lg bg-emerald-700
+                px-4 py-2 text-center text-sm
                 font-bold text-white
-                transition hover:bg-emerald-600
+                transition hover:bg-emerald-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2
                 dark:bg-emerald-400
                 dark:text-emerald-950
                 dark:hover:bg-emerald-300

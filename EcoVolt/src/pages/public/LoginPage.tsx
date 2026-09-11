@@ -47,7 +47,7 @@ function LoginPage() {
   if (user) return <Navigate to="/app" replace />
 
   return (
-    <main className="flex min-h-dvh flex-col bg-emerald-50 text-slate-900 transition-colors dark:bg-emerald-950 dark:text-white">
+    <main className="flex min-h-dvh flex-col bg-emerald-50 text-slate-900 transition-colors dark:border-emerald-800 dark:bg-emerald-950/95 dark:text-white">
       <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-6">
         <Link
           to="/"

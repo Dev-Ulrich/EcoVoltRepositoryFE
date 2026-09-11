@@ -1,14 +1,15 @@
-import { Globe } from 'lucide-react'
+import { Globe, Leaf, Mail, MapPin } from 'lucide-react'
 import type { SVGProps } from 'react'
 import { Link } from 'react-router-dom'
 
 import ecovoltLogoDark from '../../assets/ecovolt-logo-dark.png'
-import ecovoltLogo from '../../assets/ecovolt-logo.png'
 
 const footerLinks = [
   { label: 'Início', path: '/' },
-  { label: 'FAQ', path: '/faq' },
   { label: 'Como funciona', path: '/como-funciona' },
+  { label: 'Sobre', path: '/sobre' },
+  { label: 'Quem somos', path: '/quem-somos' },
+  { label: 'FAQ', path: '/faq' },
   { label: 'Contato', path: '/contato' },
 ]
 
@@ -53,97 +54,64 @@ const socialLinks = [
   { label: 'Site da SoulUp', href: 'https://soulup.io/', icon: Globe },
 ]
 
+const focusClasses = 'rounded-sm transition-colors hover:text-emerald-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300 focus-visible:ring-offset-4 focus-visible:ring-offset-[#080f0e]'
+const columnClasses = 'relative border-t border-white/10 pt-6 sm:border-t-0 sm:pt-0 lg:pl-8 lg:before:absolute lg:before:bottom-3 lg:before:left-0 lg:before:top-3 lg:before:w-px lg:before:bg-white/10'
+
 function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer
-      className="
-        border-t border-emerald-200 bg-white text-slate-700
-        pixel-bg transition-colors
-        dark:border-emerald-800
-        dark:bg-emerald-950
-        dark:text-emerald-100
-      "
-    >
-      <div className="mx-auto flex max-w-6xl flex-col items-center px-6 py-14">
-        <Link
-          to="/"
-          className="inline-flex items-center justify-center"
-          aria-label="EcoVolt - Início"
-        >
-          <img
-            src={ecovoltLogo}
-            alt="EcoVolt"
-            className="h-20 w-auto max-w-72 object-contain dark:hidden"
-          />
-          <img
-            src={ecovoltLogoDark}
-            alt="EcoVolt"
-            className="hidden h-20 w-auto max-w-72 object-contain dark:block"
-          />
-        </Link>
+    <footer className="border-t border-white/10 bg-[#080f0e] text-slate-300">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="grid gap-x-8 gap-y-8 py-8 sm:grid-cols-2 lg:grid-cols-[1.05fr_0.85fr_1.1fr_1.2fr] lg:gap-x-6">
+          <div>
+            <Link to="/" className={`inline-flex ${focusClasses}`} aria-label="EcoVolt - Início">
+              <img src={ecovoltLogoDark} alt="EcoVolt" className="h-12 w-auto max-w-44 object-contain" />
+            </Link>
+            <p className="mt-2 max-w-52 text-sm leading-relaxed">A energia das suas escolhas<br />por um planeta melhor.</p>
+            <div className="-ml-2 mt-3 flex flex-wrap gap-0.5">
+              {socialLinks.map(({ label, href, icon: Icon }) => (
+                <a key={label} href={href} className={`flex size-11 items-center justify-center ${focusClasses}`} aria-label={`${label} (nova aba)`} target="_blank" rel="noopener noreferrer">
+                  <Icon aria-hidden="true" className="size-5" />
+                </a>
+              ))}
+            </div>
+          </div>
 
-        <nav className="mt-8" aria-label="Navegação do rodapé">
-          <ul className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm font-medium">
-            {footerLinks.map((item) => (
-              <li key={item.path}>
-                <Link
-                  className="
-                    text-slate-700 transition
-                    hover:text-emerald-600
-                    dark:text-emerald-100
-                    dark:hover:text-emerald-300
-                  "
-                  to={item.path}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+          <nav className={columnClasses} aria-label="Navegação do rodapé">
+            <h2 className="mb-3 text-sm font-semibold text-white">Navegação</h2>
+            <ul className="text-sm">
+              {footerLinks.map(({ label, path }) => (
+                <li key={path}><Link to={path} className={`inline-flex min-h-11 items-center lg:min-h-7 ${focusClasses}`}>{label}</Link></li>
+              ))}
+            </ul>
+          </nav>
 
-        <div className="mt-7 flex items-center justify-center gap-4">
-          {socialLinks.map((item) => {
-            const Icon = item.icon
+          <div className={columnClasses}>
+            <h2 className="mb-3 text-sm font-semibold text-white">Projeto</h2>
+            <p className="text-sm font-medium text-white">FIAP + SoulUp</p>
+            <p className="mt-1 text-sm leading-relaxed">Tecnologia a serviço<br />de um futuro mais sustentável.</p>
+            <div className="mt-3 flex flex-wrap items-center gap-6 text-white">
+              <a href="https://www.fiap.com.br/" target="_blank" rel="noopener noreferrer" aria-label="FIAP (nova aba)" className={`inline-flex min-h-11 items-center text-3xl font-extralight tracking-[0.06em] ${focusClasses}`}>FIAP</a>
+              <a href="https://soulup.io/" target="_blank" rel="noopener noreferrer" aria-label="SoulUp (nova aba)" className={`inline-flex min-h-11 items-center text-2xl font-bold tracking-tight ${focusClasses}`}>SoulUp</a>
+            </div>
+          </div>
 
-            return (
-              <a
-                key={item.label}
-                href={item.href}
-                className="
-                  flex size-10 items-center justify-center rounded-lg
-                  border border-emerald-700/20 text-slate-700
-                  transition hover:border-emerald-500
-                  hover:bg-emerald-100 hover:text-emerald-700
-                  focus-visible:outline-none focus-visible:ring-2
-                  focus-visible:ring-emerald-500
-                  dark:border-emerald-300/20
-                  dark:text-emerald-100
-                  dark:hover:bg-emerald-400/10
-                  dark:hover:text-emerald-300
-                "
-                aria-label={item.label}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Icon aria-hidden="true" className="size-5" />
+          <div className={columnClasses}>
+            <h2 className="mb-3 text-sm font-semibold text-white">Fale com a gente</h2>
+            <address className="text-sm not-italic">
+              <a href="mailto:contato@ecovolt.com.br" className={`inline-flex min-h-11 items-center gap-3 lg:min-h-8 ${focusClasses}`}>
+                <Mail aria-hidden="true" className="size-5 shrink-0" /><span className="break-all">contato@ecovolt.com.br</span>
               </a>
-            )
-          })}
+              <p className="mt-2 flex items-center gap-3"><MapPin aria-hidden="true" className="size-5 shrink-0" />São Paulo - SP</p>
+            </address>
+          </div>
         </div>
-      </div>
 
-      <div
-        className="
-          border-t border-emerald-200 px-6 py-4 text-center
-          text-sm text-slate-500
-          dark:border-emerald-900
-          dark:text-emerald-300
-        "
-      >
-        EcoVolt • FIAP x SoulUp © {currentYear}
+        <div className="flex flex-col gap-3 border-t border-white/10 py-4 text-xs leading-relaxed text-slate-400 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {currentYear} EcoVolt. Todos os direitos reservados.</p>
+          <p className="flex items-center gap-2">Por um planeta mais vivo, hoje e sempre. <Leaf aria-hidden="true" className="size-4 shrink-0 text-emerald-400" /></p>
+        </div>
       </div>
     </footer>
   )
