@@ -1,3 +1,4 @@
+import AppPageHeader from '../../components/app/AppPageHeader'
 import { Gift, SlidersHorizontal } from 'lucide-react'
 import { useState } from 'react'
 
@@ -28,16 +29,12 @@ function RecompensasPage() {
 
   return (
     <section aria-labelledby="rewards-title">
-      <header className="mb-8">
-        <p className="mb-2 font-semibold text-emerald-700 dark:text-emerald-400">Sua jornada sustentável</p>
-        <h1 id="rewards-title" className="text-3xl font-bold tracking-tight sm:text-4xl">Recompensas</h1>
-        <p className="mt-3 max-w-2xl text-slate-600 dark:text-emerald-100">Acompanhe suas conquistas e conheça os próximos marcos da demonstração.</p>
-      </header>
+      <AppPageHeader id="rewards-title" title="Recompensas" description="Seu esforço abre caminho para novas conquistas." icon={Gift} />
 
       <RewardBalance points={user.points} />
 
       {featuredReward && (
-        <section aria-labelledby="featured-reward-title" className="mt-10">
+        <section aria-labelledby="featured-reward-title" className="mt-7">
           <div className="mb-5 flex flex-wrap items-center gap-3">
             <h2 id="featured-reward-title" className="text-2xl font-bold">Destaque</h2>
             <Badge variant="warning">Conquista em evidência</Badge>
@@ -48,7 +45,7 @@ function RecompensasPage() {
         </section>
       )}
 
-      <section aria-labelledby="catalog-title" className="mt-10">
+      <section aria-labelledby="catalog-title" className="mt-7">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 id="catalog-title" className="text-2xl font-bold">Catálogo demonstrativo</h2>

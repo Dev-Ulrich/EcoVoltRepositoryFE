@@ -1,3 +1,5 @@
+import { ClipboardCheck } from 'lucide-react'
+import AppPageHeader from '../../components/app/AppPageHeader'
 import { useState } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import Card from '../../components/common/Card'
@@ -55,9 +57,7 @@ export default function DetalhesAcaoPage() {
       >
         Voltar às validações
       </Link>
-      <h1 id="detail-title" className="mt-3 text-3xl font-bold">
-        {actionCategories[action.category].title}
-      </h1>
+      <AppPageHeader id="detail-title" title={actionCategories[action.category].title} description="Todos os detalhes do seu impacto, em um só lugar." eyebrow="Sua atividade" icon={ClipboardCheck} />
       {typeof location.state?.notice === 'string' && (
         <p
           role="status"

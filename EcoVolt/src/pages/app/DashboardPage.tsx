@@ -1,114 +1,39 @@
-import { ArrowDown, ArrowRight, Award, ClipboardList, Leaf, Target, Zap } from 'lucide-react'
+import { ArrowRight, Award, ClipboardCheck, Gift, Leaf, Plus, Target, Zap } from 'lucide-react'
 import { Link } from 'react-router-dom'
-
 import Badge from '../../components/common/Badge'
 import Card from '../../components/common/Card'
-import ProgressBar from '../../components/common/ProgressBar'
 import MissionCard from '../../components/missions/MissionCard'
 import { actionCategories, actionStatusLabels } from '../../data/mockActions'
 import { useDemoData } from '../../hooks/useDemoData'
 
 const statusVariants = { pending: 'warning', approved: 'success', rejected: 'danger', in_review: 'info' } as const
-const formatNumber = (value: number) => value.toLocaleString('pt-BR')
-const formatDate = (value: string) => new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeZone: 'America/Sao_Paulo' }).format(new Date(value))
-const shortcutClasses = 'inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-emerald-300 bg-white px-4 py-3 text-sm font-bold text-emerald-800 transition hover:bg-emerald-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:border-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-200 dark:hover:bg-emerald-900'
+const number = (value: number) => value.toLocaleString('pt-BR')
 
-function DashboardPage() {
+export default function DashboardPage() {
   const { user, actions, missions, ranking } = useDemoData()
   if (!user) return null
-
-  const completedMissions = missions.filter(mission => mission.status === 'completed').length
-  const missionProgress = missions.length ? Math.round(completedMissions / missions.length * 100) : 0
+  const completed = missions.filter(item => item.status === 'completed').length
+  const progress = missions.length ? Math.round(completed / missions.length * 100) : 0
   const rank = ranking.find(entry => entry.userId === user.id)
-  const pendingActions = actions.filter(action => action.status === 'pending' || action.status === 'in_review').length
-  const recentActions = [...actions].sort((a, b) => Date.parse(b.review?.requestedAt ?? b.submittedAt) - Date.parse(a.review?.requestedAt ?? a.submittedAt)).slice(0, 5)
-  const summaryItems = [
-    { title: 'Pontos acumulados', value: formatNumber(user.points), description: 'Ações aprovadas e missões concluídas', icon: Zap },
-    { title: 'Ações concluídas', value: formatNumber(user.completedActions), description: `${actions.length} envios na demonstração`, icon: Leaf },
-    { title: 'Missões ativas', value: formatNumber(user.activeMissions), description: `${completedMissions} de ${missions.length} missões concluídas`, icon: Target },
-    { title: 'Tier atual', value: user.tier, description: rank ? `Posição #${rank.position} no ranking mensal do tier` : 'Sem posição no ranking demonstrativo', icon: Award },
-  ]
-
+  const pending = actions.filter(action => ['pending', 'in_review'].includes(action.status)).length
+  const recent = [...actions].sort((a, b) => Date.parse(b.review?.requestedAt ?? b.submittedAt) - Date.parse(a.review?.requestedAt ?? a.submittedAt)).slice(0, 4)
   return (
     <section aria-labelledby="dashboard-title">
-      <header className="mb-8">
-        <p className="mb-2 font-semibold text-emerald-700 dark:text-emerald-400">Área do participante</p>
-        <h1 id="dashboard-title" className="text-3xl font-bold tracking-tight sm:text-4xl">Olá, {user.displayName}!</h1>
-        <p className="mt-3 max-w-2xl text-slate-600 dark:text-emerald-100">Acompanhe sua jornada sustentável com ações, missões e conquistas demonstrativas.</p>
-        <p className="mt-3 text-sm text-slate-500 dark:text-emerald-200">Dados fictícios. Alterações reiniciam ao recarregar a página ou sair.</p>
-        <nav aria-label="Atalhos do dashboard" className="mt-6 flex flex-wrap gap-3">
-          <a href="#dashboard-missions" className={shortcutClasses}><Target aria-hidden="true" size={18} /> Minhas missões <ArrowDown aria-hidden="true" size={16} /></a>
-          <a href="#dashboard-activities" className={shortcutClasses}><ClipboardList aria-hidden="true" size={18} /> Minhas atividades <ArrowDown aria-hidden="true" size={16} /></a>
-          <Link to="/app/enviar-acao" className={shortcutClasses}>Nova ação</Link>
-          <Link to="/app/validacoes" className={shortcutClasses}>Ver validações</Link>
-          <Link to="/como-funciona" className={shortcutClasses}>Como funciona <ArrowRight aria-hidden="true" size={16} /></Link>
-        </nav>
-      </header>
+      <header className="mb-6 flex items-center justify-between gap-3"><div><p className="app-eyebrow mb-2">Bom ter você por aqui</p><h1 id="dashboard-title" className="font-bold">Olá, {user.displayName.split(' ')[0]} <span className="text-emerald-600 dark:text-emerald-400">:)</span></h1><p className="app-muted mt-2 text-sm">Vamos fazer a diferença hoje?</p></div><span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-lime-300"><Leaf aria-hidden="true" size={28} /></span></header>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {summaryItems.map(({ title, value, description, icon: Icon }) => (
-          <Card key={title} className="shadow-sm">
-            <div className="mb-4 flex size-11 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300"><Icon aria-hidden="true" size={22} /></div>
-            <h2 className="text-sm font-medium text-slate-600 dark:text-emerald-100">{title}</h2>
-            <p className="mt-1 text-3xl font-bold">{value}</p>
-            <p className="mt-2 text-sm text-slate-500 dark:text-emerald-200">{description}</p>
-          </Card>
-        ))}
+      <div className="grid gap-4 lg:grid-cols-[1.5fr_1fr]">
+        <section aria-labelledby="journey-title" className="relative overflow-hidden rounded-3xl bg-[#073e30] p-6 text-white sm:p-7">
+          <div aria-hidden="true" className="absolute -right-12 -top-16 size-64 rounded-full border-[35px] border-emerald-400/10" />
+          <div className="relative"><p id="journey-title" className="text-xs font-semibold uppercase tracking-widest text-emerald-200">Seu impacto cresce com você</p><div className="mt-5 flex items-center justify-between gap-5"><div><p className="text-4xl font-bold tracking-tight">{number(user.points)} <span className="text-sm font-normal text-emerald-200">pontos</span></p><p className="mt-2 flex items-center gap-1.5 text-sm font-semibold text-lime-300"><Zap aria-hidden="true" size={17} />{number(user.xp)} XP acumulados</p></div><div className="relative flex size-24 shrink-0 items-center justify-center"><svg aria-hidden="true" viewBox="0 0 100 100" className="absolute inset-0 size-full -rotate-90"><circle cx="50" cy="50" r="43" fill="none" stroke="#1c6349" strokeWidth="7" /><circle cx="50" cy="50" r="43" fill="none" stroke="#bef264" strokeWidth="7" strokeLinecap="round" pathLength="100" strokeDasharray={`${progress} 100`} /></svg><span className="text-xl font-bold">{progress}%</span></div></div><div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-white/15 pt-4 text-xs text-emerald-100"><span>{completed} de {missions.length} missões concluídas</span><span className="flex items-center gap-1"><Award aria-hidden="true" size={15} />Tier {user.tier}</span></div></div>
+        </section>
+        <Link to="/app/enviar-acao" className="group flex flex-col justify-between gap-5 rounded-3xl border border-lime-200 bg-[#e6f6c9] p-6 text-[#173a25] transition hover:bg-lime-100 dark:border-lime-900 dark:bg-[#263f25] dark:text-lime-100"><span className="flex size-11 items-center justify-center rounded-2xl bg-white/70 text-emerald-800 dark:bg-lime-300"><Plus aria-hidden="true" size={25} /></span><div><h2 className="text-xl font-bold">Uma boa ação começa com você.</h2><p className="mt-2 text-sm leading-relaxed opacity-80">Registre sua atitude sustentável e acompanhe o impacto.</p></div><span className="flex items-center justify-between text-sm font-bold">Registrar nova ação <ArrowRight aria-hidden="true" size={20} /></span></Link>
       </div>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-2">
-        <Card className="shadow-sm">
-          <div className="flex items-center gap-3"><Zap aria-hidden="true" className="text-emerald-700 dark:text-emerald-400" /><h2 className="text-xl font-bold">Sua experiência</h2></div>
-          <p className="mt-5 text-4xl font-bold">{formatNumber(user.xp)} <span className="text-lg font-medium">XP</span></p>
-          <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-emerald-100">Experiência recebida pelas ações aprovadas e missões concluídas. Pontos, XP e tier representam indicadores diferentes da sua jornada.</p>
-          <div className="mt-5 border-t border-emerald-100 pt-5 dark:border-emerald-800">
-            <ProgressBar value={missionProgress} label="Missões concluídas no ciclo demonstrativo" />
-            <p className="mt-2 text-sm text-slate-500 dark:text-emerald-200">{completedMissions} de {missions.length} concluídas. As regras de evolução de nível ainda serão definidas.</p>
-          </div>
-        </Card>
-        <Card className="shadow-sm">
-          <h2 className="text-xl font-bold">Próximos passos da sua jornada</h2>
-          <p className="mt-4 leading-relaxed text-slate-600 dark:text-emerald-100">{pendingActions > 0 ? `${pendingActions} ações estão em análise ou revisão nos exemplos desta demonstração.` : 'Não há ações aguardando análise nesta demonstração.'}</p>
-          <p className="mt-4 text-sm leading-relaxed text-slate-500 dark:text-emerald-200">Envios e pedidos de revisão não concedem pontos ou XP automaticamente. Explore as missões e o histórico abaixo para conhecer o fluxo.</p>
-          <div className="mt-5 rounded-xl bg-emerald-50 p-4 dark:bg-emerald-900/40">
-            <Badge variant="info">Explore a demonstração</Badge>
-            <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-emerald-100">Registre uma ação, simule a análise nos detalhes e acompanhe a evolução nas missões, ranking e perfil.</p>
-          </div>
-        </Card>
-      </div>
+      <div className="mt-4 grid grid-cols-3 gap-3">{[{ title: 'Ações aprovadas', value: user.completedActions, icon: Leaf }, { title: 'Missões ativas', value: user.activeMissions, icon: Target }, { title: 'Seu ranking', value: rank ? `#${rank.position}` : '—', icon: Award }].map(({ title, value, icon: Icon }) => <Card key={title} className="!p-4"><Icon aria-hidden="true" size={21} className="text-emerald-600 dark:text-emerald-400" /><p className="mt-3 text-2xl font-bold">{value}</p><h2 className="app-muted mt-1 text-xs font-medium leading-relaxed">{title}</h2></Card>)}</div>
+      <div className="mt-5 grid gap-3 sm:grid-cols-2"><Link to="/app/validacoes" className="flex items-center gap-3 rounded-2xl border border-emerald-100 bg-white p-4 dark:border-emerald-800 dark:bg-emerald-900/30"><ClipboardCheck aria-hidden="true" className="text-emerald-600 dark:text-emerald-400" /><div className="flex-1"><p className="text-sm font-bold">Acompanhar atividades</p><p className="app-muted mt-1 text-xs">{pending ? `${pending} em análise ou revisão` : 'Todos os seus envios em um só lugar'}</p></div><ArrowRight aria-hidden="true" size={18} /></Link><Link to="/app/recompensas" className="flex items-center gap-3 rounded-2xl border border-emerald-100 bg-white p-4 dark:border-emerald-800 dark:bg-emerald-900/30"><Gift aria-hidden="true" className="text-emerald-600 dark:text-emerald-400" /><div className="flex-1"><p className="text-sm font-bold">Suas recompensas</p><p className="app-muted mt-1 text-xs">Descubra sua próxima conquista</p></div><ArrowRight aria-hidden="true" size={18} /></Link></div>
 
-      <section id="dashboard-missions" aria-labelledby="missions-title" className="mt-10 scroll-mt-48">
-        <h2 id="missions-title" className="text-2xl font-bold">Suas missões</h2>
-        <p className="mt-2 text-sm text-slate-500 dark:text-emerald-200">Ciclo demonstrativo: as aprovações simuladas atualizam as missões de ações. Não há contagem regressiva real.</p>
-        {missions.length === 0 ? <Card className="mt-5 shadow-sm"><p>Nenhuma missão disponível nesta demonstração.</p></Card> : (
-          <div className="mt-5 grid gap-5 md:grid-cols-3">{missions.map(mission => <MissionCard key={mission.id} mission={mission} />)}</div>
-        )}
-      </section>
-
-      <section id="dashboard-activities" aria-labelledby="activities-title" className="mt-10 scroll-mt-48">
-        <h2 id="activities-title" className="text-2xl font-bold">Atividades recentes</h2>
-        <p className="mt-2 text-sm text-slate-500 dark:text-emerald-200">Até cinco ações, ordenadas pelo envio ou pedido de revisão mais recente.</p>
-        <Card className="mt-5 shadow-sm">
-          {recentActions.length === 0 ? <p>Nenhuma ação nesta demonstração.</p> : (
-            <ul className="divide-y divide-emerald-100 dark:divide-emerald-800">
-              {recentActions.map(action => (
-                <li key={action.id} className="py-5 first:pt-0 last:pb-0">
-                  <div className="flex flex-wrap items-center justify-between gap-3"><h3 className="font-bold"><Link className="rounded underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-emerald-500" to={`/app/validacoes/${action.id}`}>{actionCategories[action.category].title}</Link></h3><Badge variant={statusVariants[action.status]}>{actionStatusLabels[action.status]}</Badge></div>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-emerald-100">{action.description}</p>
-                  <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-xs text-slate-500 dark:text-emerald-200">
-                    <span>Envio: <time dateTime={action.submittedAt}>{formatDate(action.submittedAt)}</time></span>
-                    <span>{action.status === 'approved' ? `${action.awardedPoints} pontos e ${action.awardedXp} XP recebidos` : `Até ${action.possiblePoints} pontos após aprovação`}</span>
-                  </div>
-                  {action.rejectionReason && <p className="mt-3 text-sm text-slate-600 dark:text-emerald-100">Motivo da recusa: {action.rejectionReason}</p>}
-                  {action.review && <p className="mt-2 text-sm text-slate-600 dark:text-emerald-100">Revisão solicitada em <time dateTime={action.review.requestedAt}>{formatDate(action.review.requestedAt)}</time>: {action.review.justification}</p>}
-                </li>
-              ))}
-            </ul>
-          )}
-        </Card>
-      </section>
+      <section id="dashboard-missions" aria-labelledby="missions-title" className="mt-8"><div className="mb-4 flex items-center justify-between gap-3"><h2 id="missions-title" className="text-xl font-bold">Missões para evoluir</h2><Link to="/app/missoes" className="inline-flex min-h-11 items-center gap-1 text-xs font-bold text-emerald-700 dark:text-emerald-300">Ver todas <ArrowRight aria-hidden="true" size={15} /></Link></div><div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">{missions.slice(0, 3).map(mission => <MissionCard key={mission.id} mission={mission} />)}</div>{!missions.length && <Card>Nenhuma missão disponível no momento.</Card>}</section>
+      <section id="dashboard-activities" aria-labelledby="activities-title" className="mt-7"><div className="mb-3 flex items-center justify-between gap-3"><h2 id="activities-title" className="text-xl font-bold">Atividades recentes</h2><Link to="/app/validacoes" className="inline-flex min-h-11 items-center gap-1 text-xs font-bold text-emerald-700 dark:text-emerald-300">Ver todas <ArrowRight aria-hidden="true" size={15} /></Link></div><Card>{recent.length ? <ul className="divide-y divide-emerald-100 dark:divide-emerald-800">{recent.map(action => <li key={action.id}><Link to={`/app/validacoes/${action.id}`} className="flex items-start gap-3 rounded-xl py-4 first:pt-2"><span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-900 dark:text-emerald-300"><Leaf aria-hidden="true" size={21} /></span><div className="min-w-0 flex-1"><div className="flex flex-wrap items-center justify-between gap-2"><h3 className="text-sm font-bold">{actionCategories[action.category].title}</h3><Badge variant={statusVariants[action.status]}>{actionStatusLabels[action.status]}</Badge></div><p className="app-muted mt-2 line-clamp-2 text-xs leading-relaxed">{action.description}</p><p className="mt-2 text-xs font-semibold text-emerald-700 dark:text-emerald-300">{action.status === 'approved' ? `+${action.awardedPoints} pontos · +${action.awardedXp} XP` : 'Acompanhar envio →'}</p></div></Link></li>)}</ul> : <p className="app-muted text-sm">Suas ações aparecerão aqui. Que tal registrar a primeira?</p>}</Card></section>
     </section>
   )
 }
-
-export default DashboardPage

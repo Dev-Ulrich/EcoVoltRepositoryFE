@@ -1,3 +1,5 @@
+import { ClipboardCheck } from 'lucide-react'
+import AppPageHeader from '../../components/app/AppPageHeader'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import ActionCard from '../../components/actions/ActionCard'
@@ -25,18 +27,8 @@ export default function ValidacoesPage() {
     .sort((a, b) => Date.parse(b.submittedAt) - Date.parse(a.submittedAt))
   return (
     <section aria-labelledby="validations-title">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <h1 id="validations-title" className="text-3xl font-bold">
-          Envios e validações
-        </h1>
-        <Link className={actionLinkClass} to="/app/enviar-acao">
-          Nova ação
-        </Link>
-      </div>
-      <p className="mt-3 text-slate-600 dark:text-emerald-100">
-        Acompanhe seus registros locais. Abra os detalhes para consultar a
-        evidência e experimentar uma análise simulada.
-      </p>
+      <AppPageHeader id="validations-title" title="Suas atividades" description="Acompanhe os envios, confira as análises e celebre cada aprovação." icon={ClipboardCheck} />
+      <div className="mb-5 flex flex-wrap items-center justify-between gap-3"><div className="flex flex-wrap gap-2">{Object.entries(actionStatusLabels).map(([value, label]) => <button key={value} type="button" aria-pressed={status === value} onClick={() => setStatus(status === value ? '' : value as ActionStatus)} className={`min-h-11 rounded-full border px-3 py-2 text-xs font-semibold ${status === value ? 'border-emerald-700 bg-emerald-700 text-white' : 'border-emerald-200 bg-white dark:border-emerald-700 dark:bg-emerald-900/30'}`}>{label} · {actions.filter(action => action.status === value).length}</button>)}</div><Link className={actionLinkClass} to="/app/enviar-acao">Nova ação</Link></div>
       <Card className="mt-6 shadow-sm">
         <div className="grid gap-4 sm:grid-cols-2">
           <div>

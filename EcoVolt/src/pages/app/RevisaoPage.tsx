@@ -1,3 +1,5 @@
+import { MessageSquare } from 'lucide-react'
+import AppPageHeader from '../../components/app/AppPageHeader'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useDemoData } from '../../hooks/useDemoData'
@@ -51,7 +53,7 @@ export default function RevisaoPage() {
   }
   return (
     <section className="mx-auto max-w-3xl">
-      <h1 className="text-3xl font-bold">Solicitar revisão</h1>
+      <AppPageHeader title="Vamos revisar sua ação" description="Conte mais sobre sua atividade para solicitar uma nova análise." eyebrow="Uma nova oportunidade" icon={MessageSquare} />
       <p className="my-4">
         {actionCategories[action.category].title} · Motivo:{' '}
         {action.rejectionReason}

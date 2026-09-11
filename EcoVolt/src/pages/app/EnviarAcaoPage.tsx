@@ -1,3 +1,5 @@
+import { Camera, UploadCloud } from 'lucide-react'
+import AppPageHeader from '../../components/app/AppPageHeader'
 import { useRef, useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
@@ -62,13 +64,8 @@ export default function EnviarAcaoPage() {
   }
   return (
     <section aria-labelledby="send-title" className="mx-auto max-w-3xl">
-      <h1 id="send-title" className="text-3xl font-bold">
-        Enviar ação sustentável
-      </h1>
-      <p className="mb-6 mt-3 text-slate-600 dark:text-emerald-100">
-        Selecione uma categoria e uma evidência. Somente os dados do arquivo
-        ficam na memória; nada é enviado ou salvo em banco.
-      </p>
+      <AppPageHeader id="send-title" title="Registre sua ação" description="Escolha a atividade, conte o que fez e adicione uma evidência." eyebrow="Faça a diferença" icon={Camera} />
+      <ol aria-label="Etapas do envio" className="mb-6 grid grid-cols-3 gap-2 text-xs font-semibold">{['Escolha a ação', 'Conte sua história', 'Adicione o vídeo'].map((step, index) => <li key={step} className="flex items-center gap-2 rounded-xl bg-emerald-100/60 p-3 dark:bg-emerald-900/40"><span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-emerald-700 text-white">{index + 1}</span>{step}</li>)}</ol>
       <Card className="shadow-sm">
         <form
           onSubmit={(event) => {
@@ -148,7 +145,7 @@ export default function EnviarAcaoPage() {
             </p>
           </div>
           <div
-            className="rounded-xl border-2 border-dashed border-emerald-300 p-5 dark:border-emerald-700"
+            className="rounded-2xl border-2 border-dashed border-emerald-300 bg-emerald-50/60 p-5 dark:border-emerald-700 dark:bg-emerald-900/20"
             onDragOver={(event) => event.preventDefault()}
             onDrop={(event) => {
               event.preventDefault()
@@ -157,6 +154,7 @@ export default function EnviarAcaoPage() {
               })
             }}
           >
+            <UploadCloud aria-hidden="true" size={32} className="mb-4 text-emerald-600 dark:text-emerald-400" />
             <label
               htmlFor="action-evidence"
               className="mb-2 block font-semibold"
@@ -167,7 +165,7 @@ export default function EnviarAcaoPage() {
               id="action-evidence"
               type="file"
               accept="video/mp4,video/quicktime,video/x-msvideo,.mp4,.mov,.avi"
-              className="block w-full min-w-0 text-sm"
+              className="block w-full min-w-0 text-sm file:mr-3 file:rounded-xl file:border-0 file:bg-emerald-700 file:px-4 file:py-3 file:font-semibold file:text-white"
               aria-invalid={!!errors.evidence}
               aria-describedby="evidence-help evidence-error"
               {...register('evidence', {

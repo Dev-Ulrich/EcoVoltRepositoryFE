@@ -1,4 +1,5 @@
-import { Award, Info, Trophy } from 'lucide-react'
+import AppPageHeader from '../../components/app/AppPageHeader'
+import { Award, Trophy } from 'lucide-react'
 import { useState } from 'react'
 
 import Card from '../../components/common/Card'
@@ -21,15 +22,7 @@ function RankingPage() {
 
   return (
     <section aria-labelledby="ranking-title">
-      <header className="mb-8">
-        <div className="flex flex-wrap items-center gap-3">
-          <Award aria-hidden="true" className="text-emerald-700 dark:text-emerald-400" size={28} />
-          <p className="font-semibold text-emerald-700 dark:text-emerald-400">Área do participante</p>
-        </div>
-        <h1 id="ranking-title" className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Ranking mensal</h1>
-        <p className="mt-3 max-w-2xl text-slate-600 dark:text-emerald-100">Compare sua evolução com outros participantes do mesmo tier e acompanhe as posições desta demonstração.</p>
-        <p className="mt-3 flex items-start gap-2 text-sm text-slate-500 dark:text-emerald-200"><Info aria-hidden="true" className="mt-0.5 shrink-0" size={16} />Classificação demonstrativa: os dados são fictícios e reiniciam ao recarregar a página ou sair.</p>
-      </header>
+      <AppPageHeader id="ranking-title" title="Ranking" description="Cada atitude leva você mais longe. Veja sua posição no mês." icon={Trophy} />
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
         <Card className="shadow-sm">

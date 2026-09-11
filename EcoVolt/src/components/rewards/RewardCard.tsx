@@ -1,4 +1,4 @@
-import { LockKeyhole, Sparkles } from 'lucide-react'
+import { Gift, LockKeyhole } from 'lucide-react'
 
 import Badge from '../common/Badge'
 import Card from '../common/Card'
@@ -27,8 +27,8 @@ function RewardCard({ reward }: RewardCardProps) {
   return (
     <Card className="flex h-full flex-col shadow-sm">
       <div className="flex items-start justify-between gap-3">
-        <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300">
-          {reward.status === 'locked' ? <LockKeyhole aria-hidden="true" size={21} /> : <Sparkles aria-hidden="true" size={21} />}
+        <div className="flex size-16 shrink-0 items-center justify-center rounded-2xl bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300">
+          {reward.status === 'locked' ? <LockKeyhole aria-hidden="true" size={21} /> : <Gift aria-hidden="true" size={30} />}
         </div>
         <Badge variant={statusVariants[reward.status]}>{statusLabels[reward.status]}</Badge>
       </div>
