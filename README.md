@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="src/assets/brand/ecovolt-logo.png" alt="EcoVolt" width="240" />
+  <img src="EcoVolt/src/assets/brand/ecovolt-logo.png" alt="EcoVolt" width="240" />
 </p>
 
 <h1 align="center">⚡ EcoVolt — Transformando ações sustentáveis em impacto real</h1>
