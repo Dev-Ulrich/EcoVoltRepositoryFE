@@ -382,7 +382,7 @@ O [planejamento anterior](docs/PLANEJAMENTO-ANTERIOR.md) permanece como registro
 
 - **Código da Sprint 03:** [EcoVoltRepositoryFE](https://github.com/Dev-Ulrich/EcoVoltRepositoryFE).
 - **Versão anterior do frontend:** [EcoVolt-FrontEnd-Repository](https://github.com/Dev-Ulrich/EcoVolt-FrontEnd-Repository).
-- **Vídeo pitch da Sprint 03:** pendente de publicação e inclusão do link do YouTube antes da entrega.
+- **Vídeo pitch da Sprint 03:** [Video Pitch](https://youtu.be/r7tb51XaPgM).
 
 <a id="equipe"></a>
 ## 👥 Equipe
