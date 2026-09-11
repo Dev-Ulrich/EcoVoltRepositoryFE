@@ -2,8 +2,8 @@ import { ArrowRight, ArrowUpRight, Bug, CircleHelp, Code, Gift, Handshake, Leaf,
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import heroBackground from '../../assets/public/contato/hero-contato-reference.png'
-import communityBackground from '../../assets/public/home/backgroun-section-homepage.png'
+import heroBackground from '../../assets/public/contato/hero-contato-reference.webp'
+import communityBackground from '../../assets/public/home/backgroun-section-homepage.webp'
 import ContactForm from '../../components/common/ContactForm'
 
 const topics = [

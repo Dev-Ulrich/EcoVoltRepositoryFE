@@ -1,15 +1,15 @@
 import { ArrowDown, CircleAlert, Earth, Eye, Heart, Leaf, ShieldCheck, Target, type LucideIcon } from 'lucide-react'
 
-import heroBackground from '../../assets/public/quem-somos/background-quem-somos.png'
-import fiapImage from '../../assets/public/quem-somos/fiap.png'
+import heroBackground from '../../assets/public/quem-somos/background-quem-somos.webp'
+import fiapImage from '../../assets/public/quem-somos/fiap.webp'
 import logoFiap from '../../assets/public/quem-somos/logo-fiap.png'
-import logoSoulUp from '../../assets/public/quem-somos/logo-soulup.png'
-import ods06 from '../../assets/public/sobre/ods-6.png'
-import ods07 from '../../assets/public/sobre/ods-7.png'
-import ods11 from '../../assets/public/sobre/ods-11.png'
-import ods12 from '../../assets/public/sobre/ods-12.png'
-import ods13 from '../../assets/public/sobre/ods-13.png'
-import ods15 from '../../assets/public/sobre/ods-15.png'
+import logoSoulUp from '../../assets/public/quem-somos/logo-soulup.webp'
+import ods06 from '../../assets/public/sobre/ods-6.webp'
+import ods07 from '../../assets/public/sobre/ods-7.webp'
+import ods11 from '../../assets/public/sobre/ods-11.webp'
+import ods12 from '../../assets/public/sobre/ods-12.webp'
+import ods13 from '../../assets/public/sobre/ods-13.webp'
+import ods15 from '../../assets/public/sobre/ods-15.webp'
 
 const pillars = [
   { icon: Target, title: 'Propósito', description: 'Incentivar e facilitar a adoção de hábitos sustentáveis por meio da tecnologia, gamificação e comunidade, gerando impacto positivo no planeta.' },

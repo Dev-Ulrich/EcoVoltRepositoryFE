@@ -1,11 +1,11 @@
 import { ArrowRight, ArrowUpRight, GraduationCap } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
-import heroBackground from '../../assets/public/quem-somos/hero-equipe.png'
+import heroBackground from '../../assets/public/quem-somos/hero-equipe.webp'
 import arthurPhoto from '../../assets/team/Arthur-da-Silva.jpg'
-import lucaPhoto from '../../assets/team/Matheus-Luca.png'
+import lucaPhoto from '../../assets/team/Matheus-Luca.webp'
 import pereiraPhoto from '../../assets/team/Matheus-Pereira.jpeg'
-import victorPhoto from '../../assets/team/Victor-Ulrich.png'
+import victorPhoto from '../../assets/team/Victor-Ulrich.webp'
 import Card from '../../components/common/Card'
 
 const members = [

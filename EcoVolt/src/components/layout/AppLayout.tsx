@@ -4,8 +4,8 @@ import { Link, Navigate, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../../auth/useAuth'
 import useTheme from '../../hooks/useTheme'
 import { useDemoData } from '../../hooks/useDemoData'
-import logo from '../../assets/brand/ecovolt-logo.png'
-import logoDark from '../../assets/brand/ecovolt-logo-dark.png'
+import logo from '../../assets/brand/ecovolt-logo.webp'
+import logoDark from '../../assets/brand/ecovolt-logo-dark.webp'
 import AppNavigation from './AppNavigation'
 
 const titles: Record<string, string> = { '/app': 'Sua jornada', '/app/missoes': 'Missões', '/app/enviar-acao': 'Nova ação', '/app/validacoes': 'Suas atividades', '/app/ranking': 'Ranking', '/app/recompensas': 'Recompensas', '/app/perfil': 'Seu perfil' }

@@ -1,9 +1,9 @@
 import { ArrowRight, BatteryFull, Bell, Bike, ChartNoAxesColumnIncreasing, Check, ClipboardCheck, Droplets, Gift, Globe, House, Leaf, Medal, Play, Plus, Recycle, ShieldCheck, Signal, UserRound, Users, Wifi, Zap } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
-import ecovoltLogoDark from '../../assets/brand/ecovolt-logo-dark.png'
-import heroBackground from '../../assets/public/home/hero-background.png'
-import homepageSectionBackground from '../../assets/public/home/backgroun-section-homepage.png'
+import ecovoltLogoDark from '../../assets/brand/ecovolt-logo-dark.webp'
+import heroBackground from '../../assets/public/home/hero-background.webp'
+import homepageSectionBackground from '../../assets/public/home/backgroun-section-homepage.webp'
 
 const features = [
   { icon: Leaf, title: 'Ações sustentáveis', description: 'Realize atividades do dia a dia que fazem a diferença para o meio ambiente.', accent: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-400/15 dark:text-emerald-300' },

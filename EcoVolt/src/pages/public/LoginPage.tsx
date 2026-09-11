@@ -7,8 +7,8 @@ import { Link, Navigate } from 'react-router-dom'
 
 import { useAuth } from '../../auth/useAuth'
 import { demoCredentials } from '../../data/mockUsers'
-import ecovoltLogoDark from '../../assets/brand/ecovolt-logo-dark.png'
-import loginBackground from '../../assets/public/contato/hero-contato-reference.png'
+import ecovoltLogoDark from '../../assets/brand/ecovolt-logo-dark.webp'
+import loginBackground from '../../assets/public/contato/hero-contato-reference.webp'
 import ThemeToggle from '../../components/common/ThemeToggle'
 
 const inputClasses = 'w-full rounded-xl border border-emerald-200 bg-white px-4 py-3 text-slate-900 outline-none transition placeholder:text-slate-500 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 dark:border-emerald-800 dark:bg-emerald-950 dark:text-white dark:placeholder:text-emerald-200/60'

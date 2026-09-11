@@ -1,7 +1,7 @@
 import { ChevronDown, CircleDollarSign, Gift, GraduationCap, Leaf, MessageCircle, Search, Settings, Trophy, UserRound, Users } from 'lucide-react'
 import { useRef, useState } from 'react'
 
-import heroBackground from '../../assets/public/faq/faq-hero.png'
+import heroBackground from '../../assets/public/faq/faq-hero.webp'
 
 const categories = [
   { id: 'geral', label: 'Geral', subtitle: 'Sobre o EcoVolt', title: 'Sobre o EcoVolt', description: 'Conheça mais sobre o projeto, seus objetivos e como ele funciona.', icon: Leaf },

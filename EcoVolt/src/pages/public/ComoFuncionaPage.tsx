@@ -1,9 +1,9 @@
 import { ArrowRight, ChartNoAxesColumnIncreasing, Earth, Gift, Leaf, Search, TreePine, Trophy, Users, Video, Zap } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
-import planetIllustration from '../../assets/public/como-funciona/asset-comofuncionapage.png'
-import forestBackground from '../../assets/public/como-funciona/backgound-comofuncionapage.png'
-import heroBackground from '../../assets/public/como-funciona/background-section-comofuncionaapge.png'
+import planetIllustration from '../../assets/public/como-funciona/asset-comofuncionapage.webp'
+import forestBackground from '../../assets/public/como-funciona/backgound-comofuncionapage.webp'
+import heroBackground from '../../assets/public/como-funciona/background-section-comofuncionaapge.webp'
 
 const steps = [
   { title: 'Escolha uma ação', description: 'Selecione uma das ações sustentáveis disponíveis, alinhadas aos ODS.', icon: Leaf, accent: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300' },
