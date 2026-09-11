@@ -53,7 +53,7 @@ export default function AppLayout() {
             <Link to="/app/perfil" aria-label="Seu perfil" className="hidden size-10 items-center justify-center rounded-full bg-emerald-100 text-sm font-bold text-emerald-800 sm:flex dark:bg-emerald-800 dark:text-emerald-100">{user.displayName.split(' ').map(part => part[0]).slice(0, 2).join('')}</Link>
           </div>
         </header>
-        <main id="app-content" tabIndex={-1} className="app-content"><Outlet /></main>
+        <main id="app-content" tabIndex={-1} className="app-content"><div key={pathname} className="app-screen"><Outlet /></div></main>
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-5 pb-28 text-xs lg:px-8 lg:pb-6">
           <p className="app-muted">Modo demonstração · As alterações reiniciam ao recarregar.</p>
           <button onClick={() => void signOut()} disabled={leaving} className="inline-flex min-h-11 items-center gap-2 rounded-lg px-2 font-semibold text-emerald-700 disabled:opacity-50 dark:text-emerald-300"><LogOut aria-hidden="true" size={15} />{leaving ? 'Saindo…' : 'Sair da conta'}</button>

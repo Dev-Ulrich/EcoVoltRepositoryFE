@@ -1,0 +1,29 @@
+/* Motion is limited to the public site and enabled only when requested by the OS. */
+@media (prefers-reduced-motion: no-preference) {
+  .public-motion :is(a, button, summary) {
+    transition-property: color, background-color, border-color, box-shadow, translate;
+    transition-duration: 180ms;
+    transition-timing-function: ease-out;
+  }
+  .public-motion :is(input, textarea, select) { transition: border-color 180ms, box-shadow 180ms, background-color 180ms; }
+  .public-motion :is(a, button):not(:disabled):active { translate: 0 1px; }
+  .public-motion main article { transition: box-shadow 240ms, border-color 240ms, translate 240ms; }
+  .public-motion :is(a, button) > svg { transition: translate 180ms; }
+  .public-motion #faq-results button > svg { transition: transform 220ms; }
+  .public-motion #faq-results [role="region"]:not([hidden]) { animation: public-answer-in 220ms ease-out; }
+  .public-motion :is([role="status"], [role="alert"]):not(:empty) { animation: public-message-in 180ms ease-out; }
+  .public-motion details[open] > p { animation: public-message-in 180ms ease-out; }
+  @media (hover: hover) and (pointer: fine) {
+    .public-motion main article:not(:has(button[aria-expanded])):hover { translate: 0 -4px; box-shadow: 0 14px 32px rgb(6 78 59 / 10%); }
+    .public-motion main :is(a, button):not(:disabled):hover { box-shadow: 0 5px 16px rgb(6 78 59 / 8%); }
+    .public-motion :is(a, button):hover > .lucide-arrow-right { translate: 3px 0; }
+    .public-motion :is(a, button):hover > .lucide-arrow-up-right { translate: 2px -2px; }
+    .public-motion #integrantes article img { transition: scale 350ms; }
+    .public-motion #integrantes article:hover img { scale: 1.035; }
+  }
+}
+@keyframes public-answer-in { from { opacity: 0; translate: 0 -4px; } to { opacity: 1; translate: 0 0; } }
+@keyframes public-message-in { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .public-motion, .public-motion *, .public-motion *::before, .public-motion *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

@@ -9,7 +9,7 @@
 .app-icon-button { display:flex; width:40px; height:40px; flex-shrink:0; align-items:center; justify-content:center; border:1px solid var(--app-border); border-radius:14px; }
 .app-icon-button:hover { background:#10b98115; }
 .app-content { width:100%; max-width:1152px; margin:0 auto; padding:24px 16px 20px; outline:none; }
-.app-content > section { min-width:0; }
+.app-screen, .app-screen > section { min-width:0; }
 .app-content article { background:var(--app-surface); border-color:var(--app-border); border-radius:22px; padding:20px; box-shadow:0 3px 16px #052e1604; }
 .app-content :is(h1,h2,h3) { letter-spacing:-.035em; }
 .app-content h1 { font-size:clamp(1.65rem,3vw,2.2rem); line-height:1.15; }
@@ -47,3 +47,42 @@
 .app-content button.bg-emerald-500 { background:#047857; }
 .app-content button.bg-emerald-500:hover { background:#065f46; }
 [data-theme="dark"] .app-content button.bg-emerald-500 { background:#34d399; }
+
+/* Short feedback animations; navigation stays fixed and forms remain usable. */
+@media (prefers-reduced-motion: no-preference) {
+  .app-screen { animation: app-screen-in 280ms cubic-bezier(.2,.7,.2,1); }
+  .app-screen:focus-within { animation: none; }
+  .app-screen article:not(:has(form, input, textarea, select)) {
+    animation: app-card-in 380ms cubic-bezier(.2,.7,.2,1) backwards;
+    transition: background-color 180ms, border-color 180ms, box-shadow 180ms;
+  }
+  .app-screen :is(article, li):nth-child(2) > article,
+  .app-screen article:nth-child(2) { animation-delay: 40ms; }
+  .app-screen :is(article, li):nth-child(3) > article,
+  .app-screen article:nth-child(3) { animation-delay: 80ms; }
+  .app-screen :is(article, li):nth-child(n+4) > article,
+  .app-screen article:nth-child(n+4) { animation-delay: 110ms; }
+  .app-screen article:focus-within { animation: none; }
+  .app-shell :is(button, a) { transition: color 160ms, background-color 160ms, border-color 160ms, box-shadow 160ms, scale 120ms; }
+  .app-shell :is(button:not(:disabled), a):active { scale: .98; }
+  .app-shell .app-nav-icon { transition: background-color 180ms, color 180ms, scale 180ms; }
+  .app-shell :is(.app-tab, .app-nav-link).is-active .app-nav-icon svg { animation: app-icon-in 260ms ease-out; }
+  .app-topbar .app-icon-button > svg { animation: app-icon-in 220ms ease-out; }
+  .app-content [role="progressbar"] > div { transition: width 480ms cubic-bezier(.2,.7,.2,1), background-color 180ms; }
+  .app-content circle[stroke-dasharray] { transition: stroke-dasharray 480ms ease-out; }
+  .app-content :is([role="status"], [role="alert"]):not(:empty) { animation: app-feedback-in 200ms ease-out; }
+  .app-content :is(input, textarea, select) { transition: border-color 180ms, box-shadow 180ms; }
+  .app-content :is(a, button) > .lucide-arrow-right { transition: translate 180ms; }
+  @media (hover: hover) and (pointer: fine) {
+    .app-screen article:not(:has(form, input, textarea, select)):hover { box-shadow: 0 8px 24px rgb(6 78 59 / 9%); }
+    .app-content :is(a, button):hover > .lucide-arrow-right { translate: 3px 0; }
+    .app-nav-link:hover .app-nav-icon, .app-icon-button:hover > svg { scale: 1.08; }
+  }
+}
+@keyframes app-screen-in { from { opacity: .4; translate: 0 8px; } to { opacity: 1; translate: 0 0; } }
+@keyframes app-card-in { from { opacity: .4; translate: 0 6px; } to { opacity: 1; translate: 0 0; } }
+@keyframes app-icon-in { from { scale: .85; } to { scale: 1; } }
+@keyframes app-feedback-in { from { opacity: .3; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .app-shell, .app-shell *, .app-shell *::before, .app-shell *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

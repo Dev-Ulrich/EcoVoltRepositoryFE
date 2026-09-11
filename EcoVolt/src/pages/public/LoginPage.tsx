@@ -1,3 +1,5 @@
+import usePublicMotion from '../../hooks/usePublicMotion'
+import '../../styles/public-motion.css'
 import { ArrowLeft, ArrowRight, Eye, EyeOff, Leaf, ShieldCheck, Sparkles } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -14,6 +16,7 @@ const inputClasses = 'w-full rounded-xl border border-emerald-200 bg-white px-4 
 type LoginFormData = { email: string; password: string }
 
 function LoginPage() {
+  const motionRef = usePublicMotion<HTMLElement>()
   const [showPassword, setShowPassword] = useState(false)
   const [message, setMessage] = useState('')
 
@@ -55,7 +58,7 @@ function LoginPage() {
   if (user) return <Navigate to="/app" replace />
 
   return (
-    <main className="flex min-h-dvh flex-col bg-[#f5faf7] text-[#09243a] transition-colors dark:bg-emerald-950 dark:text-white">
+    <main ref={motionRef} className="public-motion flex min-h-dvh flex-col bg-[#f5faf7] text-[#09243a] transition-colors dark:bg-emerald-950 dark:text-white">
       <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3 px-6 py-5">
         <Link to="/" className="inline-flex min-h-11 items-center gap-2 rounded-lg px-2 py-2 text-sm font-semibold text-emerald-800 transition hover:bg-emerald-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-emerald-100 dark:hover:bg-emerald-900"><ArrowLeft aria-hidden="true" size={18} />Voltar ao início</Link>
         <ThemeToggle />
@@ -63,7 +66,7 @@ function LoginPage() {
 
       <div className="mx-auto flex w-full max-w-6xl flex-1 items-center px-4 pb-8 sm:px-6">
         <div className="grid w-full overflow-hidden rounded-[1.75rem] border border-emerald-100 bg-white shadow-[0_20px_70px_rgba(6,78,59,.08)] lg:grid-cols-[1.05fr_1fr] dark:border-emerald-800 dark:bg-[#07372d]">
-          <section aria-labelledby="welcome-title" className="relative isolate flex min-h-[240px] flex-col justify-between overflow-hidden bg-emerald-950 p-7 text-white sm:p-9 lg:min-h-[760px] lg:p-10">
+          <section data-motion-reveal aria-labelledby="welcome-title" className="relative isolate flex min-h-[240px] flex-col justify-between overflow-hidden bg-emerald-950 p-7 text-white sm:p-9 lg:min-h-[760px] lg:p-10">
             <img src={loginBackground} alt="" fetchPriority="high" className="absolute inset-0 -z-20 h-full w-full object-cover object-right" />
             <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(0,30,23,.95)_0%,rgba(0,30,23,.8)_35%,rgba(0,30,23,.05)_70%,rgba(0,30,23,.85)_100%)] max-lg:bg-emerald-950/70" />
             <div>

@@ -128,7 +128,7 @@ function SobrePage() {
           <p className={`mt-2 text-sm leading-relaxed sm:text-base ${body}`}>Nossas ações estão conectadas a diversos ODS da ONU, contribuindo para um futuro mais justo, equilibrado e sustentável.</p>
           <div className="mt-6 grid items-center gap-6 lg:grid-cols-[1fr_250px]">
             <ul className="grid grid-cols-3 gap-2 sm:grid-cols-6">
-              {sdgCards.map(({ number, title, image }) => <li key={number} className="overflow-hidden rounded-xl"><img src={image} alt={`ODS ${number}: ${title}`} loading="lazy" className="aspect-square w-full object-contain" /></li>)}
+              {sdgCards.map(({ number, title, image }) => <li data-motion-reveal key={number} className="overflow-hidden rounded-xl"><img src={image} alt={`ODS ${number}: ${title}`} loading="lazy" className="aspect-square w-full object-contain" /></li>)}
             </ul>
             <div className="flex items-center gap-4 rounded-2xl bg-white/70 p-5 dark:bg-emerald-900/60">
               <IconMedallion icon={Earth} /><div><p className="text-sm font-semibold leading-relaxed">Juntos por um amanhã mais verde.</p><p className={`mt-1 text-sm ${body}`}>Cada escolha conta.</p><AccentStroke /></div>

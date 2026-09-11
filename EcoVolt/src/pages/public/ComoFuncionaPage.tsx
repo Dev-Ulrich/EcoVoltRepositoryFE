@@ -61,7 +61,7 @@ function ComoFuncionaPage() {
           </div>
           <ol className="mt-8 grid gap-x-5 gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 lg:gap-x-4">
             {steps.map(({ title, description, icon: Icon, accent }, index) => (
-              <li key={title} className="relative text-center">
+              <li data-motion-reveal key={title} className="relative text-center">
                 {index < steps.length - 1 && <span aria-hidden="true" className="absolute left-[calc(50%+52px)] top-11 hidden h-px w-[calc(100%-88px)] bg-slate-300 lg:block dark:bg-emerald-700"><span className="absolute right-0 -top-px size-[3px] rounded-full bg-slate-400 dark:bg-emerald-500" /></span>}
                 <div className={`relative mx-auto flex size-[88px] items-center justify-center rounded-full ${accent}`}>
                   <Icon aria-hidden="true" size={38} strokeWidth={1.8} />
@@ -83,7 +83,7 @@ function ComoFuncionaPage() {
               <p className={`mt-4 text-base leading-relaxed ${body}`}>O EcoVolt une tecnologia, gamificação e sustentabilidade para incentivar atitudes que realmente fazem a diferença. Cada ação contribui para um futuro mais verde, justo e consciente.</p>
               <Link to="/sobre" className={`${primaryButton} mt-4 px-4`}>Conheça mais sobre o projeto <ArrowRight aria-hidden="true" size={17} className="shrink-0" /></Link>
             </div>
-            <img src={planetIllustration} alt="Ilustração de um planeta verde envolvido por folhas" loading="lazy" width={1254} height={1254} className="mx-auto w-full max-w-[290px] object-contain md:max-w-[320px] lg:max-w-none" />
+            <img data-motion-visual src={planetIllustration} alt="Ilustração de um planeta verde envolvido por folhas" loading="lazy" width={1254} height={1254} className="mx-auto w-full max-w-[290px] object-contain md:max-w-[320px] lg:max-w-none" />
             <ul className="grid gap-6 md:col-span-2 md:grid-cols-3 lg:col-span-1 lg:grid-cols-1">
               {highlights.map(({ icon: Icon, title, description }) => (
                 <li key={title} className="flex items-start gap-4 md:flex-col lg:flex-row">

@@ -84,7 +84,7 @@ function HomePage() {
               {[{ icon: Leaf, text: 'Mais consciência' }, { icon: Users, text: 'Mais pessoas' }, { icon: Globe, text: 'Um planeta melhor' }].map(({ icon: Icon, text }) => <li key={text} className="flex items-center gap-2"><Icon aria-hidden="true" size={27} className="shrink-0 text-emerald-300" />{text}</li>)}
             </ul>
           </div>
-          <div className="relative min-w-0 px-2 py-4 lg:px-4">
+          <div data-motion-visual className="relative min-w-0 px-2 py-4 lg:px-4">
             <div aria-hidden="true" className="absolute inset-x-4 inset-y-12 rounded-full bg-emerald-400/10 blur-3xl" />
             <DashboardPhone />
           </div>
