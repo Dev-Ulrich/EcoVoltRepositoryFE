@@ -1,8 +1,177 @@
-import {validateEnergy} from '../services/validation';
-import {useState,type FormEvent} from 'react';
-import {useApi} from '../hooks/useApi';
-import {saveEnergy} from '../services/energy';
-import {button,field,Feedback} from './UI';
-import type {Conta,ContaInput,Usuario} from '../types/api';
-const initial:ContaInput={idUsuario:0,idRecompensa:null,nomeTitular:'',concessionaria:'',numeroInstalacao:'',mesReferencia:'',valorConta:0,valorSubsidio:0,arquivoComprovante:null,statusPagamento:'PENDENTE'};
-export default function EnergyForm({conta,onSave,onCancel}:{conta?:Conta;onSave:()=>void;onCancel:()=>void}){const [value,setValue]=useState<ContaInput>(conta??initial);const [busy,setBusy]=useState(false),[error,setError]=useState('');const users=useApi<Usuario[]>('/usuario');function update<K extends keyof ContaInput>(key:K,val:ContaInput[K]){setValue(v=>({...v,[key]:val}))}async function submit(e:FormEvent){e.preventDefault();if(busy)return;const invalid=validateEnergy(value);if(invalid){setError(invalid);return;}setError('');setBusy(true);try{await saveEnergy(value,conta?.id);onSave()}catch(e){setError(e instanceof Error?e.message:'Falha ao salvar.')}finally{setBusy(false)}}return <form onSubmit={submit} className="mb-8 rounded-2xl border border-stone-200 bg-white p-6"><h2 className="mb-5 text-2xl font-semibold">{conta?'Editar conta':'Nova conta de energia'}</h2><Feedback {...users}/><div className="grid gap-5 md:grid-cols-2"><label>Usuário<select required className={field} value={value.idUsuario} onChange={e=>update('idUsuario',Number(e.target.value))}><option value="0" disabled>Selecione o usuário</option>{users.data?.map(u=><option key={u.id} value={u.id}>{u.nome} (#{u.id})</option>)}</select></label><label>Titular<input required maxLength={100} className={field} value={value.nomeTitular} onChange={e=>update('nomeTitular',e.target.value)}/></label><label>Concessionária<input required maxLength={100} className={field} value={value.concessionaria} onChange={e=>update('concessionaria',e.target.value)}/></label><label>Instalação<input required maxLength={50} className={field} value={value.numeroInstalacao} onChange={e=>update('numeroInstalacao',e.target.value)}/></label><label>Mês de referência<input required type="month" className={field} value={value.mesReferencia} onChange={e=>update('mesReferencia',e.target.value)}/></label><label>Valor da conta (R$)<input required type="number" min="0" step="0.01" className={field} value={value.valorConta} onChange={e=>update('valorConta',Number(e.target.value))}/></label><label>Status<select className={field} value={value.statusPagamento} onChange={e=>update('statusPagamento',e.target.value)}>{Array.from(new Set(['PENDENTE','PAGO','SUBSIDIADO',value.statusPagamento])).map(s=><option key={s}>{s}</option>)}</select></label></div>{error&&<p role="alert" className="mt-4 text-red-700">{error}</p>}<div className="mt-6 flex gap-4"><button disabled={busy||users.loading||!!users.error||!value.idUsuario} className={button}>{busy?'Salvando…':'Salvar conta'}</button><button type="button" disabled={busy} onClick={onCancel} className="px-4 underline">Cancelar</button></div></form>}
+import { validateEnergy } from "../services/validation";
+import { useState, type FormEvent } from "react";
+import { useApi } from "../hooks/useApi";
+import { saveEnergy } from "../services/energy";
+import { button, field, Feedback } from "./UI";
+import type { Conta, ContaInput, Usuario } from "../types/api";
+const initial: ContaInput = {
+  idUsuario: 0,
+  idRecompensa: null,
+  nomeTitular: "",
+  concessionaria: "",
+  numeroInstalacao: "",
+  mesReferencia: "",
+  valorConta: 0,
+  valorSubsidio: 0,
+  arquivoComprovante: null,
+  statusPagamento: "PENDENTE",
+};
+export default function EnergyForm({
+  conta,
+  onSave,
+  onCancel,
+}: {
+  conta?: Conta;
+  onSave: () => void;
+  onCancel: () => void;
+}) {
+  const [value, setValue] = useState<ContaInput>(conta ?? initial);
+  const [busy, setBusy] = useState(false),
+    [error, setError] = useState("");
+  const users = useApi<Usuario[]>("/usuario");
+  function update<K extends keyof ContaInput>(key: K, val: ContaInput[K]) {
+    setValue((v) => ({ ...v, [key]: val }));
+  }
+  async function submit(e: FormEvent) {
+    e.preventDefault();
+    if (busy) return;
+    const invalid = validateEnergy(value);
+    if (invalid) {
+      setError(invalid);
+      return;
+    }
+    setError("");
+    setBusy(true);
+    try {
+      await saveEnergy(value, conta?.id);
+      onSave();
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Falha ao salvar.");
+    } finally {
+      setBusy(false);
+    }
+  }
+  return (
+    <form
+      onSubmit={submit}
+      className="mb-8 rounded-2xl border border-stone-200 bg-white p-6"
+    >
+      <h2 className="mb-5 text-2xl font-semibold">
+        {conta ? "Editar conta" : "Nova conta de energia"}
+      </h2>
+      <Feedback {...users} />
+      <div className="grid gap-5 md:grid-cols-2">
+        <label>
+          Usuário
+          <select
+            required
+            className={field}
+            value={value.idUsuario}
+            onChange={(e) => update("idUsuario", Number(e.target.value))}
+          >
+            <option value="0" disabled>
+              Selecione o usuário
+            </option>
+            {users.data?.map((u) => (
+              <option key={u.id} value={u.id}>
+                {u.nome} (#{u.id})
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Titular
+          <input
+            required
+            maxLength={100}
+            className={field}
+            value={value.nomeTitular}
+            onChange={(e) => update("nomeTitular", e.target.value)}
+          />
+        </label>
+        <label>
+          Concessionária
+          <input
+            required
+            maxLength={100}
+            className={field}
+            value={value.concessionaria}
+            onChange={(e) => update("concessionaria", e.target.value)}
+          />
+        </label>
+        <label>
+          Instalação
+          <input
+            required
+            maxLength={50}
+            className={field}
+            value={value.numeroInstalacao}
+            onChange={(e) => update("numeroInstalacao", e.target.value)}
+          />
+        </label>
+        <label>
+          Mês de referência
+          <input
+            required
+            type="month"
+            className={field}
+            value={value.mesReferencia}
+            onChange={(e) => update("mesReferencia", e.target.value)}
+          />
+        </label>
+        <label>
+          Valor da conta (R$)
+          <input
+            required
+            type="number"
+            min="0"
+            step="0.01"
+            className={field}
+            value={value.valorConta}
+            onChange={(e) => update("valorConta", Number(e.target.value))}
+          />
+        </label>
+        <label>
+          Status
+          <select
+            className={field}
+            value={value.statusPagamento}
+            onChange={(e) => update("statusPagamento", e.target.value)}
+          >
+            {Array.from(
+              new Set([
+                "PENDENTE",
+                "PAGO",
+                "APROVADO", "REPROVADO",
+                value.statusPagamento,
+              ]),
+            ).map((s) => (
+              <option key={s}>{s}</option>
+            ))}
+          </select>
+        </label>
+      </div>
+      {error && (
+        <p role="alert" className="mt-4 text-red-700">
+          {error}
+        </p>
+      )}
+      <div className="mt-6 flex gap-4">
+        <button
+          disabled={busy || users.loading || !!users.error || !value.idUsuario}
+          className={button}
+        >
+          {busy ? "Salvando…" : "Salvar conta"}
+        </button>
+        <button
+          type="button"
+          disabled={busy}
+          onClick={onCancel}
+          className="px-4 underline"
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+  );
+}
