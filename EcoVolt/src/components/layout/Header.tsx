@@ -9,7 +9,8 @@ import ThemeToggle from '../common/ThemeToggle'
 
 const navigationItems = [
   { label: 'Início', path: '/' },
-  { label: 'Como funciona', path: '/como-funciona' },
+  { label: 'Missões', path: '/missoes' },
+  { label: 'Energia', path: '/energia' },
   { label: 'Sobre', path: '/sobre' },
   { label: 'Quem somos', path: '/quem-somos' },
   { label: 'FAQ', path: '/faq' },
@@ -91,7 +92,7 @@ function Header() {
             focus-visible:outline-none
             focus-visible:ring-2
             focus-visible:ring-emerald-500
-            lg:hidden
+            xl:hidden
             dark:border-emerald-700
             dark:text-emerald-100
             dark:hover:bg-emerald-900
@@ -119,16 +120,16 @@ function Header() {
             border-b border-emerald-200
             bg-white p-6
             transition-colors
-            lg:static lg:flex lg:w-auto
-            lg:flex-row lg:items-center
-            lg:border-0 lg:bg-transparent lg:p-0
+            xl:static xl:flex xl:w-auto
+            xl:flex-row xl:items-center
+            xl:border-0 xl:bg-transparent xl:p-0
             dark:border-emerald-800
             dark:bg-emerald-950
-            lg:dark:bg-transparent
+            xl:dark:bg-transparent
             ${isMenuOpen ? 'flex' : 'hidden'}
           `}
         >
-          {(user ? [{ label: 'Dashboard', path: '/app' }] : navigationItems).map((item) => (
+          {(user ? [{ label: 'Dashboard demo', path: '/app' }, { label: 'Missões', path: '/missoes' }, { label: 'Energia', path: '/energia' }] : navigationItems).map((item) => (
             <li key={item.path}>
               <NavLink
                 to={item.path}
@@ -163,7 +164,7 @@ function Header() {
             <ThemeToggle />
           </li>
 
-          {user ? <li className="flex flex-wrap items-center gap-3 lg:max-w-72">
+          {user ? <li className="flex flex-wrap items-center gap-3 xl:max-w-72">
             <span className="text-sm font-semibold text-emerald-800 dark:text-emerald-100">{user.displayName}<span className="mt-0.5 block text-xs font-normal">Sessão demonstrativa</span></span>
             <button type="button" disabled={isLoggingOut} onClick={() => void handleLogout()} className="rounded-lg border border-emerald-600 px-4 py-2 font-semibold text-emerald-700 hover:bg-emerald-100 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 dark:text-emerald-200 dark:hover:bg-emerald-900">{isLoggingOut ? 'Saindo…' : 'Sair'}</button>
             {logoutError && <p role="alert" className="text-sm text-red-600 dark:text-red-300">{logoutError}</p>}

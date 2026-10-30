@@ -1,3 +1,7 @@
+import LiveLayout from '../features/live/components/LiveLayout'
+import LiveMissions from '../features/live/pages/Missions'
+import LiveMissionDetail from '../features/live/pages/MissionDetail'
+import LiveEnergy from '../features/live/pages/Energy'
 import EnviarAcaoPage from '../pages/app/EnviarAcaoPage'
 import ValidacoesPage from '../pages/app/ValidacoesPage'
 import DetalhesAcaoPage from '../pages/app/DetalhesAcaoPage'
@@ -28,6 +32,11 @@ function AppRoutes() {
       <Route path="login" element={<LoginPage />} />
       <Route element={<PublicLayout />}>
         <Route index element={<HomePage />} />
+        <Route element={<LiveLayout />}>
+          <Route path="missoes" element={<LiveMissions />} />
+          <Route path="missoes/:id" element={<LiveMissionDetail />} />
+          <Route path="energia" element={<LiveEnergy />} />
+        </Route>
         <Route path="como-funciona" element={<ComoFuncionaPage />} />
         <Route path="sobre" element={<SobrePage />} />
         <Route path="faq" element={<FaqPage />} />

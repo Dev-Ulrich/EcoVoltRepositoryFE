@@ -1,3 +1,11 @@
+# Sprint 4 — Integração com API Java
+
+As páginas `/missoes`, `/missoes/:id` e `/energia` consomem a API Java. A área `/app` mantém a demonstração da Sprint 3.
+
+Consulte [o guia da Sprint 4](docs/SPRINT4.md) para instalação, deploy e validação. O conteúdo abaixo documenta a versão anterior.
+
+---
+
 <p align="center">
   <img src="src/assets/brand/ecovolt-logo.png" alt="EcoVolt" width="240" />
 </p>
