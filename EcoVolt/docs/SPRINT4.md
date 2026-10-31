@@ -34,3 +34,14 @@ Vídeo YouTube (máximo 3 minutos): pendente de gravação pelo grupo.
 
 ## Uso de IA
 Ferramenta: Codex/OpenAI. Solicitação: ler requisitos da Sprint 4, preparar integração do frontend com API Java, publicar e dividir em cinco commits por integrante. Código de HTTP, telas conectadas, testes e configuração de deploy foram preparados com assistência de IA. O grupo deve revisar os contratos, testar o CRUD e explicar as decisões no vídeo; o material não comprova participação individual por si só. Não foram criados commits em nome de integrantes.
+
+## URLs publicadas
+Frontend: https://ecovolt-sprint4.vercel.app
+API: https://ecovolt-api-sprint4.onrender.com
+
+## Validação realizada em 30/10/2026
+Build TypeScript/Vite aprovado. Três arquivos de testes frontend aprovados, incluindo HTTP (POST/204/erro de servidor/rede/configuração ausente). Teste Java de regressão do ModelMapper aprovado. Consultas remotas de missões, usuários e contas retornaram 200. CRUD remoto de conta de teste: POST 201, GET 200, PUT 200, leitura após atualização confirmada e DELETE 204. Somente o registro criado para o teste foi excluído.
+
+Correção de backend: MatchingStrategies.STRICT evita que idUsuario/idRecompensa sejam mapeados como id da conta. Credenciais foram configuradas no Render e não constam do código. Plano Free pode demorar ao retornar de inatividade; o cliente espera até 90 segundos.
+
+A publicação pontual da integração na Vercel preserva main como branch de produção para futuros pushes. Não fazer push de código incompleto em main: isso pode substituir a versão publicada. Depois de finalizar os commits individuais, enviar a versão completa para main.
