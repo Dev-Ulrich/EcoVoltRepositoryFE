@@ -19,6 +19,11 @@ import ContatoPage from '../pages/public/ContatoPage'
 import NotFoundPage from '../pages/public/NotFoundPage'
 import QuemSomosPage from '../pages/public/QuemSomosPage'
 import LoginPage from '../pages/public/LoginPage'
+import Contas from '../integracao/Contas.tsx'
+import MissoesAPI from '../integracao/Missoes.tsx'
+import DetalheMissao from '../integracao/DetalheMissao.tsx'
+import RecompensasAPI from '../integracao/Recompensas.tsx'
+import RankingAPI from '../integracao/Ranking.tsx'
 
 function AppRoutes() {
   const { pathname } = useLocation()
@@ -47,6 +52,11 @@ function AppRoutes() {
         <Route path="missoes" element={<MissoesPage />} />
         <Route path="ranking" element={<RankingPage />} />
         <Route path="recompensas" element={<RecompensasPage />} />
+        <Route path="contas" element={<Contas />} />
+        <Route path="consulta-missoes" element={<MissoesAPI />} />
+        <Route path="consulta-missoes/:id" element={<DetalheMissao />} />
+        <Route path="consulta-recompensas" element={<RecompensasAPI />} />
+        <Route path="consulta-ranking" element={<RankingAPI />} />
       </Route>
     </Routes>
   )
