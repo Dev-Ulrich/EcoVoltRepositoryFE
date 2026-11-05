@@ -1,39 +1,115 @@
-import { ArrowRight, Award, ClipboardCheck, Gift, Leaf, Plus, Target, Zap } from 'lucide-react'
-import { Link } from 'react-router-dom'
-import Badge from '../../components/common/Badge'
-import Card from '../../components/common/Card'
-import MissionCard from '../../components/missions/MissionCard'
-import { actionCategories, actionStatusLabels } from '../../data/mockActions'
-import { useDemoData } from '../../hooks/useDemoData'
-
-const statusVariants = { pending: 'warning', approved: 'success', rejected: 'danger', in_review: 'info' } as const
-const number = (value: number) => value.toLocaleString('pt-BR')
-
+import { ArrowRight, Leaf, Plus, Zap } from "lucide-react";
+import { Link } from "react-router-dom";
+import type { User } from "../../types/user";
+import type { Submission } from "../../features/account/types";
+import {
+  useRemote,
+  RemoteState,
+  Title,
+  card,
+  primary,
+  secondary,
+  muted,
+  label,
+  Empty,
+} from "../../features/account/ui";
 export default function DashboardPage() {
-  const { user, actions, missions, ranking } = useDemoData()
-  if (!user) return null
-  const completed = missions.filter(item => item.status === 'completed').length
-  const progress = missions.length ? Math.round(completed / missions.length * 100) : 0
-  const rank = ranking.find(entry => entry.userId === user.id)
-  const pending = actions.filter(action => ['pending', 'in_review'].includes(action.status)).length
-  const recent = [...actions].sort((a, b) => Date.parse(b.review?.requestedAt ?? b.submittedAt) - Date.parse(a.review?.requestedAt ?? a.submittedAt)).slice(0, 4)
+  const state = useRemote<{
+    user: User;
+    pending: number;
+    accounts: number;
+    recent: Submission[];
+  }>("/app/painel");
   return (
-    <section aria-labelledby="dashboard-title">
-      <header className="mb-6 flex items-center justify-between gap-3"><div><p className="mb-2 text-[10px] font-extrabold uppercase tracking-[0.15em] text-emerald-700 dark:text-emerald-300">Bom ter você por aqui</p><h1 id="dashboard-title" className="font-bold">Olá, {user.displayName.split(' ')[0]} <span className="text-emerald-600 dark:text-emerald-400">:)</span></h1><p className="mt-2 text-sm text-[#52665f] dark:text-[#b1c8bd]">Vamos fazer a diferença hoje?</p></div><span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-lime-300"><Leaf aria-hidden="true" size={28} /></span></header>
-
-      <div className="grid gap-4 lg:grid-cols-[1.5fr_1fr]">
-        <section aria-labelledby="journey-title" className="relative overflow-hidden rounded-3xl bg-[#073e30] p-6 text-white sm:p-7">
-          <div aria-hidden="true" className="absolute -right-12 -top-16 size-64 rounded-full border-[35px] border-emerald-400/10" />
-          <div className="relative"><p id="journey-title" className="text-xs font-semibold uppercase tracking-widest text-emerald-200">Seu impacto cresce com você</p><div className="mt-5 flex items-center justify-between gap-5"><div><p className="text-4xl font-bold tracking-tight">{number(user.points)} <span className="text-sm font-normal text-emerald-200">pontos</span></p><p className="mt-2 flex items-center gap-1.5 text-sm font-semibold text-lime-300"><Zap aria-hidden="true" size={17} />{number(user.xp)} XP acumulados</p></div><div className="relative flex size-24 shrink-0 items-center justify-center"><svg aria-hidden="true" viewBox="0 0 100 100" className="absolute inset-0 size-full -rotate-90"><circle cx="50" cy="50" r="43" fill="none" stroke="#1c6349" strokeWidth="7" /><circle cx="50" cy="50" r="43" fill="none" stroke="#bef264" strokeWidth="7" strokeLinecap="round" pathLength="100" strokeDasharray={`${progress} 100`} /></svg><span className="text-xl font-bold">{progress}%</span></div></div><div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-white/15 pt-4 text-xs text-emerald-100"><span>{completed} de {missions.length} missões concluídas</span><span className="flex items-center gap-1"><Award aria-hidden="true" size={15} />Tier {user.tier}</span></div></div>
-        </section>
-        <Link to="/app/enviar-acao" className="group flex flex-col justify-between gap-5 rounded-3xl border border-lime-200 bg-[#e6f6c9] p-6 text-[#173a25] transition hover:bg-lime-100 dark:border-lime-900 dark:bg-[#263f25] dark:text-lime-100"><span className="flex size-11 items-center justify-center rounded-2xl bg-white/70 text-emerald-800 dark:bg-lime-300"><Plus aria-hidden="true" size={25} /></span><div><h2 className="text-xl font-bold">Uma boa ação começa com você.</h2><p className="mt-2 text-sm leading-relaxed opacity-80">Registre sua atitude sustentável e acompanhe o impacto.</p></div><span className="flex items-center justify-between text-sm font-bold">Registrar nova ação <ArrowRight aria-hidden="true" size={20} /></span></Link>
-      </div>
-
-      <div className="mt-4 grid grid-cols-3 gap-3">{[{ title: 'Ações aprovadas', value: user.completedActions, icon: Leaf }, { title: 'Missões ativas', value: user.activeMissions, icon: Target }, { title: 'Seu ranking', value: rank ? `#${rank.position}` : '—', icon: Award }].map(({ title, value, icon: Icon }) => <Card key={title} className="!p-4"><Icon aria-hidden="true" size={21} className="text-emerald-600 dark:text-emerald-400" /><p className="mt-3 text-2xl font-bold">{value}</p><h2 className="mt-1 text-xs font-medium leading-relaxed text-[#52665f] dark:text-[#b1c8bd]">{title}</h2></Card>)}</div>
-      <div className="mt-5 grid gap-3 sm:grid-cols-2"><Link to="/app/validacoes" className="flex items-center gap-3 rounded-2xl border border-emerald-100 bg-white p-4 dark:border-emerald-800 dark:bg-emerald-900/30"><ClipboardCheck aria-hidden="true" className="text-emerald-600 dark:text-emerald-400" /><div className="flex-1"><p className="text-sm font-bold">Acompanhar atividades</p><p className="mt-1 text-xs text-[#52665f] dark:text-[#b1c8bd]">{pending ? `${pending} em análise ou revisão` : 'Todos os seus envios em um só lugar'}</p></div><ArrowRight aria-hidden="true" size={18} /></Link><Link to="/app/recompensas" className="flex items-center gap-3 rounded-2xl border border-emerald-100 bg-white p-4 dark:border-emerald-800 dark:bg-emerald-900/30"><Gift aria-hidden="true" className="text-emerald-600 dark:text-emerald-400" /><div className="flex-1"><p className="text-sm font-bold">Suas recompensas</p><p className="mt-1 text-xs text-[#52665f] dark:text-[#b1c8bd]">Descubra sua próxima conquista</p></div><ArrowRight aria-hidden="true" size={18} /></Link></div>
-
-      <section id="dashboard-missions" aria-labelledby="missions-title" className="mt-8"><div className="mb-4 flex items-center justify-between gap-3"><h2 id="missions-title" className="text-xl font-bold">Missões para evoluir</h2><Link to="/app/missoes" className="inline-flex min-h-11 items-center gap-1 text-xs font-bold text-emerald-700 dark:text-emerald-300">Ver todas <ArrowRight aria-hidden="true" size={15} /></Link></div><div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">{missions.slice(0, 3).map(mission => <MissionCard key={mission.id} mission={mission} />)}</div>{!missions.length && <Card>Nenhuma missão disponível no momento.</Card>}</section>
-      <section id="dashboard-activities" aria-labelledby="activities-title" className="mt-7"><div className="mb-3 flex items-center justify-between gap-3"><h2 id="activities-title" className="text-xl font-bold">Atividades recentes</h2><Link to="/app/validacoes" className="inline-flex min-h-11 items-center gap-1 text-xs font-bold text-emerald-700 dark:text-emerald-300">Ver todas <ArrowRight aria-hidden="true" size={15} /></Link></div><Card>{recent.length ? <ul className="divide-y divide-emerald-100 dark:divide-emerald-800">{recent.map(action => <li key={action.id}><Link to={`/app/validacoes/${action.id}`} className="flex items-start gap-3 rounded-xl py-4 first:pt-2"><span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-900 dark:text-emerald-300"><Leaf aria-hidden="true" size={21} /></span><div className="min-w-0 flex-1"><div className="flex flex-wrap items-center justify-between gap-2"><h3 className="text-sm font-bold">{actionCategories[action.category].title}</h3><Badge variant={statusVariants[action.status]}>{actionStatusLabels[action.status]}</Badge></div><p className="mt-2 line-clamp-2 text-xs leading-relaxed text-[#52665f] dark:text-[#b1c8bd]">{action.description}</p><p className="mt-2 text-xs font-semibold text-emerald-700 dark:text-emerald-300">{action.status === 'approved' ? `+${action.awardedPoints} pontos · +${action.awardedXp} XP` : 'Acompanhar envio →'}</p></div></Link></li>)}</ul> : <p className="text-sm text-[#52665f] dark:text-[#b1c8bd]">Suas ações aparecerão aqui. Que tal registrar a primeira?</p>}</Card></section>
+    <section>
+      <Title
+        title={
+          state.data
+            ? `Olá, ${state.data.user.displayName.split(" ")[0]}!`
+            : "Sua jornada"
+        }
+        description="Cada atitude conta. Acompanhe seu progresso e registre sua próxima ação."
+        action={
+          <Link to="/app/enviar-acao" className={primary}>
+            <Plus size={18} />
+            Registrar ação
+          </Link>
+        }
+      />
+      <RemoteState state={state} />
+      {state.data && (
+        <>
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {[
+              ["Pontos conquistados", state.data.user.points],
+              ["Experiência", `${state.data.user.xp} XP`],
+              ["Ações aprovadas", state.data.user.completedActions],
+              ["Em avaliação", state.data.pending],
+            ].map(([name, value]) => (
+              <article className={card} key={name}>
+                <p className={muted}>{name}</p>
+                <p className="mt-3 text-3xl font-bold text-emerald-700 dark:text-lime-300">
+                  {value}
+                </p>
+              </article>
+            ))}
+          </div>
+          <div className="my-6 grid gap-4 sm:grid-cols-2">
+            <Link
+              to="/app/missoes"
+              className={`${card} flex items-center justify-between gap-4`}
+            >
+              <span>
+                <Leaf className="mb-3 text-emerald-600" />
+                <strong>Encontre sua próxima missão</strong>
+                <span className={`${muted} mt-2 block`}>
+                  {state.data.user.activeMissions} em andamento
+                </span>
+              </span>
+              <ArrowRight />
+            </Link>
+            <Link
+              to="/app/contas"
+              className={`${card} flex items-center justify-between gap-4`}
+            >
+              <span>
+                <Zap className="mb-3 text-emerald-600" />
+                <strong>Suas contas de energia</strong>
+                <span className={`${muted} mt-2 block`}>
+                  {state.data.accounts} cadastradas
+                </span>
+              </span>
+              <ArrowRight />
+            </Link>
+          </div>
+          <div className="mb-4 flex items-center justify-between gap-3">
+            <h2 className="text-xl font-bold">Atividades recentes</h2>
+            <Link to="/app/validacoes" className={secondary}>
+              Ver todas
+            </Link>
+          </div>
+          {state.data.recent.length ? (
+            <ul className="space-y-3">
+              {state.data.recent.map((a) => (
+                <li key={a.id}>
+                  <Link
+                    className={`${card} flex flex-wrap items-center justify-between gap-3`}
+                    to={`/app/validacoes/${a.id}`}
+                  >
+                    <strong>{a.nome}</strong>
+                    <span className={muted}>{label(a.status)}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <Empty>
+              Você ainda não enviou uma ação. Registre sua primeira atitude
+              sustentável.
+            </Empty>
+          )}
+        </>
+      )}
     </section>
-  )
+  );
 }
