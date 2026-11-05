@@ -1,3 +1,7 @@
+import LiveLayout from "../features/live/components/LiveLayout";
+import LiveMissions from "../features/live/pages/Missions";
+import LiveMissionDetail from "../features/live/pages/MissionDetail";
+import LiveEnergy from "../features/live/pages/Energy";
 import EnviarAcaoPage from "../pages/app/EnviarAcaoPage";
 import ValidacoesPage from "../pages/app/ValidacoesPage";
 import DetalhesAcaoPage from "../pages/app/DetalhesAcaoPage";
