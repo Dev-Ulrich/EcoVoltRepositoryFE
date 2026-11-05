@@ -8,7 +8,7 @@ import logo from '../../assets/brand/ecovolt-logo.webp'
 import logoDark from '../../assets/brand/ecovolt-logo-dark.webp'
 import AppNavigation from './AppNavigation'
 
-const titles: Record<string, string> = { '/app': 'Sua jornada', '/app/missoes': 'Missões', '/app/enviar-acao': 'Nova ação', '/app/validacoes': 'Suas atividades', '/app/ranking': 'Ranking', '/app/recompensas': 'Recompensas', '/app/perfil': 'Seu perfil' }
+const titles: Record<string, string> = { '/app': 'Sua jornada', '/app/missoes': 'Missões', '/app/enviar-acao': 'Nova ação', '/app/validacoes': 'Suas atividades', '/app/ranking': 'Ranking', '/app/recompensas': 'Recompensas', '/app/perfil': 'Seu perfil', '/app/contas': 'Contas de energia', '/app/consulta-missoes': 'Consulta de missões', '/app/consulta-recompensas': 'Consulta de recompensas', '/app/consulta-ranking': 'Consulta de ranking' }
 const mutedTextClass = 'text-[#52665f] dark:text-[#b1c8bd]'
 const eyebrowClass = 'text-[10px] font-extrabold uppercase tracking-[0.15em] text-emerald-700 dark:text-emerald-300'
 const iconButtonClass = `flex size-10 shrink-0 items-center justify-center rounded-2xl border border-emerald-200 transition-colors hover:bg-emerald-500/8 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f3f7f5] dark:border-emerald-700 dark:hover:bg-emerald-500/15 dark:focus-visible:ring-emerald-300 dark:focus-visible:ring-offset-[#061f1a]`
