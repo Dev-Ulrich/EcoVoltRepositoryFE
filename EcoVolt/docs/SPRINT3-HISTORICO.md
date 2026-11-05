@@ -1,6 +1,6 @@
-# EcoVolt — documentação histórica da Sprint 3
+# EcoVolt — Histórico da Sprint 3
 
-> Este documento preserva a descrição e as imagens da versão demonstrativa anterior. As referências a mocks, login fictício e fluxos simulados são históricas e **não descrevem necessariamente a entrega atual**. Para o estado presente, consulte [Sprint 4](SPRINT4.md) e [Área interna](AREA-INTERNA.md).
+> Arquivo histórico: documentação e capturas anteriores à Sprint 4. As informações sobre funcionalidades simuladas pertencem à versão antiga. Consulte [Sprint 4](SPRINT4.md) para a entrega atual.
 
 <p align="center">
   <img src="../src/assets/brand/ecovolt-logo.png" alt="EcoVolt" width="240" />
