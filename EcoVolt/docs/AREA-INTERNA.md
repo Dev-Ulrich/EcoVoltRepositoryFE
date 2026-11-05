@@ -44,3 +44,14 @@ Backend: Java 21, Maven, pasta `backend`. Variáveis privadas `SPRING_DATASOURCE
 - Conferência visual do login, painel e formulário de conta; cadastro pelo botão da interface e layout móvel.
 
 Os registros utilizados nessas verificações são fictícios e removidos ao concluir a validação.
+
+## Operação no Render e limite de sessões Oracle
+
+- Serviço: https://dashboard.render.com/web/srv-dbifnpdg1s2s73c9cll0
+- Endpoint público: https://ecovolt-api-sprint4.onrender.com/health
+- Branch do backend: `codex/sprint4-integracao`.
+- Diagnóstico registrado em 04/11/2026: `ORA-02391: exceeded simultaneous SESSIONS_PER_USER limit`. A configuração do HikariCP foi reduzida para **uma conexão máxima por instância**, com mínimo ocioso zero e inicialização tolerante a indisponibilidade temporária do banco. Isso reduz a pressão sobre o Oracle, mas **não aumenta o limite do banco nem garante o sucesso do deploy**.
+- Verifique no Render se o deploy mais recente ficou **Live** e se `/health` responde. Se persistir `ORA-02391`, confira outros processos, instâncias e clientes usando o mesmo usuário Oracle. Aguarde o encerramento natural das sessões antigas ou peça ao administrador do Oracle para identificar e encerrar apenas sessões comprovadamente órfãs, sem interromper operações legítimas.
+- Evite redeploys repetidos enquanto o banco está no limite: durante a substituição, duas instâncias podem coexistir e consumir sessões simultaneamente.
+- Não coloque credenciais Oracle, código de convite nem códigos de recuperação nos logs, tickets ou GitHub.
+- Antes de apresentar ao avaliador, confirme cadastro, login, fila de avaliação, upload e leitura de evidências, autorização e persistência no Oracle. **Essas verificações ainda dependem de um deploy saudável.**
