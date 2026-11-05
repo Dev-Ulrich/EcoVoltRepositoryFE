@@ -1,103 +1,62 @@
-import { MessageSquare } from 'lucide-react'
-import AppPageHeader from '../../components/app/AppPageHeader'
-import { useForm } from 'react-hook-form'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import { useDemoData } from '../../hooks/useDemoData'
-import Card from '../../components/common/Card'
-import Button from '../../components/common/Button'
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { post } from "../../features/account/api";
 import {
-  fieldClass,
-  actionLinkClass,
-} from '../../components/actions/actionPresentation'
-import { actionCategories } from '../../data/mockActions'
-
-type ReviewForm = { justification: string }
+  useOperation,
+  ErrorMessage,
+  Title,
+  card,
+  primary,
+  secondary,
+  input,
+} from "../../features/account/ui";
 export default function RevisaoPage() {
-  const { acaoId } = useParams()
-  const { getAction, requestReview } = useDemoData()
-  const action = getAction(acaoId ?? '')
-  const navigate = useNavigate()
-  const {
-    register,
-    handleSubmit,
-    setError,
-    formState: { errors, isSubmitting },
-  } = useForm<ReviewForm>()
-  if (!action || action.status !== 'rejected')
-    return (
-      <Card>
-        <h1 className="text-2xl font-bold">Revisão indisponível</h1>
-        <p className="my-4">
-          Selecione uma ação recusada para solicitar uma revisão.
-        </p>
-        <Link className={actionLinkClass} to="/app/validacoes">
-          Voltar às validações
-        </Link>
-      </Card>
-    )
-  async function submit(data: ReviewForm) {
-    try {
-      requestReview(action!.id, data.justification)
-      navigate(`/app/validacoes/${action!.id}`, {
-        replace: true,
-        state: { notice: 'Revisão registrada na demonstração.' },
-      })
-    } catch (error) {
-      setError('root', {
-        message:
-          error instanceof Error
-            ? error.message
-            : 'Não foi possível registrar a revisão.',
-      })
-    }
-  }
+  const { acaoId } = useParams(),
+    op = useOperation(),
+    navigate = useNavigate();
   return (
-    <section className="mx-auto max-w-3xl">
-      <AppPageHeader title="Vamos revisar sua ação" description="Conte mais sobre sua atividade para solicitar uma nova análise." eyebrow="Uma nova oportunidade" icon={MessageSquare} />
-      <p className="my-4">
-        {actionCategories[action.category].title} · Motivo:{' '}
-        {action.rejectionReason}
-      </p>
-      <Card className="shadow-sm">
-        <form onSubmit={handleSubmit(submit)} noValidate className="space-y-4">
-          <label htmlFor="justification" className="block font-bold">
+    <section className="mx-auto max-w-2xl">
+      <Title
+        title="Solicitar revisão"
+        description="Explique por que sua ação deve ser reavaliada. O pedido ficará registrado junto à atividade."
+      />
+      <form
+        className={card}
+        onSubmit={(e) => {
+          e.preventDefault();
+          const reason = new FormData(e.currentTarget).get("reason");
+          void op.run(async () => {
+            await post(`/app/envios/${acaoId}/revisao`, { reason });
+            navigate(`/app/validacoes/${acaoId}`, {
+              state: {
+                notice: "Revisão enviada. Aguarde o retorno do avaliador.",
+              },
+            });
+          });
+        }}
+      >
+        <fieldset disabled={op.busy} className="space-y-4">
+          <label className="block text-sm font-semibold">
             Justificativa
+            <textarea
+              className={input}
+              name="reason"
+              required
+              minLength={10}
+              maxLength={500}
+              rows={6}
+            />
           </label>
-          <textarea
-            id="justification"
-            rows={6}
-            className={fieldClass}
-            aria-invalid={!!errors.justification}
-            aria-describedby="review-help review-error"
-            {...register('justification', {
-              required: 'Informe sua justificativa.',
-              validate: (value) =>
-                value.trim().length >= 10 ||
-                'Escreva pelo menos 10 caracteres.',
-              maxLength: { value: 2000, message: 'Use até 2.000 caracteres.' },
-            })}
-          />
-          <p id="review-help" className="text-sm">
-            Explique o contexto em 10 a 2.000 caracteres. O pedido é local e não
-            será enviado a um avaliador.
-          </p>
-          <p id="review-error" role="alert" className="mt-2 text-sm text-red-700 dark:text-red-300">
-            {errors.justification?.message}
-          </p>
-          {errors.root && <p role="alert" className="mt-2 text-sm text-red-700 dark:text-red-300">{errors.root.message}</p>}
-          <div className="flex flex-wrap gap-4">
-            <Button type="submit" disabled={isSubmitting}>
-              Enviar revisão
-            </Button>
-            <Link
-              to={`/app/validacoes/${action.id}`}
-              className="rounded-lg p-3 underline focus-visible:ring-2 focus-visible:ring-emerald-500"
-            >
-              Cancelar
+          <ErrorMessage message={op.error} />
+          <div className="flex gap-3">
+            <button type="submit" className={primary}>
+              {op.busy ? "Enviando…" : "Enviar revisão"}
+            </button>
+            <Link to={`/app/validacoes/${acaoId}`} className={secondary}>
+              Voltar
             </Link>
           </div>
-        </form>
-      </Card>
+        </fieldset>
+      </form>
     </section>
-  )
+  );
 }
