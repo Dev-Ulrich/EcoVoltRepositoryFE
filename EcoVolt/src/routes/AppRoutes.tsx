@@ -35,6 +35,11 @@ function AppRoutes() {
       <Route path="recuperar-senha" element={<AuthPage mode="recover" />} />
       <Route element={<PublicLayout />}>
         <Route index element={<HomePage />} />
+        <Route element={<LiveLayout />}>
+          <Route path="missoes" element={<LiveMissions />} />
+          <Route path="missoes/:id" element={<LiveMissionDetail />} />
+          <Route path="energia" element={<LiveEnergy />} />
+        </Route>
         <Route path="como-funciona" element={<ComoFuncionaPage />} />
         <Route path="sobre" element={<SobrePage />} />
         <Route path="faq" element={<FaqPage />} />

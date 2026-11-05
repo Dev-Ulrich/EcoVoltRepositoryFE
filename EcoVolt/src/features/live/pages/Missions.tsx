@@ -1,0 +1,75 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { ArrowUpRight, Target } from "lucide-react";
+import { useApi } from "../hooks/useApi";
+import { usePreferences } from "../context/Preferences";
+import { Title, Feedback, Empty, field } from "../components/UI";
+import type { Missao } from "../types/api";
+export default function Missions() {
+  const state = useApi<Missao[]>("/missao");
+  const [search, setSearch] = useState("");
+  const { onlyActive, toggle } = usePreferences();
+  const items = state.data?.filter(
+    (m) =>
+      (!onlyActive || m.status) &&
+      m.nome.toLocaleLowerCase().includes(search.toLocaleLowerCase()),
+  );
+  return (
+    <>
+      <Title
+        eyebrow="Ação que transforma"
+        title="Encontre seu próximo desafio."
+      >
+        Missões sustentáveis para levar a mudança à sua rotina.
+      </Title>
+      <div className="mb-8 flex flex-col gap-5 sm:flex-row sm:items-center">
+        <label className="flex-1">
+          Buscar missão
+          <input
+            className={field}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="O que você quer transformar?"
+          />
+        </label>
+        <label className="flex gap-2">
+          <input type="checkbox" checked={onlyActive} onChange={toggle} />
+          Somente ativas
+        </label>
+      </div>
+      <Feedback {...state} />
+      {!state.loading &&
+        !state.error &&
+        (items?.length ? (
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {items.map((m) => (
+              <Link
+                to={`/missoes/${m.id}`}
+                key={m.id}
+                className="rounded-2xl border border-stone-200 bg-white p-7 hover:border-emerald-500"
+              >
+                <div className="flex justify-between">
+                  <Target className="text-emerald-600" />
+                  <span className="rounded-full bg-lime-100 px-3 py-1 text-xs">
+                    {m.dificuldade}
+                  </span>
+                </div>
+                <h2 className="mt-6 text-xl font-semibold">{m.nome}</h2>
+                <p className="mt-3 line-clamp-3 text-stone-600">
+                  {m.descricao}
+                </p>
+                <div className="mt-8 flex justify-between border-t border-stone-100 pt-5 text-sm">
+                  <span>
+                    {m.pontuacaoRecompensa} pontos · {m.xpRecompensa} XP
+                  </span>
+                  <ArrowUpRight size={20} />
+                </div>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <Empty>Nenhuma missão encontrada para estes filtros.</Empty>
+        ))}
+    </>
+  );
+}

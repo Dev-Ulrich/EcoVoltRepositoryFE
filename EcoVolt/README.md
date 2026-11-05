@@ -1,3 +1,21 @@
+# Sprint 4 — Integração com API Java
+
+## Como usar
+
+- Frontend: https://ecovolt-sprint4.vercel.app
+- API: https://ecovolt-api-sprint4.onrender.com
+- Repositório: https://github.com/Dev-Ulrich/EcoVoltRepositoryFE
+- Versão publicada: branch `codex/sprint4-integracao`.
+- Vídeo YouTube (até 3 minutos): pendente de gravação pelo grupo.
+- Instalação: na pasta `EcoVolt`, executar `npm ci`, configurar `VITE_API_URL` conforme `.env.example` e executar `npm run dev`.
+- Verificação: `npm run build` e `npm test`.
+
+As páginas `/missoes`, `/missoes/:id` e `/energia` consomem a API Java. A área `/app` mantém a demonstração da Sprint 3.
+
+Consulte [o guia da Sprint 4](docs/SPRINT4.md) para instalação, deploy e validação. O conteúdo abaixo documenta a versão anterior.
+
+---
+
 <p align="center">
   <img src="src/assets/brand/ecovolt-logo.png" alt="EcoVolt" width="240" />
 </p>

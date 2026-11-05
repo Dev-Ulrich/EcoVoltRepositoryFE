@@ -9,6 +9,8 @@ const footerLinks = [
   { label: 'Como funciona', path: '/como-funciona' },
   { label: 'Sobre', path: '/sobre' },
   { label: 'Quem somos', path: '/quem-somos' },
+  { label: 'Missões', path: '/missoes' },
+  { label: 'Energia', path: '/energia' },
   { label: 'FAQ', path: '/faq' },
   { label: 'Contato', path: '/contato' },
 ]
