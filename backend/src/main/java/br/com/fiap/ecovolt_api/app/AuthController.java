@@ -13,7 +13,7 @@ public class AuthController {
     private final AuthService auth;
     public AuthController(AuthService auth) { this.auth=auth; }
     public record Login(@NotBlank @Email @Size(max=150) String email, @NotBlank @Size(max=128) String password) {}
-    public record Register(@NotBlank @Size(min=2,max=120) String name, @NotBlank @Email @Size(max=150) String email, @NotBlank @Size(min=10,max=128) String password) {}
+    public record Register(@NotBlank @Size(min=2,max=120) String name, @NotBlank @Email @Size(max=150) String email, @NotBlank @Size(min=10,max=128) String password, @Size(max=100) String invitation) {}
     public record Recover(@NotBlank @Email @Size(max=150) String email, @NotBlank @Size(max=100) String code, @NotBlank @Size(min=10,max=128) String password) {}
     public record Change(@NotBlank @Size(max=128) String currentPassword, @NotBlank @Size(min=10,max=128) String password) {}
     @PostMapping("/login") public Map<String,Object> login(@Valid @RequestBody Login body,HttpServletRequest req) {
@@ -21,7 +21,7 @@ public class AuthController {
     }
     @PostMapping("/cadastro") @ResponseStatus(HttpStatus.CREATED)
     public Map<String,Object> register(@Valid @RequestBody Register body,HttpServletRequest req) {
-        auth.throttle("register:"+req.getRemoteAddr()); return auth.register(body.name(),body.email(),body.password());
+        auth.throttle("register:"+req.getRemoteAddr()); return auth.register(body.name(),body.email(),body.password(),body.invitation());
     }
     @PostMapping("/recuperar") public Map<String,String> recover(@Valid @RequestBody Recover body,HttpServletRequest req) {
         auth.throttle("recover:"+req.getRemoteAddr()+":"+body.email().trim().toLowerCase());

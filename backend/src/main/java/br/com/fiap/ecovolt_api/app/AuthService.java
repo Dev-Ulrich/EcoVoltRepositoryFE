@@ -56,8 +56,9 @@ public class AuthService {
         sessions.put(Passwords.digest(token), new Session(id, Instant.now().plusSeconds(43200)));
         return Map.of("token",token,"user",profile(id));
     }
-    private Map<String,Object> credentials(String email) {
-        var rows = db.queryForList("SELECT id_usuario, sn_hash FROM T_EV_USUARIO WHERE LOWER(em_usuario)=? AND at_usuario='S' AND st_usuario='ATIVO'", email.trim().toLowerCase(Locale.ROOT));
+    private Map<String,Object> credentials(String email) { return credentials(email,false); }
+    private Map<String,Object> credentials(String email,boolean lock) {
+        var rows = db.queryForList("SELECT id_usuario, sn_hash FROM T_EV_USUARIO WHERE LOWER(em_usuario)=? AND at_usuario='S' AND st_usuario='ATIVO'"+(lock?" FOR UPDATE":""), email.trim().toLowerCase(Locale.ROOT));
         return rows.isEmpty() ? null : rows.getFirst();
     }
     public Map<String,Object> login(String email, String password) {
@@ -68,8 +69,10 @@ public class AuthService {
         return start(id);
     }
     @Transactional
-    public synchronized Map<String,Object> register(String name, String email, String password) {
+    public synchronized Map<String,Object> register(String name, String email, String password, String invitation) {
         email = email.trim().toLowerCase(Locale.ROOT);
+        boolean reviewer=REVIEWER_EMAIL.equals(email);
+        if(reviewer && (invitation==null || !java.security.MessageDigest.isEqual(Passwords.digest(invitation).getBytes(),INVITE_HASH.getBytes()))) throw fail(403,"Este e-mail é reservado para o avaliador. Informe o código de convite recebido.");
         if (db.queryForObject("SELECT COUNT(*) FROM T_EV_USUARIO WHERE LOWER(em_usuario)=?",Integer.class,email)>0) throw fail(409,"Já existe uma conta com este e-mail.");
         Long tier = db.queryForObject("SELECT MIN(id_tier) KEEP (DENSE_RANK FIRST ORDER BY rd_tier) FROM T_EV_TIER WHERE st_tier='ATIVO'",Long.class);
         Long level = db.queryForObject("SELECT MIN(id_nivel) KEEP (DENSE_RANK FIRST ORDER BY nr_nivel) FROM T_EV_NIVEL WHERE st_nivel='ATIVO'",Long.class);
@@ -77,11 +80,12 @@ public class AuthService {
         long id = db.queryForObject("SELECT SQ_EV_USUARIO.NEXTVAL FROM DUAL",Long.class);
         String recovery = Passwords.token();
         db.update("INSERT INTO T_EV_USUARIO (id_usuario,nm_usuario,em_usuario,sn_hash,id_tier,id_nivel) VALUES (?,?,?,?,?,?)",id,name.trim(),email,Passwords.hash(password,recovery),tier,level);
+        if(reviewer) db.update("UPDATE T_EV_USUARIO SET tp_usuario='FUNCIONARIO' WHERE id_usuario=?",id);
         return Map.of("recoveryCode",recovery,"email",email);
     }
     @Transactional
     public String recover(String email, String key, String password) {
-        var row = credentials(email);
+        var row = credentials(email,true);
         if (row == null || !Passwords.recover(key,(String)row.get("SN_HASH"))) throw fail(400,"E-mail ou código de recuperação inválido.");
         long id = ((Number)row.get("ID_USUARIO")).longValue();
         String next = Passwords.token();
@@ -96,7 +100,7 @@ public class AuthService {
     }
     @Transactional
     public String changePassword(long id, String oldPassword, String password) {
-        String hash = db.queryForObject("SELECT sn_hash FROM T_EV_USUARIO WHERE id_usuario=?",String.class,id);
+        String hash = db.queryForObject("SELECT sn_hash FROM T_EV_USUARIO WHERE id_usuario=? FOR UPDATE",String.class,id);
         if (!Passwords.verify(oldPassword,hash)) throw fail(400,"A senha atual está incorreta.");
         String next = Passwords.token();
         db.update("UPDATE T_EV_USUARIO SET sn_hash=? WHERE id_usuario=?",Passwords.hash(password,next),id);
